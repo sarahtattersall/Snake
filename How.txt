@@ -1,0 +1,9 @@
+HOW:
+ - Board 
+ - Board visulisation
+ - Cells (although this isn't efficient)
+ - Snake
+ - Keyboard input handler
+ - Food
+ - Rules (in charge of everything)
+ - Speed

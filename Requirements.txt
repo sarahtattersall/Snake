@@ -1,0 +1,19 @@
+PURPOSE = To have fun
+PROPERTIES = Board, Snake
+INTERACT = visual and keyboard, must be very responsive.
+GAME PLAY TIME = short which implies quick to finish thus...
+ - not too big board (variable in size?)
+ - snake doesn't grow too slowly
+ - food comes fairly quickly
+ - 
+COME BACK FACTOR = highscores
+CATER FOR ALL AUDIENCES =  user can vary the difficulty...
+ - speed of snake
+ - location of food
+ - pass through walls?
+MULTIPLAYER = n players, human or AI
+ - Play on one PC/many
+ - Players can play with different snake speeds?
+FOOD = different food could do different things (e.g. grow other player, shrink your snake)
+EXTENSIONS = could you add obstacles? 
+ 

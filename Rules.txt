@@ -1,0 +1,14 @@
+THE RULES:
+GENERAL:
+ - Snake moves in direction pressed until another keypress is received.
+ - Collect food to make your snake grow
+ - +n points per piece of food
+ - only one piece of food on the board at the time (although with 2 players could have player food)
+ - 
+TO LOSE:
+ - hit the wall (if you cannot travel through them)
+ - hit yourself
+ - hit another player 
+
+TO WIN:
+ - goes on forever until you become too big and loose.
