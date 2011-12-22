@@ -1,7 +1,7 @@
-snake: main.o Board.o Cell.o BoardVisuliser.o CellOccupier.o EmptyOccupier.o
-	g++ main.o Board.o Cell.o BoardVisuliser.o CellOccupier.o EmptyOccupier.o -o snake
+snake: main.o Board.o Cell.o BoardVisualiser.o CellOccupier.o EmptyOccupier.o
+	g++ main.o Board.o Cell.o BoardVisualiser.o CellOccupier.o EmptyOccupier.o -o snake
 
-main.o: main.cpp Board.hpp BoardVisuliser.hpp
+main.o: main.cpp Board.hpp BoardVisualiser.hpp
 	g++ -c main.cpp
 
 Board.o: Board.cpp Board.hpp Cell.hpp
@@ -10,8 +10,8 @@ Board.o: Board.cpp Board.hpp Cell.hpp
 Cell.o: Cell.cpp Cell.hpp CellOccupier.hpp
 	g++ -c Cell.cpp
 
-BoardVisuliser.o: BoardVisuliser.cpp BoardVisuliser.hpp Board.hpp
-	g++ -c BoardVisuliser.cpp
+BoardVisualiser.o: BoardVisualiser.cpp BoardVisualiser.hpp Board.hpp
+	g++ -c BoardVisualiser.cpp
 
 CellOccupier.o: CellOccupier.cpp CellOccupier.hpp
 	g++ -c CellOccupier.cpp
