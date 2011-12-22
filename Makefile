@@ -1,7 +1,7 @@
 snake: main.o Board.o Cell.o BoardVisuliser.o CellOccupier.o EmptyOccupier.o
 	g++ main.o Board.o Cell.o BoardVisuliser.o CellOccupier.o EmptyOccupier.o -o snake
 
-main.o: main.cpp Board.hpp 
+main.o: main.cpp Board.hpp BoardVisuliser.hpp
 	g++ -c main.cpp
 
 Board.o: Board.cpp Board.hpp Cell.hpp
