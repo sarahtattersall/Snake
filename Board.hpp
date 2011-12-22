@@ -5,22 +5,16 @@
 using std::vector;
 
 
-class Board{
+//IAN: Made this class a pure abstract interface
+class Board {
 public:
-    Board(const int size);
 	// Returns the cell at x, y.
 	//  Done this way so that a board visulisation does
 	//  not need to know how board stores it's cells.
-	Cell get(int x, int y);
-	int get_height();
-	int get_width();
-private:
-    int m_size;
-	// Initializes the board with empty cells.
-    void initialize_board();
-    vector<vector<Cell> > m_cells;
-    
-    
+  //IAN: Have to return cell by reference if you want to be able to modify it.
+	virtual Cell& get(int x, int y) = 0;
+	virtual int get_height() = 0;
+	virtual int get_width() = 0;
 };
 
 class BoardBuilder {

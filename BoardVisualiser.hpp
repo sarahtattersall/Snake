@@ -1,7 +1,13 @@
 #ifndef BOARD_VISUALISER_HPP
 #define BOARD_VISUALISER_HPP
-#include "Board.hpp"
 
+//IAN: No need to include Board.hpp, you only use a pointer to Board in here,
+// so a forward declaration of the type will suffice.
+class Board;
+
+//IAN: Why do you think you need this interface?
+// Is there a time where you are going to want to refer to a visualiser
+// without knowing it's full type?
 class BoardVisualiser{
 public:
 	BoardVisualiser(Board* board);
