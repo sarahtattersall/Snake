@@ -27,7 +27,7 @@ void BoardVisualiser::display(){
 			Cell current = m_board->get(i, j);
 			CellOccupier* occupier = current.get_occupier();
 			CellOccupier::TYPE type = occupier->get_type();
-			cout << textual_display(type);
+			cout << textual_display(type) << ", ";
 		}
 		cout << endl;
 	}
