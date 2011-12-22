@@ -15,6 +15,10 @@ Board* BoardBuilder::create(){
     return new Board(m_size);
 }
 
+Cell Board::get(int x, int y){
+	return m_cells[x][y];
+}
+
 
 Board::Board(const int size){
     m_size = size;
