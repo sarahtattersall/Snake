@@ -11,7 +11,6 @@ public:
 	// Displays a textual representation of the board
 	void display();
 private:
-	Board* m_board;
 	// Returns a string displaying a textual representation
 	// of the cell occupiers type.
 	string textual_display(CellOccupier::TYPE type);
