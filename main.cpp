@@ -8,5 +8,6 @@ int main(int argc, char *argv[])
     BoardBuilder board_builder;
     board_builder.set_size(10);
     Board* board = board_builder.create();
-	BoardVisualiser visulier(board);
+	BoardVisualiser visualiser(board);
+	visualiser.display();
 }
