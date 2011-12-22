@@ -16,6 +16,7 @@ public:
 	int get_width();
 private:
     int m_size;
+	// Initializes the board with empty cells.
     void initialize_board();
     vector<vector<Cell> > m_cells;
     

@@ -1,5 +1,5 @@
-snake: main.o Board.o Cell.o BoardVisualiser.o CellOccupier.o EmptyOccupier.o
-	g++ main.o Board.o Cell.o BoardVisualiser.o CellOccupier.o EmptyOccupier.o -o snake
+snake: main.o Board.o Cell.o BoardVisualiser.o CellOccupier.o EmptyOccupier.o TextualBoardVisualiser.o
+	g++ main.o Board.o Cell.o BoardVisualiser.o CellOccupier.o EmptyOccupier.o TextualBoardVisualiser.o -o snake
 
 main.o: main.cpp Board.hpp BoardVisualiser.hpp
 	g++ -c main.cpp
@@ -18,6 +18,9 @@ CellOccupier.o: CellOccupier.cpp CellOccupier.hpp
 
 EmptyOccupier.o: EmptyOccupier.cpp EmptyOccupier.hpp CellOccupier.hpp
 	g++ -c EmptyOccupier.cpp
+
+TextualBoardVisualiser.o: TextualBoardVisualiser.cpp TextualBoardVisualiser.hpp BoardVisualiser.hpp
+	g++ -c TextualBoardVisualiser.cpp
 
 clean:
 	rm -rf *o snake
