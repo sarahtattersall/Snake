@@ -1,4 +1,5 @@
 #include "Board.hpp"
+#include "Cell.hpp"
 
 BoardBuilder::BoardBuilder(){
     m_size = 0;
@@ -14,6 +15,19 @@ Board* BoardBuilder::create(){
     return new Board(m_size);
 }
 
+
 Board::Board(const int size){
     m_size = size;
+    initialize_board();
+}
+
+
+void Board::initialize_board(){
+	m_cells.resize(m_size);
+    for (int i = 0; i < m_size; ++i){
+		m_cells[i].resize(m_size);
+        for( int j = 0; j < m_size; ++j){
+            m_cells[i][j] = Cell();
+        }
+    }
 }
