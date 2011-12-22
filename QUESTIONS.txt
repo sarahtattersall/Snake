@@ -1,4 +1,4 @@
-Do I need a cell builder? It's ok for cells to start empty (all initially null?)
+Do I need a cell builder? It's ok for cells to start empty (empty occupiers)
 Perhaps extend board builder to have square board builder?
 Should BoardVisualiser have been a builder? 
 Cell display? - probably should entirely be in the boardvisuliser so you can easily change the visulisation but then you'd have to do isSnake()? isFood()? in cell and to do that you'd need some isinstance()? solved using enums...

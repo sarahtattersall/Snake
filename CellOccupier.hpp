@@ -7,8 +7,7 @@ public:
 	CellOccupier(TYPE type);
 	TYPE get_type();
 protected:
-	TYPE m_type;
-    
+	TYPE m_type;    
 };
 
 #endif

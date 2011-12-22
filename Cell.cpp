@@ -1,5 +1,4 @@
 #include "Cell.hpp"
-#include <string.h>
 #include "EmptyOccupier.hpp"
 
 Cell::Cell(){
@@ -15,5 +14,5 @@ CellOccupier* Cell::get_occupier(){
 }
 
 bool Cell::is_occupied(){
-    return m_occupier != NULL;
+    return m_occupier->get_type() != CellOccupier::EMPTY;
 }

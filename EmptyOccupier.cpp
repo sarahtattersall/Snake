@@ -1,5 +1,4 @@
 #include "EmptyOccupier.hpp"
 
-EmptyOccupier::EmptyOccupier() : CellOccupier(EMPTY){
-	
+EmptyOccupier::EmptyOccupier() : CellOccupier(EMPTY){	
 }
