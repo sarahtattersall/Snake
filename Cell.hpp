@@ -6,6 +6,7 @@ class Cell{
 public:
     bool is_occupied();
     void set_cell(CellOccupier* occupier);
+	CellOccupier* get_occupier();
     Cell();
 private:
     CellOccupier* m_occupier;
