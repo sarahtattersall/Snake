@@ -12,6 +12,8 @@ public:
 	//  Done this way so that a board visulisation does
 	//  not need to know how board stores it's cells.
 	Cell get(int x, int y);
+	int get_height();
+	int get_width();
 private:
     int m_size;
     void initialize_board();

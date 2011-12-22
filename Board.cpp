@@ -19,6 +19,13 @@ Cell Board::get(int x, int y){
 	return m_cells[x][y];
 }
 
+int Board::get_height(){
+	return m_size;
+}
+
+int Board::get_width(){
+	return m_size;
+}
 
 Board::Board(const int size){
     m_size = size;
