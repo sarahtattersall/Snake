@@ -1,4 +1,5 @@
 #include "TextualBoardVisualiser.hpp"
+#include "Board.hpp"
 #include <iostream>
 using namespace std;
 

@@ -1,7 +1,7 @@
 #ifndef BOARD_BUILDER_HPP
 #define BOARD_BUILDER_HPP
 #include "Cell.hpp"
-#include <vecto>r
+#include <vector>
 using std::vector;
 
 

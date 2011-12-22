@@ -5,7 +5,7 @@
 class SquareBoard : public Board {
 public:
     SquareBoard(const int size);
-    virtual Cell get(int x, int y);
+    virtual Cell& get(int x, int y);
     virtual int get_height();
     virtual int get_width();
 private:

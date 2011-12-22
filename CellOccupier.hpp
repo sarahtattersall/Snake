@@ -13,7 +13,7 @@
 class CellOccupier{
 public:
 	enum TYPE {EMPTY, SNAKE, FOOD};
-	CellOccupier(TYPE type);
+	CellOccupier();
 	virtual TYPE get_type() = 0;
 };
 
