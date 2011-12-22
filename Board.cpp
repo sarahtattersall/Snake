@@ -1,6 +1,20 @@
 #include "Board.hpp"
 #include "Cell.hpp"
 
+//IAN: This is the only current implementation of Board
+class SquareBoard : public Board {
+public:
+    SquareBoard(const int size);
+    virtual Cell get(int x, int y);
+    virtual int get_height();
+    virtual int get_width();
+private:
+    int m_size;
+    // Initializes the board with empty cells.
+    void initialize_board();
+    vector<vector<Cell> > m_cells;
+};
+
 BoardBuilder::BoardBuilder(){
     m_size = 0;
 }
@@ -12,28 +26,28 @@ BoardBuilder& BoardBuilder::set_size(const int size){
 
 Board* BoardBuilder::create(){
 // Error case needed
-    return new Board(m_size);
+    return new SquareBoard(m_size);
 }
 
-Cell Board::get(int x, int y){
+Cell& SquareBoard::get(int x, int y){
 	return m_cells[x][y];
 }
 
-int Board::get_height(){
+int SquareBoard::get_height(){
 	return m_size;
 }
 
-int Board::get_width(){
+int SquareBoard::get_width(){
 	return m_size;
 }
 
-Board::Board(const int size){
+SquareBoard::SquareBoard(const int size){
     m_size = size;
     initialize_board();
 }
 
 
-void Board::initialize_board(){
+void SquareBoard::initialize_board(){
 	m_cells.resize(m_size);
     for (int i = 0; i < m_size; ++i){
 		m_cells[i].resize(m_size);

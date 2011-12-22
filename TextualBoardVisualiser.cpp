@@ -8,6 +8,9 @@ TextualBoardVisualiser::TextualBoardVisualiser(Board* board) : BoardVisualiser(b
 // Not sure yet of a better way to do this...is a bit ugly
 // Could grow into some massive if, but if move into
 // Cells then it's taking the visulisation out of this class?
+//IAN: For now I would leave this and move on, it's enough to get you started.
+// when it comes time to fix this, you might want to look into MVC and friends
+// (Model View Controller).
 string TextualBoardVisualiser::textual_display(CellOccupier::TYPE type){
 	if( type == CellOccupier::EMPTY){
 		return string(" ");
@@ -15,7 +18,7 @@ string TextualBoardVisualiser::textual_display(CellOccupier::TYPE type){
 		return string("S");
 	} else if (type == CellOccupier::FOOD){
 		return string("F");
-	} 
+	}
 	// else Error
 }
 
