@@ -1,6 +1,6 @@
 #include "Board.hpp"
 #include "Cell.hpp"
-
+#include <iostream>
 //IAN: This is the only current implementation of Board
 class SquareBoard : public Board {
 public:
@@ -58,9 +58,8 @@ void SquareBoard::insert(CellOccupier* occupier, Coord coord){
 void SquareBoard::initialize_board(){
 	m_cells.resize(m_size);
     for (int i = 0; i < m_size; ++i){
-		// m_cells[i].resize(m_size);
         for( int j = 0; j < m_size; ++j){
-            m_cells[i][j] = Cell(Coord(i, j));
+            m_cells[i].push_back(Cell(Coord(i, j)));
         }
     }
 }
