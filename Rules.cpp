@@ -65,7 +65,6 @@ Rules* RuleBuilder::create(){
 	board_builder.set_size(m_board_size);
 	Board* board = board_builder.create();
 	vector<Snake> snakes;
-	// SARAH: Could have just used m_board_size instead?
 	Coord board_middle = Coord(board->get_width()/2, board->get_height()/2);
 	for( int i = 0; i < m_player_count; ++i){
 		if( m_snake_size != 0){

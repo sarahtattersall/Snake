@@ -14,8 +14,6 @@ public:
 class Snake{
 public:
 	Snake(Coord board_middle, int size = 3);
-	// SARAH: should this return a reference? Thought not incase someone
-	//  accidentally changes it.
 	vector<SnakeOccupier*> get_occupiers();	
 	~Snake();
 private:
