@@ -6,6 +6,7 @@ class SquareBoard : public Board {
 public:
     SquareBoard(const int size);
     virtual Cell& get(Coord coord);
+	virtual Cell& get(int x, int y);
     virtual int get_height();
     virtual int get_width();
 	virtual void insert(CellOccupier* occupier, Coord coord);
@@ -32,6 +33,10 @@ Board* BoardBuilder::create(){
 
 Cell& SquareBoard::get(Coord coord){
 	return m_cells[coord.get_x()][coord.get_y()];
+}
+
+Cell& SquareBoard::get(int x, int y){
+	return m_cells[x][y];
 }
 
 int SquareBoard::get_height(){

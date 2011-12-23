@@ -13,6 +13,7 @@ public:
 	//  Done this way so that a board visulisation does
 	//  not need to know how board stores it's cells.
 	virtual Cell& get(Coord coord) = 0;
+	virtual Cell& get(int x, int y) = 0;
 	virtual int get_height() = 0;
 	virtual int get_width() = 0;
 	virtual void insert(CellOccupier* occupier, Coord coord) = 0;
