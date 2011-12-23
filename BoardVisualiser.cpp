@@ -11,5 +11,5 @@ BoardVisualiserBuilder::BoardVisualiserBuilder(){
 }
 
 BoardVisualiserBuilder& BoardVisualiserBuilder::set_board(Board* board){
-	m_board = NULL;
+	m_board = board;
 }

@@ -9,7 +9,7 @@ public:
 	virtual Cell& get(int x, int y);
     virtual int get_height();
     virtual int get_width();
-	virtual void insert(CellOccupier* occupier, Coord coord);
+	void insert(CellOccupier* occupier, Coord coord);
 private:
     int m_size;
     // Initializes the board with empty cells.

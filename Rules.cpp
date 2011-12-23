@@ -1,13 +1,14 @@
 #include "Rules.hpp"
 #include <string.h>
 using namespace std;
-Rules::Rules(Board* board, vector<Snake> snakes){
+Rules::Rules(Board* board, vector<Snake> snakes, BoardVisualiser* visualiser){
 	m_board = board;
 	m_snakes = snakes;
+	m_visualiser = visualiser;
 }
 
 Rules::~Rules(){
-	delete m_board;
+	// delete m_board;
 }
 
 Board* Rules::get_board(){
@@ -19,6 +20,10 @@ void Rules::update_board(Snake snake){
 	for( vector<SnakeOccupier*>::iterator itr = occupiers.begin(); itr != occupiers.end(); ++itr ){
 		m_board->insert(*itr, (*itr)->get_coord());
 	}
+}
+
+void Rules::play(){
+	m_visualiser->display();
 }
 
 RuleBuilder::RuleBuilder(){
@@ -63,5 +68,9 @@ Rules* RuleBuilder::create(){
 			snakes.push_back(Snake(board_middle));
 		}
 	}
-	return new Rules(board, snakes);
+	if (m_visualiser_builder != NULL){
+		m_visualiser_builder->set_board(board);
+		return new Rules(board, snakes, m_visualiser_builder->create());
+	}
+	//else still need to error!
 }

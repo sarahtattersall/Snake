@@ -9,6 +9,8 @@ int main(int argc, char *argv[])
     rule_builder.set_board_size(10);
 	rule_builder.set_player_count(1);
 	rule_builder.set_visualiser_builder(new TextualBoardVisualiserBuilder());
+	Rules* rules = rule_builder.create();
+	rules->play();
 	// TextualBoardVisualiser visualiser(board_builder.create());
 	// visualiser.display();
 }

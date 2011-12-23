@@ -10,7 +10,7 @@ class TextualBoardVisualiser : public BoardVisualiser {
 public:
 	TextualBoardVisualiser(Board* board);
 	// Displays a textual representation of the board
-	virtual void display();
+	void display();
 private:
 	// Returns a string displaying a textual representation
 	// of the cell occupiers type.
@@ -19,9 +19,7 @@ private:
 
 class TextualBoardVisualiserBuilder : public BoardVisualiserBuilder {
 public:
-    virtual BoardVisualiser* create();
-private:
-	Board* m_board;
+    BoardVisualiser* create();
 };
 
 #endif

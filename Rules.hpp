@@ -2,18 +2,22 @@
 #define RULES_CPP
 #include "Snake.hpp"
 #include "Board.hpp"
+#include "BoardVisualiser.hpp"
 using std::vector;
 
-class BoardVisualiserBuilder;
+class BoardVisualiser;
 
 class Rules{
 public:
-	Rules(Board* board, vector<Snake> snakes);
+	Rules(Board* board, vector<Snake> snakes, BoardVisualiser* visualiser);
 	~Rules();
 	Board* get_board();
+	// Currently just displays the board;
+	void play();
 private:
 	vector<Snake> m_snakes;
 	Board* m_board;
+	BoardVisualiser* m_visualiser;
 	// Updates board with snakes coordinates.
 	void update_board(Snake snake);
 };

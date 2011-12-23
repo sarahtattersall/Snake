@@ -24,7 +24,7 @@ public:
     BoardVisualiserBuilder();
     BoardVisualiserBuilder& set_board(Board* board);
     virtual BoardVisualiser* create() = 0;
-private:
+protected:
 	Board* m_board;
 };
 
