@@ -14,6 +14,7 @@ CATER FOR ALL AUDIENCES =  user can vary the difficulty...
 MULTIPLAYER = n players, human or AI
  - Play on one PC/many
  - Players can play with different snake speeds?
+ - Could snakes be of different sizes?
 FOOD = different food could do different things (e.g. grow other player, shrink your snake)
 EXTENSIONS = could you add obstacles? 
  
