@@ -1,7 +1,7 @@
-snake: main.o Board.o Cell.o CellOccupier.o EmptyOccupier.o TextualBoardVisualiser.o Snake.o Rules.o Coord.o
-	g++ main.o Board.o Cell.o CellOccupier.o EmptyOccupier.o TextualBoardVisualiser.o Snake.o Rules.o Coord.o -o snake
+snake: main.o Board.o Cell.o CellOccupier.o EmptyOccupier.o BoardVisualiser.o TextualBoardVisualiser.o Snake.o Rules.o Coord.o
+	g++ main.o Board.o Cell.o CellOccupier.o EmptyOccupier.o BoardVisualiser.o TextualBoardVisualiser.o Snake.o Rules.o Coord.o -o snake
 
-main.o: main.cpp Board.hpp TextualBoardVisualiser.hpp
+main.o: main.cpp Rules.hpp TextualBoardVisualiser.hpp
 	g++ -c main.cpp
 
 Board.o: Board.cpp Board.hpp Cell.hpp Coord.hpp
@@ -16,7 +16,9 @@ CellOccupier.o: CellOccupier.cpp CellOccupier.hpp
 EmptyOccupier.o: EmptyOccupier.cpp EmptyOccupier.hpp CellOccupier.hpp
 	g++ -c EmptyOccupier.cpp
 
-TextualBoardVisualiser.o: TextualBoardVisualiser.cpp TextualBoardVisualiser.hpp
+BoardVisualiser.o: BoardVisualiser.cpp BoardVisualiser.hpp
+
+TextualBoardVisualiser.o: TextualBoardVisualiser.cpp TextualBoardVisualiser.hpp BoardVisualiser.hpp
 	g++ -c TextualBoardVisualiser.cpp
 
 Snake.o: Snake.cpp Snake.hpp Coord.hpp
