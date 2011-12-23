@@ -18,10 +18,13 @@ private:
 class RuleBuilder{
 public:
 	RuleBuilder& set_board_size(int size);
+	// Don't have to set snake size will go to default if not.
+	RuleBuilder& set_snake_size(int size);
 	RuleBuilder& set_player_count(int count);
 	Rules* create();
 private:
 	int m_board_size;
+	int m_snake_size;
 	int m_player_count;	
 };
 

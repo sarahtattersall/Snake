@@ -18,6 +18,15 @@ RuleBuilder& RuleBuilder::set_board_size(int size){
 	return *this;
 }
 
+RuleBuilder& RuleBuilder::set_snake_size(int size){
+	if (size >= m_board_size){
+		// proper error later.
+		throw -1;
+	}
+	m_snake_size = size;
+	return *this;
+}
+
 RuleBuilder& RuleBuilder::set_player_count(int count){
 	m_player_count = count;
 	return *this;
@@ -25,10 +34,17 @@ RuleBuilder& RuleBuilder::set_player_count(int count){
 
 Rules* RuleBuilder::create(){
 	BoardBuilder board_builder;
-    board_builder.set_size(m_board_size);
+	board_builder.set_size(m_board_size);
+	Board* board = board_builder.create();
 	vector<Snake> snakes;
+	// SARAH: Could have just used m_board_size instead?
+	Coord board_middle = Coord(board->get_width()/2, board->get_height()/2);
 	for( int i = 0; i < m_player_count; ++i){
-		snakes.push_back(Snake());
+		if( m_snake_size != 0){
+			snakes.push_back(Snake(board_middle, m_snake_size));
+		}else{
+			snakes.push_back(Snake(board_middle));
+		}
 	}
-	return new Rules(board_builder.create(), snakes);
+	return new Rules(board, snakes);
 }
