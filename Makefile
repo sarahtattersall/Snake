@@ -22,10 +22,11 @@ TextualBoardVisualiser.o: TextualBoardVisualiser.cpp TextualBoardVisualiser.hpp
 Snake.o: Snake.cpp Snake.hpp Coord.hpp
 	g++ -c Snake.cpp
 
-Rules.o: Rules.cpp Rules.hpp Snake.hpp Board.hpp
+Rules.o: Rules.cpp Rules.hpp Snake.hpp Board.hpp Coord.hpp
 	g++ -c Rules.cpp
 
 Coord.o: Coord.cpp Coord.hpp
+	g++ -c Coord.cpp
 
 clean:
 	rm -rf *o snake
