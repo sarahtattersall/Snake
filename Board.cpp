@@ -31,11 +31,11 @@ Board* BoardBuilder::create(){
 }
 
 Cell& SquareBoard::get(Coord coord){
-	return m_cells[coord.get_x()][coord.get_y()];
+	return m_cells[coord.get_y()][coord.get_x()];
 }
 
 Cell& SquareBoard::get(int x, int y){
-	return m_cells[x][y];
+	return m_cells[y][x];
 }
 
 int SquareBoard::get_height(){

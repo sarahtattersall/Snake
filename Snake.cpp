@@ -1,5 +1,5 @@
 #include "Snake.hpp"
-
+#include <iostream>
 Snake::Snake(Coord board_middle, int size) {
 	m_size = size;
 	int x = board_middle.get_x();

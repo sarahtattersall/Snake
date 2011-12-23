@@ -1,10 +1,15 @@
 #include "Rules.hpp"
 #include <string.h>
+#include <iostream>
 using namespace std;
 Rules::Rules(Board* board, vector<Snake> snakes, BoardVisualiser* visualiser){
 	m_board = board;
 	m_snakes = snakes;
 	m_visualiser = visualiser;
+	// Initialised board with snakes
+	for(vector<Snake>::iterator itr = m_snakes.begin(); itr != m_snakes.end(); ++itr){
+		update_board(*itr);
+	}
 }
 
 Rules::~Rules(){
@@ -28,6 +33,7 @@ void Rules::play(){
 
 RuleBuilder::RuleBuilder(){
 	m_visualiser_builder = NULL;
+	m_snake_size = 0;
 }
 
 RuleBuilder& RuleBuilder::set_board_size(int size){
