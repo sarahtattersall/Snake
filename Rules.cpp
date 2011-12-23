@@ -41,8 +41,10 @@ RuleBuilder& RuleBuilder::set_board_size(int size){
 	return *this;
 }
 
+// Snakes start in the middle of the board and duplicate snakes branch right from this
+// Not the best implementation. Decide a better way later.
 RuleBuilder& RuleBuilder::set_snake_size(int size){
-	if (size >= m_board_size){
+	if (size >= (m_board_size/2)){
 		// proper error later.
 		throw -1;
 	}
@@ -65,12 +67,13 @@ Rules* RuleBuilder::create(){
 	board_builder.set_size(m_board_size);
 	Board* board = board_builder.create();
 	vector<Snake> snakes;
-	Coord board_middle = Coord(board->get_width()/2, board->get_height()/2);
+	Coord board_middle(board->get_width()/2, board->get_height()/2);
 	for( int i = 0; i < m_player_count; ++i){
+		Coord snake_start(board_middle.get_x() - i, board_middle.get_y());
 		if( m_snake_size != 0){
-			snakes.push_back(Snake(board_middle, m_snake_size));
+			snakes.push_back(Snake(snake_start, m_snake_size));
 		}else{
-			snakes.push_back(Snake(board_middle));
+			snakes.push_back(Snake(snake_start));
 		}
 	}
 	if (m_visualiser_builder != NULL){
