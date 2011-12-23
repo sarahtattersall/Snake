@@ -1,11 +1,11 @@
 #ifndef TEXTUAL_BOARD_VISUALISER_HPP
 #define TEXTUAL_BOARD_VISUALISER_HPP
-#include "BoardVisualiser.hpp"
 #include "CellOccupier.hpp"
 #include <string>
+class Board;
 using std::string;
 
-class TextualBoardVisualiser : public BoardVisualiser {
+class TextualBoardVisualiser {
 public:
 	TextualBoardVisualiser(Board* board);
 	// Displays a textual representation of the board
@@ -14,5 +14,6 @@ private:
 	// Returns a string displaying a textual representation
 	// of the cell occupiers type.
 	string textual_display(CellOccupier::TYPE type);
+	Board* m_board;
 };
 #endif

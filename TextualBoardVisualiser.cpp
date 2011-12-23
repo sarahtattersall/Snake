@@ -3,7 +3,8 @@
 #include <iostream>
 using namespace std;
 
-TextualBoardVisualiser::TextualBoardVisualiser(Board* board) : BoardVisualiser(board){
+TextualBoardVisualiser::TextualBoardVisualiser(Board* board) {
+	m_board = board;
 }
 
 // Not sure yet of a better way to do this...is a bit ugly
