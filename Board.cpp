@@ -26,7 +26,7 @@ BoardBuilder& BoardBuilder::set_size(const int size){
     return *this;
 }
 Board* BoardBuilder::create(){
-// Error case needed
+	// Error case needed
     return new SquareBoard(m_size);
 }
 
@@ -58,9 +58,9 @@ void SquareBoard::insert(CellOccupier* occupier, Coord coord){
 void SquareBoard::initialize_board(){
 	m_cells.resize(m_size);
     for (int i = 0; i < m_size; ++i){
-		m_cells[i].resize(m_size);
+		// m_cells[i].resize(m_size);
         for( int j = 0; j < m_size; ++j){
-            m_cells[i][j] = Cell();
+            m_cells[i][j] = Cell(Coord(i, j));
         }
     }
 }

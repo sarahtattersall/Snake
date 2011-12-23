@@ -1,6 +1,6 @@
 #ifndef CELL_OCCUPIER_HPP
 #define CELL_OCCUPIER_HPP
-
+#include "Coord.hpp"
 //IAN: There are so many ways to implement this, but none of them are really
 // all that good.
 // I have changed this to a slightly nicer way to use the enum approach.
@@ -13,8 +13,11 @@
 class CellOccupier{
 public:
 	enum TYPE {EMPTY, SNAKE, FOOD};
-	CellOccupier();
+	CellOccupier(Coord coord);
 	virtual TYPE get_type() = 0;
+	Coord get_coord();
+private:
+	Coord m_coord;
 };
 
 #endif

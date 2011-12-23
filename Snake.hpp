@@ -5,12 +5,22 @@
 #include <vector>
 using std::vector;
 
-class Snake : CellOccupier{
+class SnakeOccupier : public CellOccupier{
+public:
+	SnakeOccupier(Coord coord);
+  	virtual TYPE get_type() { return SNAKE; }
+};
+
+class Snake{
 public:
 	Snake(Coord board_middle, int size = 3);
-  	virtual TYPE get_type() { return SNAKE; }
+	// SARAH: should this return a reference? Thought not incase someone
+	//  accidentally changes it.
+	vector<SnakeOccupier*> get_occupiers();	
+	~Snake();
 private:
 	int m_size;
-	vector<Coord> m_coords;
+	vector<SnakeOccupier*> m_occupiers;
 };
+
 #endif

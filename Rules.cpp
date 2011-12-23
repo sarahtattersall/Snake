@@ -13,6 +13,14 @@ Board* Rules::get_board(){
 	return m_board;
 }
 
+void Rules::update_board(Snake snake){
+	vector<SnakeOccupier*> occupiers = snake.get_occupiers();
+	for( vector<SnakeOccupier*>::iterator itr = occupiers.begin(); itr != occupiers.end(); ++itr ){
+		m_board->insert(*itr, (*itr)->get_coord());
+	}
+}
+
+
 RuleBuilder& RuleBuilder::set_board_size(int size){
 	m_board_size = size;
 	return *this;

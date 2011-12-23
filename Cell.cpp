@@ -1,8 +1,8 @@
 #include "Cell.hpp"
 #include "EmptyOccupier.hpp"
 
-Cell::Cell(){
-    m_occupier = new EmptyOccupier();
+Cell::Cell(Coord coord){
+    m_occupier = new EmptyOccupier(coord);
 }
 
 void Cell::set_cell(CellOccupier* occupier){

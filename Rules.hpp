@@ -12,6 +12,8 @@ public:
 private:
 	vector<Snake> m_snakes;
 	Board* m_board;
+	// Updates board with snakes coordinates.
+	void update_board(Snake snake);
 };
 
 
