@@ -17,6 +17,7 @@ EmptyOccupier.o: EmptyOccupier.cpp EmptyOccupier.hpp CellOccupier.hpp
 	g++ -c EmptyOccupier.cpp
 
 BoardVisualiser.o: BoardVisualiser.cpp BoardVisualiser.hpp
+	g++ -c BoardVisualiser.cpp
 
 TextualBoardVisualiser.o: TextualBoardVisualiser.cpp TextualBoardVisualiser.hpp BoardVisualiser.hpp
 	g++ -c TextualBoardVisualiser.cpp

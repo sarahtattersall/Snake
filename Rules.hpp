@@ -4,6 +4,8 @@
 #include "Board.hpp"
 using std::vector;
 
+class BoardVisualiserBuilder;
+
 class Rules{
 public:
 	Rules(Board* board, vector<Snake> snakes);
@@ -19,15 +21,18 @@ private:
 
 class RuleBuilder{
 public:
+	RuleBuilder();
 	RuleBuilder& set_board_size(int size);
 	// Don't have to set snake size will go to default if not.
 	RuleBuilder& set_snake_size(int size);
 	RuleBuilder& set_player_count(int count);
+	RuleBuilder& set_visualiser_builder(BoardVisualiserBuilder* visualiser_builder);
 	Rules* create();
 private:
 	int m_board_size;
 	int m_snake_size;
-	int m_player_count;	
+	int m_player_count;
+	BoardVisualiserBuilder* m_visualiser_builder;
 };
 
 #endif

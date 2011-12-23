@@ -1,4 +1,5 @@
 #include "Rules.hpp"
+#include <string.h>
 using namespace std;
 Rules::Rules(Board* board, vector<Snake> snakes){
 	m_board = board;
@@ -20,6 +21,9 @@ void Rules::update_board(Snake snake){
 	}
 }
 
+RuleBuilder::RuleBuilder(){
+	m_visualiser_builder = NULL;
+}
 
 RuleBuilder& RuleBuilder::set_board_size(int size){
 	m_board_size = size;
@@ -37,6 +41,11 @@ RuleBuilder& RuleBuilder::set_snake_size(int size){
 
 RuleBuilder& RuleBuilder::set_player_count(int count){
 	m_player_count = count;
+	return *this;
+}
+
+RuleBuilder& RuleBuilder::set_visualiser_builder(BoardVisualiserBuilder* visualiser_builder){
+	m_visualiser_builder = visualiser_builder;
 	return *this;
 }
 
