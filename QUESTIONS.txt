@@ -4,3 +4,4 @@ Should BoardVisualiser have been a builder?
 Cell display? - probably should entirely be in the boardvisuliser so you can easily change the visulisation but then you'd have to do isSnake()? isFood()? in cell and to do that you'd need some isinstance()? solved using enums...
 
 When to include class or just declare class?
+How should throw errors from builders?
