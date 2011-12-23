@@ -3,8 +3,7 @@
 #include <iostream>
 using namespace std;
 
-TextualBoardVisualiser::TextualBoardVisualiser(Board* board) {
-	m_board = board;
+TextualBoardVisualiser::TextualBoardVisualiser(Board* board) : BoardVisualiser(board){
 }
 
 // Not sure yet of a better way to do this...is a bit ugly
@@ -35,4 +34,11 @@ void TextualBoardVisualiser::display(){
 		}
 		cout << endl;
 	}
+}
+
+BoardVisualiser* TextualBoardVisualiserBuilder::create(){
+	if (m_board != NULL){
+		return new TextualBoardVisualiser(m_board);
+	}
+	// Error?
 }

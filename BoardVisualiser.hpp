@@ -17,13 +17,15 @@ protected:
 	Board* m_board;
 };
 
-// class BoardVisualiserBuilder(){
-// public:
-//     BoardVisualiserBuilder();
-//     BoardVisualiserBuilder& set_board(Board* board);
-//     BoardVisualiser* create();
-// private:
-// 	Board* m_board;
-// }
+// Need a builder because you want to set the board after you've declared you're
+// using a visualiser
+class BoardVisualiserBuilder{
+public:
+    BoardVisualiserBuilder();
+    BoardVisualiserBuilder& set_board(Board* board);
+    virtual BoardVisualiser* create() = 0;
+private:
+	Board* m_board;
+};
 
 #endif
