@@ -45,7 +45,8 @@ void RulesTest::noSnakeSizeTest(){
 	m_builder3->set_board_size(m_test_board_size);
 	m_builder3->set_player_count(m_test_player_count);
 	m_builder3->set_visualiser_builder(m_test_visualiser);
-	// CPPUNIT_ASSERT_THROW(m_builder3->create(), RuleBuilderException);
+	m_builder3->create();
+	// Should really check that the output is expected here.
 }
 
 void RulesTest::noVisualiserTest(){
