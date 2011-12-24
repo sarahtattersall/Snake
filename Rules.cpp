@@ -46,9 +46,6 @@ RuleBuilder& RuleBuilder::set_board_size(int size){
 // Snakes start in the middle of the board and duplicate snakes branch right from this
 // Not the best implementation. Decide a better way later.
 RuleBuilder& RuleBuilder::set_snake_size(int size){
-	if (size >= (m_board_size/2)){
-		throw SnakeTooBigException();
-	}
 	m_snake_size = size;
 	return *this;
 }
@@ -67,6 +64,9 @@ shared_ptr<Rules> RuleBuilder::create(){
 	BoardBuilder board_builder;
 	if (m_board_size == 0 || m_player_count == 0 || m_visualiser_builder.get() == NULL){
 		throw RuleBuilderException();
+	}
+	if (m_snake_size >= (m_board_size/2)){
+		throw SnakeTooBigException();
 	}
 	board_builder.set_size(m_board_size);
 	shared_ptr<Board> board = board_builder.create();
