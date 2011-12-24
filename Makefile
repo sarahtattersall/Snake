@@ -1,14 +1,17 @@
 snake: main.o Board.o Cell.o CellOccupier.o EmptyOccupier.o BoardVisualiser.o TextualBoardVisualiser.o Snake.o Rules.o Coord.o
 	g++ main.o Board.o Cell.o CellOccupier.o EmptyOccupier.o BoardVisualiser.o TextualBoardVisualiser.o Snake.o Rules.o Coord.o -o snake
 
-test: test.o BoardTest.o Board.o Cell.o CellOccupier.o EmptyOccupier.o BoardVisualiser.o TextualBoardVisualiser.o Snake.o Rules.o Coord.o
-	g++ test.o BoardTest.o Board.o Cell.o CellOccupier.o EmptyOccupier.o BoardVisualiser.o TextualBoardVisualiser.o Snake.o Rules.o Coord.o -o test -lcppunit
+test: test.o BoardTest.o RulesTest.o Board.o Cell.o CellOccupier.o EmptyOccupier.o BoardVisualiser.o TextualBoardVisualiser.o Snake.o Rules.o Coord.o
+	g++ test.o BoardTest.o RulesTest.o Board.o Cell.o CellOccupier.o EmptyOccupier.o BoardVisualiser.o TextualBoardVisualiser.o Snake.o Rules.o Coord.o -o test -lcppunit
 
 test.o: test.cpp
 	g++ -c test.cpp
 
 BoardTest.o: BoardTest.cpp BoardTest.hpp Board.hpp
 	g++ -c BoardTest.cpp
+
+RulesTest.o: RulesTest.cpp RulesTest.hpp Rules.hpp
+	g++ -c RulesTest.cpp
 
 main.o: main.cpp Rules.hpp TextualBoardVisualiser.hpp SnakeException.hpp
 	g++ -c main.cpp
