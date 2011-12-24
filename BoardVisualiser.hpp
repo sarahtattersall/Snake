@@ -26,7 +26,7 @@ class BoardVisualiserBuilder{
 public:
     BoardVisualiserBuilder();
     BoardVisualiserBuilder& set_board(shared_ptr<Board> board);
-    virtual BoardVisualiser* create() = 0;
+    virtual shared_ptr<BoardVisualiser> create() = 0;
 protected:
 	shared_ptr<Board> m_board;
 };

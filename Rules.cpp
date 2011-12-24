@@ -2,7 +2,7 @@
 #include <string.h>
 #include <iostream>
 using namespace std;
-Rules::Rules(shared_ptr<Board> board, vector<Snake> snakes, BoardVisualiser* visualiser){
+Rules::Rules(shared_ptr<Board> board, vector<Snake> snakes, shared_ptr<BoardVisualiser> visualiser){
 	m_board = board;
 	m_snakes = snakes;
 	m_visualiser = visualiser;
@@ -21,8 +21,8 @@ shared_ptr<Board> Rules::get_board(){
 }
 
 void Rules::update_board(Snake snake){
-	vector<SnakeOccupier*> occupiers = snake.get_occupiers();
-	for( vector<SnakeOccupier*>::iterator itr = occupiers.begin(); itr != occupiers.end(); ++itr ){
+	vector<shared_ptr<SnakeOccupier> > occupiers = snake.get_occupiers();
+	for( vector<shared_ptr<SnakeOccupier> >::iterator itr = occupiers.begin(); itr != occupiers.end(); ++itr ){
 		m_board->insert(*itr, (*itr)->get_coord());
 	}
 }
@@ -31,8 +31,9 @@ void Rules::play(){
 	m_visualiser->display();
 }
 
-RuleBuilder::RuleBuilder(){
-	m_visualiser_builder = NULL;
+RuleBuilder::RuleBuilder() : m_visualiser_builder(){
+	// m_visualiser_builder = NULL;
+	m_player_count = 0;
 	m_snake_size = 0;
 }
 
@@ -57,12 +58,12 @@ RuleBuilder& RuleBuilder::set_player_count(int count){
 	return *this;
 }
 
-RuleBuilder& RuleBuilder::set_visualiser_builder(BoardVisualiserBuilder* visualiser_builder){
+RuleBuilder& RuleBuilder::set_visualiser_builder(shared_ptr<BoardVisualiserBuilder> visualiser_builder){
 	m_visualiser_builder = visualiser_builder;
 	return *this;
 }
 
-Rules* RuleBuilder::create(){
+shared_ptr<Rules> RuleBuilder::create(){
 	BoardBuilder board_builder;
 	board_builder.set_size(m_board_size);
 	shared_ptr<Board> board = board_builder.create();
@@ -78,7 +79,7 @@ Rules* RuleBuilder::create(){
 	}
 	if (m_visualiser_builder != NULL){
 		m_visualiser_builder->set_board(board);
-		return new Rules(board, snakes, m_visualiser_builder->create());
+		return shared_ptr<Rules> (new Rules(board, snakes, m_visualiser_builder->create()));
 	}
 	//else still need to error!
 }

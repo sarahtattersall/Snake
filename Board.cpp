@@ -9,7 +9,7 @@ public:
 	virtual Cell& get(int x, int y);
     virtual int get_height();
     virtual int get_width();
-	void insert(CellOccupier* occupier, Coord coord);
+	void insert(shared_ptr<CellOccupier> occupier, Coord coord);
 private:
     int m_size;
     // Initializes the board with empty cells.
@@ -51,7 +51,7 @@ SquareBoard::SquareBoard(const int size){
     initialize_board();
 }
 
-void SquareBoard::insert(CellOccupier* occupier, Coord coord){
+void SquareBoard::insert(shared_ptr<CellOccupier> occupier, Coord coord){
 	m_cells[coord.get_x()][coord.get_y()].set_cell(occupier);
 }
 

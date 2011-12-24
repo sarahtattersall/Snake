@@ -21,7 +21,7 @@ private:
 
 class TextualBoardVisualiserBuilder : public BoardVisualiserBuilder {
 public:
-    BoardVisualiser* create();
+    shared_ptr<BoardVisualiser> create();
 };
 
 #endif

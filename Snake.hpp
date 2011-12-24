@@ -3,7 +3,9 @@
 #include "Coord.hpp"
 #include "CellOccupier.hpp"
 #include <vector>
+#include <Boost/shared_ptr.hpp>
 using std::vector;
+using boost::shared_ptr;
 
 class SnakeOccupier : public CellOccupier{
 public:
@@ -14,11 +16,11 @@ public:
 class Snake{
 public:
 	Snake(Coord board_middle, int size = 3);
-	vector<SnakeOccupier*> get_occupiers();	
+	vector<shared_ptr<SnakeOccupier> > get_occupiers();	
 	~Snake();
 private:
 	int m_size;
-	vector<SnakeOccupier*> m_occupiers;
+	vector<shared_ptr<SnakeOccupier> > m_occupiers;
 };
 
 #endif

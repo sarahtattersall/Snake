@@ -18,7 +18,7 @@ public:
 	virtual Cell& get(int x, int y)= 0;
 	virtual int get_height() = 0;
 	virtual int get_width() = 0;
-	virtual void insert(CellOccupier* occupier, Coord coord) = 0;
+	virtual void insert(shared_ptr<CellOccupier> occupier, Coord coord) = 0;
 };
 
 class BoardBuilder {

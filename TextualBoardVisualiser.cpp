@@ -28,7 +28,7 @@ void TextualBoardVisualiser::display(){
 	for( int i = 0; i < m_board->get_height(); ++i){
 		for( int j = 0; j < m_board->get_width(); ++j){
 			Cell current = m_board->get(i, j);
-			CellOccupier* occupier = current.get_occupier();
+			shared_ptr<CellOccupier> occupier = current.get_occupier();
 			CellOccupier::TYPE type = occupier->get_type();
 			cout << textual_display(type) << ", ";
 		}
@@ -36,9 +36,9 @@ void TextualBoardVisualiser::display(){
 	}
 }
 
-BoardVisualiser* TextualBoardVisualiserBuilder::create(){
-	if (m_board != NULL){
-		return new TextualBoardVisualiser(m_board);
+shared_ptr<BoardVisualiser> TextualBoardVisualiserBuilder::create(){
+	if (m_board.get() != NULL){
+		return shared_ptr<BoardVisualiser> (new TextualBoardVisualiser(m_board));
 	}
 	// Error?
 }

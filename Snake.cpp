@@ -5,7 +5,7 @@ Snake::Snake(Coord board_middle, int size) {
 	int x = board_middle.get_x();
 	int y = board_middle.get_y();
 	for( int i = 0; i < size; ++i){
-		m_occupiers.push_back(new SnakeOccupier(Coord(x, y--)));
+		m_occupiers.push_back(shared_ptr<SnakeOccupier> (new SnakeOccupier(Coord(x, y--))));
 	}
 }
 
@@ -15,7 +15,7 @@ Snake::~Snake(){
 	// }
 }
 
-vector<SnakeOccupier*> Snake::get_occupiers(){
+vector<shared_ptr<SnakeOccupier> > Snake::get_occupiers(){
 	return m_occupiers;
 }
 
