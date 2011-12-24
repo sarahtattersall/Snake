@@ -2,14 +2,14 @@
 #include <string.h>
 using namespace std;
 
-BoardVisualiser::BoardVisualiser(Board* board){
+BoardVisualiser::BoardVisualiser(shared_ptr<Board> board){
 	m_board = board;
 }
 
-BoardVisualiserBuilder::BoardVisualiserBuilder(){
-	m_board = NULL;
+BoardVisualiserBuilder::BoardVisualiserBuilder() : m_board(){
+	// m_board = NULL;
 }
 
-BoardVisualiserBuilder& BoardVisualiserBuilder::set_board(Board* board){
+BoardVisualiserBuilder& BoardVisualiserBuilder::set_board(shared_ptr<Board> board){
 	m_board = board;
 }

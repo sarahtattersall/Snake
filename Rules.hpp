@@ -3,20 +3,22 @@
 #include "Snake.hpp"
 #include "Board.hpp"
 #include "BoardVisualiser.hpp"
+#include <boost/shared_ptr.hpp>
 using std::vector;
+using boost::shared_ptr;
 
 class BoardVisualiser;
 
 class Rules{
 public:
-	Rules(Board* board, vector<Snake> snakes, BoardVisualiser* visualiser);
+	Rules(shared_ptr<Board> board, vector<Snake> snakes, BoardVisualiser* visualiser);
 	~Rules();
-	Board* get_board();
+	shared_ptr<Board> get_board();
 	// Currently just displays the board;
 	void play();
 private:
 	vector<Snake> m_snakes;
-	Board* m_board;
+	shared_ptr<Board> m_board;
 	BoardVisualiser* m_visualiser;
 	// Updates board with snakes coordinates.
 	void update_board(Snake snake);

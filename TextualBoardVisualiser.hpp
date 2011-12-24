@@ -2,13 +2,15 @@
 #define TEXTUAL_BOARD_VISUALISER_HPP
 #include "CellOccupier.hpp"
 #include "BoardVisualiser.hpp"
+#include <Boost/shared_ptr.hpp>
 #include <string>
 class Board;
 using std::string;
+using boost::shared_ptr;
 
 class TextualBoardVisualiser : public BoardVisualiser {
 public:
-	TextualBoardVisualiser(Board* board);
+	TextualBoardVisualiser(shared_ptr<Board> board);
 	// Displays a textual representation of the board
 	void display();
 private:

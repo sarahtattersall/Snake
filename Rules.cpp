@@ -2,7 +2,7 @@
 #include <string.h>
 #include <iostream>
 using namespace std;
-Rules::Rules(Board* board, vector<Snake> snakes, BoardVisualiser* visualiser){
+Rules::Rules(shared_ptr<Board> board, vector<Snake> snakes, BoardVisualiser* visualiser){
 	m_board = board;
 	m_snakes = snakes;
 	m_visualiser = visualiser;
@@ -16,7 +16,7 @@ Rules::~Rules(){
 	// delete m_board;
 }
 
-Board* Rules::get_board(){
+shared_ptr<Board> Rules::get_board(){
 	return m_board;
 }
 
@@ -65,7 +65,7 @@ RuleBuilder& RuleBuilder::set_visualiser_builder(BoardVisualiserBuilder* visuali
 Rules* RuleBuilder::create(){
 	BoardBuilder board_builder;
 	board_builder.set_size(m_board_size);
-	Board* board = board_builder.create();
+	shared_ptr<Board> board = board_builder.create();
 	vector<Snake> snakes;
 	Coord board_middle(board->get_width()/2, board->get_height()/2);
 	for( int i = 0; i < m_player_count; ++i){

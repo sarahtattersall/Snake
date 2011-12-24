@@ -3,7 +3,9 @@
 #include "Cell.hpp"
 #include "Coord.hpp"
 #include <vector>
+#include <Boost/shared_ptr.hpp>
 using std::vector;
+using boost::shared_ptr;
 
 
 //IAN: Made this class a pure abstract interface
@@ -24,7 +26,7 @@ public:
     BoardBuilder();
     BoardBuilder& set_size(const int size);
     // if haven't set size create should refuse.
-    Board* create();
+    shared_ptr<Board> create();
 private:
     int m_size;
 };

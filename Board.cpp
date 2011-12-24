@@ -25,9 +25,9 @@ BoardBuilder& BoardBuilder::set_size(const int size){
     m_size = size;
     return *this;
 }
-Board* BoardBuilder::create(){
+shared_ptr<Board> BoardBuilder::create(){
 	// Error case needed
-    return new SquareBoard(m_size);
+    return shared_ptr<Board> (new SquareBoard(m_size));
 }
 
 Cell& SquareBoard::get(Coord coord){
