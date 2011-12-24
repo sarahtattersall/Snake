@@ -8,31 +8,31 @@ class SnakeException: public exception{
 };
 
 class RuleBuilderException : public SnakeException{
-	virtual const char* what() const throw(){
+	virtual const char* what() const{
     	return "Error have not set all conditions of RuleBuilder.";
 	}
 };
 
 class BoardBuilderException : public SnakeException{
-	virtual const char* what() const throw(){
+	virtual const char* what() const{
     	return "Error have not set board size in BoardBuilder.";
 	}
 };
 
 class SnakeTooBigException : public SnakeException{
-	virtual const char* what() const throw(){
+	virtual const char* what() const{
     	return "Snake size is bigger than half the board.";
 	}
 };
 
 class TextualBoardVisualiserBuilderException : public SnakeException{
-	virtual const char* what() const throw(){
+	virtual const char* what() const{
     	return "Error havent sent board in textual board visualiser.";
 	} 
 };
 
 class TextualRepresentationError : public SnakeException{
-	virtual const char* what() const throw(){
+	virtual const char* what() const{
     	return "Cannot represent unknown type on board.";
 	} 
 };
