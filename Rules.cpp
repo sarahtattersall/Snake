@@ -1,5 +1,5 @@
 #include "Rules.hpp"
-#include "BuilderException.hpp"
+#include "SnakeException.hpp"
 #include <string.h>
 #include <iostream>
 using namespace std;
@@ -47,8 +47,7 @@ RuleBuilder& RuleBuilder::set_board_size(int size){
 // Not the best implementation. Decide a better way later.
 RuleBuilder& RuleBuilder::set_snake_size(int size){
 	if (size >= (m_board_size/2)){
-		// proper error later.
-		throw -1;
+		throw SnakeTooBigException();
 	}
 	m_snake_size = size;
 	return *this;
@@ -67,7 +66,7 @@ RuleBuilder& RuleBuilder::set_visualiser_builder(shared_ptr<BoardVisualiserBuild
 shared_ptr<Rules> RuleBuilder::create(){
 	BoardBuilder board_builder;
 	if (m_board_size == 0 || m_player_count == 0 || m_visualiser_builder.get() == NULL){
-		throw BuilderException();
+		throw RuleBuilderException();
 	}
 	board_builder.set_size(m_board_size);
 	shared_ptr<Board> board = board_builder.create();
@@ -81,9 +80,6 @@ shared_ptr<Rules> RuleBuilder::create(){
 			snakes.push_back(Snake(snake_start));
 		}
 	}
-	if (m_visualiser_builder != NULL){
-		m_visualiser_builder->set_board(board);
-		return shared_ptr<Rules> (new Rules(board, snakes, m_visualiser_builder->create()));
-	}
-	//else still need to error!
+	m_visualiser_builder->set_board(board);
+	return shared_ptr<Rules> (new Rules(board, snakes, m_visualiser_builder->create()));
 }

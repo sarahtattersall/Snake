@@ -1,7 +1,10 @@
 #include "Board.hpp"
 #include "Cell.hpp"
+#include "SnakeException.hpp"
 #include <iostream>
 //IAN: This is the only current implementation of Board
+
+
 class SquareBoard : public Board {
 public:
     SquareBoard(const int size);
@@ -26,7 +29,9 @@ BoardBuilder& BoardBuilder::set_size(const int size){
     return *this;
 }
 shared_ptr<Board> BoardBuilder::create(){
-	// Error case needed
+	if(m_size == 0){
+		throw BoardBuilderException();
+	}
     return shared_ptr<Board> (new SquareBoard(m_size));
 }
 

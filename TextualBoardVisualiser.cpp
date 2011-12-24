@@ -1,5 +1,6 @@
 #include "TextualBoardVisualiser.hpp"
 #include "Board.hpp"
+#include "SnakeException.hpp"
 #include <iostream>
 using namespace std;
 
@@ -19,8 +20,9 @@ string TextualBoardVisualiser::textual_display(CellOccupier::TYPE type){
 		return string("S");
 	} else if (type == CellOccupier::FOOD){
 		return string("F");
+	} else{
+		throw TextualRepresentationError();
 	}
-	// else Error
 }
 
 void TextualBoardVisualiser::display(){
@@ -37,8 +39,9 @@ void TextualBoardVisualiser::display(){
 }
 
 shared_ptr<BoardVisualiser> TextualBoardVisualiserBuilder::create(){
-	if (m_board.get() != NULL){
-		return shared_ptr<BoardVisualiser> (new TextualBoardVisualiser(m_board));
+	if (m_board.get() == NULL){
+		throw TextualBoardVisualiserBuilderException();
 	}
+	return shared_ptr<BoardVisualiser> (new TextualBoardVisualiser(m_board));
 	// Error?
 }
