@@ -7,7 +7,7 @@ using namespace CppUnit;
 int main(int argc, char* argv[])
 {
   	// Get the top level suite from the registry
-  	CppUnit::Test *suite = TestFactoryRegistry::getRegistry().makeTest();
+  	CppUnit::Test* suite = TestFactoryRegistry::getRegistry().makeTest();
 	  
   	// Adds the test to the list of test to run
 	CppUnit::TextUi::TestRunner runner;

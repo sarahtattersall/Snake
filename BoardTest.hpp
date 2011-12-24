@@ -9,15 +9,20 @@
 
 class BoardTest : public CppUnit::TestFixture
 {
-//   CPPUNIT_TEST_SUITE( BoardTest );
-//   CPPUNIT_TEST( testConstructor );
-//   CPPUNIT_TEST_SUITE_END();
-// 
-// public:
-//   void setUp();
-//   void tearDown();
-// 
-//   void testConstructor();
+	CPPUNIT_TEST_SUITE( BoardTest );
+	CPPUNIT_TEST( sizeTest );
+	CPPUNIT_TEST( builderFailsTest );
+	CPPUNIT_TEST_SUITE_END();
+
+public:
+  	void setUp();
+  	void tearDown();
+protected:
+  	void sizeTest();
+	void builderFailsTest();
+private:
+	BoardBuilder* m_builder1;
+	BoardBuilder* m_builder2;
 };
 
 #endif 
