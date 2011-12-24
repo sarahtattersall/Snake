@@ -1,4 +1,5 @@
 #include "Rules.hpp"
+#include "BuilderException.hpp"
 #include <string.h>
 #include <iostream>
 using namespace std;
@@ -65,6 +66,9 @@ RuleBuilder& RuleBuilder::set_visualiser_builder(shared_ptr<BoardVisualiserBuild
 
 shared_ptr<Rules> RuleBuilder::create(){
 	BoardBuilder board_builder;
+	if (m_board_size == 0 || m_player_count == 0 || m_visualiser_builder.get() == NULL){
+		throw BuilderException();
+	}
 	board_builder.set_size(m_board_size);
 	shared_ptr<Board> board = board_builder.create();
 	vector<Snake> snakes;
