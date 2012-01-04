@@ -2,6 +2,7 @@
 #include "Cell.hpp"
 #include "SnakeException.hpp"
 #include <iostream>
+#include "EmptyOccupier.hpp";
 //IAN: This is the only current implementation of Board
 
 
@@ -12,7 +13,8 @@ public:
 	virtual Cell& get(int x, int y);
     virtual int get_height();
     virtual int get_width();
-	void insert(shared_ptr<CellOccupier> occupier, Coord coord);
+	virtual void insert(shared_ptr<CellOccupier> occupier, Coord coord);
+	// virtual void remove(Coord coord);
 private:
     int m_size;
     // Initializes the board with empty cells.
@@ -59,6 +61,10 @@ SquareBoard::SquareBoard(const int size){
 void SquareBoard::insert(shared_ptr<CellOccupier> occupier, Coord coord){
 	m_cells[coord.get_x()][coord.get_y()].set_cell(occupier);
 }
+
+// void SquareBoard::remove(Coord coord){
+// 	m_cells[coord.get_x()][coord.get_y()].set_cell(EmptyOccupier());
+// }
 
 void SquareBoard::initialize_board(){
 	m_cells.resize(m_size);

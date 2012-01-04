@@ -19,6 +19,8 @@ public:
 	virtual int get_height() = 0;
 	virtual int get_width() = 0;
 	virtual void insert(shared_ptr<CellOccupier> occupier, Coord coord) = 0;
+	// Removes occupier in cell and sets it to empty.
+	// virtual void remove(Coord coord) = 0;
 };
 
 class BoardBuilder {

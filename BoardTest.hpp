@@ -12,6 +12,8 @@ class BoardTest : public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE( BoardTest );
 	CPPUNIT_TEST( sizeTest );
 	CPPUNIT_TEST( builderFailsTest );
+	CPPUNIT_TEST( createdEmpty );
+	CPPUNIT_TEST( insertInRightCell );
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -20,9 +22,14 @@ public:
 protected:
   	void sizeTest();
 	void builderFailsTest();
+	void createdEmpty();
+	void insertInRightCell();
 private:
 	BoardBuilder* m_builder1;
 	BoardBuilder* m_builder2;
+	BoardBuilder* m_builder3;
+	BoardBuilder* m_builder4;
+	int m_test_size;
 };
 
 #endif 
