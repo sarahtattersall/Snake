@@ -1,8 +1,8 @@
 #include "Cell.hpp"
 #include "EmptyOccupier.hpp"
 
-Cell::Cell(Coord coord){
-    m_occupier = shared_ptr<CellOccupier> (new EmptyOccupier(coord));
+Cell::Cell(){
+    m_occupier = shared_ptr<CellOccupier> (new EmptyOccupier());
 }
 
 void Cell::set_cell(shared_ptr<CellOccupier> occupier){

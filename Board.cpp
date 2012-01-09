@@ -70,7 +70,7 @@ void SquareBoard::initialize_board(){
 	m_cells.resize(m_size);
     for (int i = 0; i < m_size; ++i){
         for( int j = 0; j < m_size; ++j){
-            m_cells[i].push_back(Cell(Coord(i, j)));
+            m_cells[i].push_back(Cell());
         }
     }
 }

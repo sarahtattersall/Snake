@@ -13,11 +13,7 @@
 class CellOccupier{
 public:
 	enum TYPE {EMPTY, SNAKE, FOOD};
-	CellOccupier(Coord coord);
 	virtual TYPE get_type() = 0;
-	Coord get_coord();
-private:
-	Coord m_coord;
 };
 
 #endif

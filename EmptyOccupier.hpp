@@ -4,7 +4,6 @@
 #include "Coord.hpp"
 class EmptyOccupier : public CellOccupier{
 public:
-	EmptyOccupier(Coord coord);
   	virtual TYPE get_type() { return EMPTY; }
 };
 

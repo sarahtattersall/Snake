@@ -22,10 +22,10 @@ shared_ptr<Board> Rules::get_board(){
 }
 
 void Rules::update_board(Snake snake){
-	vector<shared_ptr<SnakeOccupier> > occupiers = snake.get_occupiers();
-	for( vector<shared_ptr<SnakeOccupier> >::iterator itr = occupiers.begin(); itr != occupiers.end(); ++itr ){
-		m_board->insert(*itr, (*itr)->get_coord());
-	}
+	// vector<shared_ptr<SnakeOccupier> > occupiers = snake.get_occupiers();
+	// for( vector<shared_ptr<SnakeOccupier> >::iterator itr = occupiers.begin(); itr != occupiers.end(); ++itr ){
+	// 	m_board->insert(*itr, (*itr)->get_coord());
+	// }
 }
 
 void Rules::play(){

@@ -10,7 +10,7 @@ public:
     bool is_occupied();
     void set_cell(shared_ptr<CellOccupier> occupier);
 	shared_ptr<CellOccupier> get_occupier();
-    Cell(Coord coord);
+    Cell();
 private:
     shared_ptr<CellOccupier> m_occupier;
 };

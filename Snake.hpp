@@ -9,7 +9,6 @@ using boost::shared_ptr;
 
 class SnakeOccupier : public CellOccupier{
 public:
-	SnakeOccupier(Coord coord);
   	virtual TYPE get_type() { return SNAKE; }
 };
 
