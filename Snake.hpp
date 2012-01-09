@@ -9,7 +9,10 @@ using boost::shared_ptr;
 
 class SnakeOccupier : public CellOccupier{
 public:
+	SnakeOccupier(int player_number);
   	virtual TYPE get_type() { return SNAKE; }
+private:
+	int m_number;
 };
 
 class Snake{

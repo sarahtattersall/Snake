@@ -8,9 +8,9 @@ Rules::Rules(shared_ptr<Board> board, vector<Snake> snakes, shared_ptr<BoardVisu
 	m_snakes = snakes;
 	m_visualiser = visualiser;
 	// Initialised board with snakes
-	for(vector<Snake>::iterator itr = m_snakes.begin(); itr != m_snakes.end(); ++itr){
-		update_board(*itr);
-	}
+	// for(vector<Snake>::iterator itr = m_snakes.begin(); itr != m_snakes.end(); ++itr){
+	// 		update_board(*itr);
+	// 	}
 }
 
 Rules::~Rules(){
@@ -21,12 +21,12 @@ shared_ptr<Board> Rules::get_board(){
 	return m_board;
 }
 
-void Rules::update_board(Snake snake){
+// void Rules::update_board(Snake snake){
 	// vector<shared_ptr<SnakeOccupier> > occupiers = snake.get_occupiers();
 	// for( vector<shared_ptr<SnakeOccupier> >::iterator itr = occupiers.begin(); itr != occupiers.end(); ++itr ){
 	// 	m_board->insert(*itr, (*itr)->get_coord());
 	// }
-}
+// }
 
 void Rules::play(){
 	m_visualiser->display();
@@ -72,8 +72,8 @@ shared_ptr<Rules> RuleBuilder::create(){
 	shared_ptr<Board> board = board_builder.create();
 	vector<Snake> snakes;
 	Coord board_middle(board->get_width()/2, board->get_height()/2);
-	for( int i = 0; i < m_player_count; ++i){
-		Coord snake_start(board_middle.get_x() - i, board_middle.get_y());
+	for( int player = 0; player < m_player_count; ++player){
+		Coord snake_start(board_middle.get_x() - player, board_middle.get_y());
 		if( m_snake_size != 0){
 			snakes.push_back(Snake(m_snake_size));
 		}else{
@@ -82,7 +82,7 @@ shared_ptr<Rules> RuleBuilder::create(){
 		int x = snake_start.get_x();
 		int y = snake_start.get_y();
 		for( int i = 0; i < snakes.back().get_size(); ++i){
-			board->insert(shared_ptr<SnakeOccupier> (new SnakeOccupier()), Coord(x, y - i));
+			board->insert(shared_ptr<SnakeOccupier> (new SnakeOccupier(player)), Coord(x, y - i));
 		}
 	}
 

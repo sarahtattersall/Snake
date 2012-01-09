@@ -20,8 +20,9 @@ private:
 	vector<Snake> m_snakes;
 	shared_ptr<Board> m_board;
 	shared_ptr<BoardVisualiser> m_visualiser;
+	bool move_snake(Coord coord);
 	// Updates board with snakes coordinates.
-	void update_board(Snake snake);
+	// void update_board(Snake snake);
 };
 
 
