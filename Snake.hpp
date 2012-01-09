@@ -14,12 +14,13 @@ public:
 
 class Snake{
 public:
-	Snake(Coord board_middle, int size = 3);
-	vector<shared_ptr<SnakeOccupier> > get_occupiers();	
-
+	Snake(int size = 3);
+	// vector<shared_ptr<SnakeOccupier> > get_occupiers();	
+	int get_size();
+	
 private:
 	int m_size;
-	vector<shared_ptr<SnakeOccupier> > m_occupiers;
+	// vector<shared_ptr<SnakeOccupier> > m_occupiers;
 };
 
 #endif

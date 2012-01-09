@@ -75,11 +75,17 @@ shared_ptr<Rules> RuleBuilder::create(){
 	for( int i = 0; i < m_player_count; ++i){
 		Coord snake_start(board_middle.get_x() - i, board_middle.get_y());
 		if( m_snake_size != 0){
-			snakes.push_back(Snake(snake_start, m_snake_size));
+			snakes.push_back(Snake(m_snake_size));
 		}else{
-			snakes.push_back(Snake(snake_start));
+			snakes.push_back(Snake());
+		}
+		int x = snake_start.get_x();
+		int y = snake_start.get_y();
+		for( int i = 0; i < snakes.back().get_size(); ++i){
+			board->insert(shared_ptr<SnakeOccupier> (new SnakeOccupier()), Coord(x, y - i));
 		}
 	}
+
 	m_visualiser_builder->set_board(board);
 	return shared_ptr<Rules> (new Rules(board, snakes, m_visualiser_builder->create()));
 }

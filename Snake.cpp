@@ -1,14 +1,12 @@
 #include "Snake.hpp"
 #include <iostream>
-Snake::Snake(Coord board_middle, int size) {
+Snake::Snake(int size) {
 	m_size = size;
-	int x = board_middle.get_x();
-	int y = board_middle.get_y();
-	for( int i = 0; i < size; ++i){
-		m_occupiers.push_back(shared_ptr<SnakeOccupier> (new SnakeOccupier()));
-	}
 }
 
-vector<shared_ptr<SnakeOccupier> > Snake::get_occupiers(){
-	return m_occupiers;
+int Snake::get_size(){
+	return m_size;
 }
+// vector<shared_ptr<SnakeOccupier> > Snake::get_occupiers(){
+// 	return m_occupiers;
+// }
