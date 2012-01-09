@@ -9,12 +9,6 @@ Snake::Snake(Coord board_middle, int size) {
 	}
 }
 
-Snake::~Snake(){
-	// for( vector<SnakeOccupier*>::iterator itr = m_occupiers.begin(); itr != m_occupiers.end(); ++itr){
-	// 	delete *itr;
-	// }
-}
-
 vector<shared_ptr<SnakeOccupier> > Snake::get_occupiers(){
 	return m_occupiers;
 }

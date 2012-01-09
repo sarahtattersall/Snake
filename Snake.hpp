@@ -16,7 +16,7 @@ class Snake{
 public:
 	Snake(Coord board_middle, int size = 3);
 	vector<shared_ptr<SnakeOccupier> > get_occupiers();	
-	~Snake();
+
 private:
 	int m_size;
 	vector<shared_ptr<SnakeOccupier> > m_occupiers;
