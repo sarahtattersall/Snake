@@ -9,21 +9,21 @@ using boost::shared_ptr;
 
 class SnakeOccupier : public CellOccupier{
 public:
-	SnakeOccupier(int player_number);
+	SnakeOccupier(int player_number, bool head);
   	virtual TYPE get_type() { return SNAKE; }
+	bool is_head();
 private:
 	int m_number;
+	bool m_head;
 };
 
 class Snake{
 public:
 	Snake(int size = 3);
-	// vector<shared_ptr<SnakeOccupier> > get_occupiers();	
 	int get_size();
 	
 private:
 	int m_size;
-	// vector<shared_ptr<SnakeOccupier> > m_occupiers;
 };
 
 #endif

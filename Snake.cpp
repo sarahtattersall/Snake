@@ -1,8 +1,13 @@
 #include "Snake.hpp"
 #include <iostream>
 
-SnakeOccupier::SnakeOccupier(int player_number) : CellOccupier(){
+SnakeOccupier::SnakeOccupier(int player_number, bool head) : CellOccupier(){
 	m_number = player_number;
+	m_head = head;
+}
+
+bool SnakeOccupier::is_head(){
+	return m_head;
 }
 
 Snake::Snake(int size) {
