@@ -20,7 +20,7 @@ public:
   	void setUp();
   	void tearDown();
 protected:
-  	void sizeTest();
+	void sizeTest();
 	void builderFailsTest();
 	void createdEmpty();
 	void insertInRightCell();
