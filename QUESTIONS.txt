@@ -1,2 +1,1 @@
-When to include class or just declare class?
-How should throw errors from builders?
+http://www.boost.org/doc/libs/1_48_0/libs/smart_ptr/shared_ptr.htm says shouldnt have unnamed shared_ptrs??
