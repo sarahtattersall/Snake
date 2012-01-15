@@ -9,12 +9,19 @@ using boost::shared_ptr;
 int main(int argc, char *argv[])
 {
 	try{
+		BoardBuilder board_builder;
+		board_builder.set_size(10);
+		shared_ptr<Board> board =  board_builder.create();
 	    RuleBuilder rule_builder;
-	    rule_builder.set_board_size(10);
+	    rule_builder.set_board(board);
 		rule_builder.set_player_count(1);
-		rule_builder.set_visualiser_builder(shared_ptr<BoardVisualiserBuilder> (new TextualBoardVisualiserBuilder()));
+		// rule_builder.set_visualiser_builder(shared_ptr<BoardVisualiserBuilder> (new TextualBoardVisualiserBuilder()));
 		shared_ptr<Rules> rules = rule_builder.create();
-		rules->play();
+		// rules->play();
+		TextualBoardVisualiserBuilder visualiser_builder;
+		visualiser_builder.set_board(board);
+		shared_ptr<BoardVisualiser> visualiser = visualiser_builder.create();
+		visualiser->display();
 	}catch (SnakeException& e){
 		cout << e.what() << endl;
 	}
