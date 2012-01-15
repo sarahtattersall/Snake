@@ -38,8 +38,8 @@ RuleBuilder::RuleBuilder() : m_visualiser_builder(){
 	m_snake_size = 0;
 }
 
-RuleBuilder& RuleBuilder::set_board_size(int size){
-	m_board_size = size;
+RuleBuilder& RuleBuilder::set_board(shared_ptr<Board> board){
+	m_board = board;
 	return *this;
 }
 
@@ -55,23 +55,16 @@ RuleBuilder& RuleBuilder::set_player_count(int count){
 	return *this;
 }
 
-RuleBuilder& RuleBuilder::set_visualiser_builder(shared_ptr<BoardVisualiserBuilder> visualiser_builder){
-	m_visualiser_builder = visualiser_builder;
-	return *this;
-}
-
 shared_ptr<Rules> RuleBuilder::create(){
 	BoardBuilder board_builder;
-	if (m_board_size == 0 || m_player_count == 0 || m_visualiser_builder.get() == NULL){
+	if (m_board.get() == NULL || m_player_count == 0){
 		throw RuleBuilderException();
 	}
 	if (m_snake_size >= (m_board_size/2)){
 		throw SnakeTooBigException();
 	}
-	board_builder.set_size(m_board_size);
-	shared_ptr<Board> board = board_builder.create();
 	vector<Snake> snakes;
-	Coord board_middle(board->get_width()/2, board->get_height()/2);
+	Coord board_middle(m_board->get_width()/2, m_board->get_height()/2);
 	for( int i = 0; i < m_player_count; ++i){
 		Coord snake_start(board_middle.get_x() - i, board_middle.get_y());
 		if( m_snake_size != 0){
@@ -82,10 +75,8 @@ shared_ptr<Rules> RuleBuilder::create(){
 		int x = snake_start.get_x();
 		int y = snake_start.get_y();
 		for( int i = 0; i < snakes.back().get_size(); ++i){
-			board->insert(shared_ptr<SnakeOccupier> (new SnakeOccupier()), Coord(x, y - i));
+			m_board->insert(shared_ptr<SnakeOccupier> (new SnakeOccupier()), Coord(x, y - i));
 		}
 	}
-
-	m_visualiser_builder->set_board(board);
-	return shared_ptr<Rules> (new Rules(board, snakes, m_visualiser_builder->create()));
+	return shared_ptr<Rules> (new Rules(m_board, snakes));
 }
