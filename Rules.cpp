@@ -1,5 +1,7 @@
 #include "Rules.hpp"
 #include "SnakeException.hpp"
+#include "EmptyOccupier.hpp"
+#include "Snake.hpp"
 #include <string.h>
 #include <iostream>
 using namespace std;
@@ -20,6 +22,15 @@ shared_ptr<Board> Rules::get_board(){
 	return m_board;
 }
 
+// SARAH: should Rules do this or should Board have move method??
+bool Rules::move_snake(int index, Coord direction){
+	Snake snake = m_snakes[index];
+	Coord back = snake.back();
+	Coord new_front = snake.front() + direction;
+	shared_ptr<CellOccupier> snake_back = m_board->get(3,5).get_occupier();
+	m_board->insert(shared_ptr<CellOccupier> (new SnakeOccupier(index, true)), new_front);
+	m_board->insert(shared_ptr<CellOccupier> (new EmptyOccupier()), back);
+}
 // void Rules::update_board(Snake snake){
 	// vector<shared_ptr<SnakeOccupier> > occupiers = snake.get_occupiers();
 	// for( vector<shared_ptr<SnakeOccupier> >::iterator itr = occupiers.begin(); itr != occupiers.end(); ++itr ){
@@ -71,7 +82,7 @@ shared_ptr<Rules> RuleBuilder::create(){
 		bool head = true;
 		for( int i = 0; i < snakes.back().get_size(); ++i){
 			m_board->insert(shared_ptr<SnakeOccupier> (new SnakeOccupier(player, head)), Coord(x, y - i));
-			snakes.back().add_back(Coord(x, y - i));
+			snakes.back().push_back(Coord(x, y - i));
 			head = false;
 		}
 	}

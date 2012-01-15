@@ -22,9 +22,12 @@ public:
 	Snake(int size = 3);
 	int get_size();
 	// Adds coord at head of snake
-	void add_front(Coord coord);
+	void push_front(Coord coord);
 	// Adds coord at back of snake
-	void add_back(Coord coord);
+	void push_back(Coord coord);
+	void remove_back();
+	Coord back();
+	Coord front();
 	
 private:
 	int m_size;

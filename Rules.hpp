@@ -14,13 +14,13 @@ public:
 	Rules(shared_ptr<Board> board, vector<Snake> snakes);
 	~Rules();
 	shared_ptr<Board> get_board();
+	bool move_snake(int index, Coord coord);
 	// Currently just displays the board;
 	// void play();
 private:
 	vector<Snake> m_snakes;
 	shared_ptr<Board> m_board;
 	// shared_ptr<BoardVisualiser> m_visualiser;
-	bool move_snake(Coord coord);
 	// Updates board with snakes coordinates.
 	// void update_board(Snake snake);
 };

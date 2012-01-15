@@ -59,7 +59,7 @@ SquareBoard::SquareBoard(const int size){
 }
 
 void SquareBoard::insert(shared_ptr<CellOccupier> occupier, Coord coord){
-	m_cells[coord.get_x()][coord.get_y()].set_cell(occupier);
+	m_cells[coord.get_y()][coord.get_x()].set_cell(occupier);
 }
 
 // void SquareBoard::remove(Coord coord){
