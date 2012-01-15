@@ -84,10 +84,10 @@ shared_ptr<Rules> RuleBuilder::create(){
 		bool head = true;
 		for( int i = 0; i < snakes.back().get_size(); ++i){
 			board->insert(shared_ptr<SnakeOccupier> (new SnakeOccupier(player, head)), Coord(x, y - i));
+			snakes.back().add_back(Coord(x, y - i));
 			head = false;
 		}
 	}
-
 	m_visualiser_builder->set_board(board);
 	return shared_ptr<Rules> (new Rules(board, snakes, m_visualiser_builder->create()));
 }

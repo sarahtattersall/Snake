@@ -15,11 +15,11 @@ public:
 	~Rules();
 	shared_ptr<Board> get_board();
 	// Currently just displays the board;
-	void play();
+	// void play();
 private:
 	vector<Snake> m_snakes;
 	shared_ptr<Board> m_board;
-	shared_ptr<BoardVisualiser> m_visualiser;
+	// shared_ptr<BoardVisualiser> m_visualiser;
 	bool move_snake(Coord coord);
 	// Updates board with snakes coordinates.
 	// void update_board(Snake snake);
@@ -33,7 +33,7 @@ public:
 	// Don't have to set snake size will go to default if not.
 	RuleBuilder& set_snake_size(int size);
 	RuleBuilder& set_player_count(int count);
-	RuleBuilder& set_visualiser_builder(shared_ptr<BoardVisualiserBuilder> visualiser_builder);
+	// RuleBuilder& set_visualiser_builder(shared_ptr<BoardVisualiserBuilder> visualiser_builder);
 	shared_ptr<Rules> create();
 private:
 	int m_board_size;
