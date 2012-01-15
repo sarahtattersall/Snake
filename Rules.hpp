@@ -15,13 +15,15 @@ public:
 	~Rules();
 	shared_ptr<Board> get_board();
 	// Returns bool for if the move succeeds. If false
-	//  end of game.
+	// end of game (i.e. hit wall or snake)
 	bool move_snake(int index, Coord coord);
 	// Currently just displays the board;
 	// void play();
 private:
 	vector<Snake> m_snakes;
 	shared_ptr<Board> m_board;
+	// Determines if a Coord is out of bounds for the board
+	bool coord_out_of_bounds(Coord coord);
 	// shared_ptr<BoardVisualiser> m_visualiser;
 	// Updates board with snakes coordinates.
 	// void update_board(Snake snake);

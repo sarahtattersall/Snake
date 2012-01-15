@@ -22,14 +22,29 @@ shared_ptr<Board> Rules::get_board(){
 	return m_board;
 }
 
+bool Rules::coord_out_of_bounds(Coord coord){
+	bool x_out_of_bounds = coord.get_x() < 0 || coord.get_x() >= m_board->get_width();
+	bool y_out_of_bounds = coord.get_y() < 0 || coord.get_y() >= m_board->get_height();
+	return (x_out_of_bounds || y_out_of_bounds);
+}
+
 // SARAH: should Rules do this or should Board have move method??
+// TODO: Needs to fail for diagonal Coord, throw error.
 bool Rules::move_snake(int index, Coord direction){
-	Snake snake = m_snakes[index];
-	Coord back = snake.back();
-	Coord new_front = snake.front() + direction;
+	Coord back = m_snakes[index].back();
+	Coord new_front = m_snakes[index].front() + direction;
+	if (coord_out_of_bounds(new_front)){
+		return false;
+	}
+	if (m_board->get(new_front).get_occupier()->get_type() == CellOccupier::SNAKE){
+		return false;
+	}
 	shared_ptr<CellOccupier> snake_back = m_board->get(3,5).get_occupier();
 	m_board->insert(shared_ptr<CellOccupier> (new SnakeOccupier(index, true)), new_front);
 	m_board->insert(shared_ptr<CellOccupier> (new EmptyOccupier()), back);
+	m_snakes[index].remove_back();
+	m_snakes[index].push_front(new_front);
+	return true;
 }
 // void Rules::update_board(Snake snake){
 	// vector<shared_ptr<SnakeOccupier> > occupiers = snake.get_occupiers();

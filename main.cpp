@@ -22,9 +22,18 @@ int main(int argc, char *argv[])
 		visualiser_builder.set_board(board);
 		shared_ptr<BoardVisualiser> visualiser = visualiser_builder.create();
 		visualiser->display();
-		cout << endl;
-		rules->move_snake(0, Coord(1,0));
-		visualiser->display();
+		// rules->move_snake(0, Coord(1,0));
+		// 		visualiser->display();
+		bool result;
+		cout << "Here" << endl;
+		for(int i = 0; i < 5; ++i){
+			cout << "Here" << i  << endl;
+			result = rules->move_snake(0, Coord(0,1));
+			visualiser->display();
+			cout << result << endl;
+			
+		}
+		// result = rules->move_snake(1, Coord(0,1));
 	}catch (SnakeException& e){
 		cout << e.what() << endl;
 	}
