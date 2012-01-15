@@ -2,9 +2,9 @@
 #define SNAKE_HPP
 #include "Coord.hpp"
 #include "CellOccupier.hpp"
-#include <vector>
+#include <deque>
 #include <Boost/shared_ptr.hpp>
-using std::vector;
+using std::deque;
 using boost::shared_ptr;
 
 class SnakeOccupier : public CellOccupier{
@@ -28,7 +28,7 @@ public:
 	
 private:
 	int m_size;
-	vector<Coord> m_coords;
+	deque<Coord> m_coords;
 };
 
 #endif
