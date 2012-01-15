@@ -17,6 +17,14 @@ Snake::Snake(int size) {
 int Snake::get_size(){
 	return m_size;
 }
+
+void Snake::add_front(Coord coord){
+	m_coords.push_front(coord);
+}
+
+void Snake::add_back(Coord coord){
+	m_coords.push_back(coord);
+}
 // vector<shared_ptr<SnakeOccupier> > Snake::get_occupiers(){
 // 	return m_occupiers;
 // }

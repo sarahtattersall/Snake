@@ -21,9 +21,14 @@ class Snake{
 public:
 	Snake(int size = 3);
 	int get_size();
+	// Adds coord at head of snake
+	void add_front(Coord coord);
+	// Adds coord at back of snake
+	void add_back(Coord coord);
 	
 private:
 	int m_size;
+	vector<Coord> m_coords;
 };
 
 #endif
