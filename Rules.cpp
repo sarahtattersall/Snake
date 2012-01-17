@@ -40,7 +40,7 @@ bool Rules::move_snake(int index, Coord direction){
 		return false;
 	}
 	shared_ptr<CellOccupier> snake_back = m_board->get(3,5).get_occupier();
-	m_board->insert(shared_ptr<CellOccupier> (new SnakeOccupier(index, true)), new_front);
+	m_board->insert(shared_ptr<CellOccupier> (new SnakeOccupier()), new_front);
 	m_board->insert(shared_ptr<CellOccupier> (new EmptyOccupier()), back);
 	m_snakes[index].remove_back();
 	m_snakes[index].push_front(new_front);
@@ -94,11 +94,9 @@ shared_ptr<Rules> RuleBuilder::create(){
 		}
 		int x = snake_start.get_x();
 		int y = snake_start.get_y();
-		bool head = true;
 		for( int i = 0; i < snakes.back().get_size(); ++i){
-			m_board->insert(shared_ptr<SnakeOccupier> (new SnakeOccupier(player, head)), Coord(x, y - i));
+			m_board->insert(shared_ptr<SnakeOccupier> (new SnakeOccupier()), Coord(x, y - i));
 			snakes.back().push_back(Coord(x, y - i));
-			head = false;
 		}
 	}
 	return shared_ptr<Rules> (new Rules(m_board, snakes));
