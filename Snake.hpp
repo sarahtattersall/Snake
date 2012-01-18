@@ -13,6 +13,10 @@ public:
   	virtual TYPE get_type() { return SNAKE; }
 };
 
+
+// TODO: SNAKE DOESNT NEED TO HOLD COORDINATES JUST MAKE SNAKE OCCUPIERS
+// IN BOARD A LINKED LIST, MOVE THE HEAD AND REINSERT TAIL NEXT TO HEAD.
+// TRY AND MAKE IT CIRCULAR
 class Snake{
 public:
 	Snake(int size = 3);
