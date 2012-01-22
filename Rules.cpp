@@ -29,7 +29,8 @@ bool Rules::coord_out_of_bounds(Coord coord){
 }
 
 // SARAH: should Rules do this or should Board have move method??
-// TODO: Needs to fail for diagonal Coord, throw error.
+// TODO: CHANGE Coord to ENUM UP, DOWN, LEFT, RIGHT.
+// TODO: CHANGE THE BOARD TO HAVE WALL OCCUPIERS?!?
 bool Rules::move_snake(int index, Coord direction){
 	Coord back = m_snakes[index].back();
 	Coord new_front = m_snakes[index].front() + direction;
@@ -51,7 +52,7 @@ bool Rules::move_snake(int index, Coord direction){
 	// for( vector<shared_ptr<SnakeOccupier> >::iterator itr = occupiers.begin(); itr != occupiers.end(); ++itr ){
 	// 	m_board->insert(*itr, (*itr)->get_coord());
 	// }
-// }
+//}
 
 RuleBuilder::RuleBuilder(){
 	m_player_count = 0;
