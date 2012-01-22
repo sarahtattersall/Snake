@@ -1,5 +1,5 @@
 #ifndef RULES_HPP
-#define RULES_CPP
+#define RULES_HPP
 #include "Snake.hpp"
 #include "Board.hpp"
 #include "BoardVisualiser.hpp"
