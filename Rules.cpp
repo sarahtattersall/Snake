@@ -57,7 +57,7 @@ bool Rules::move_snake(int index, Direction direction){
 	if (m_board->get(new_front).get_occupier()->get_type() == CellOccupier::SNAKE){
 		return false;
 	}
-	shared_ptr<CellOccupier> snake_back = m_board->get(3,5).get_occupier();
+	shared_ptr<CellOccupier> snake_back = m_board->get(back).get_occupier();
 	m_board->insert(shared_ptr<CellOccupier> (new SnakeOccupier()), new_front);
 	m_board->insert(shared_ptr<CellOccupier> (new EmptyOccupier()), back);
 	m_snakes[index].remove_back();
