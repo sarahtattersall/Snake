@@ -19,8 +19,6 @@ class Scene : public QGraphicsScene
     private:    
         QGraphicsView view;
         QPainter painter;
-        // Snake *m_snake; 
-        // Food *m_food;
         
 };
 

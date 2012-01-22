@@ -1,1 +1,1 @@
-http://www.boost.org/doc/libs/1_48_0/libs/smart_ptr/shared_ptr.htm says shouldnt have unnamed shared_ptrs??
+When to make pointer? E.g. in SnakeGUI Scene or pointer?
