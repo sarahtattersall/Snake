@@ -1,4 +1,4 @@
-TEMPLATE = lib
+TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
 INCLUDEPATH += .
