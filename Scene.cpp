@@ -40,7 +40,7 @@ void Scene::updateView(){
 	QTransform transform;
 	for( int row = 0; row < m_board->get_height(); ++row ){
 		for( int col = 0; col < m_board->get_width(); ++col ){
-			shared_ptr<CellOccupier> occupier = m_board->get(row, col).get_occupier();
+			shared_ptr<CellOccupier> occupier = m_board->get(col, row).get_occupier();
 			int x = mapToView(col, SnakeObject::get_width());
 			int y = mapToView(row, SnakeObject::get_height());
 			// Would rather remove if not snake?
