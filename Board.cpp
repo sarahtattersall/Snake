@@ -59,8 +59,14 @@ SquareBoard::SquareBoard(const int size){
 }
 
 void SquareBoard::insert(shared_ptr<CellOccupier> occupier, Coord coord){
+	// This will only work for 1 player game! Else which list do you add it to?!? 
+	if( occupier->get_type() == CellOccupier::SNAKE ){
+		m_snake_occupiers.push_back(occupier);
+	}
+	
 	m_cells[coord.get_y()][coord.get_x()].set_cell(occupier);
 }
+
 
 // void SquareBoard::remove(Coord coord){
 // 	m_cells[coord.get_x()][coord.get_y()].set_cell(EmptyOccupier());

@@ -3,8 +3,10 @@
 #include "Cell.hpp"
 #include "Coord.hpp"
 #include <vector>
+#include <list>
 #include <Boost/shared_ptr.hpp>
 using std::vector;
+using std::list;
 using boost::shared_ptr;
 
 
@@ -30,6 +32,7 @@ public:
     // if haven't set size create should refuse.
     shared_ptr<Board> create();
 private:
+	list<shared_ptr<CellOccupier> > m_snake_occupiers;
     int m_size;
 };
 
