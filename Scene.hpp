@@ -22,6 +22,10 @@ private:
 	QPainter painter;
 	shared_ptr<Board> m_board;
 	shared_ptr<Rules> m_rules;
+	void updateView();
+	// Maps board point x to the view, taking into consideration
+	// size of objects
+	int mapToView(int x, int size);
 };
 
 #endif

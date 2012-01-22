@@ -38,12 +38,16 @@ bool Rules::move_snake(int index, Direction direction){
 	switch(direction){
 		case UP:
 			direction_coord = new Coord(0, -1);
+			break;
 		case DOWN:
 			direction_coord = new Coord(0, 1);
+			break;
 		case LEFT:
 			direction_coord = new Coord(-1, 0);
+			break;
 		case RIGHT:
 			direction_coord = new Coord(1, 0);
+			break;
 	}
 	Coord new_front = m_snakes[index].front() + *direction_coord;
 	delete direction_coord;
