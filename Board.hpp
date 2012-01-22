@@ -23,6 +23,8 @@ public:
 	virtual void insert(shared_ptr<CellOccupier> occupier, Coord coord) = 0;
 	// Removes occupier in cell and sets it to empty.
 	// virtual void remove(Coord coord) = 0;
+protected:
+	list<shared_ptr<CellOccupier> > m_snake_occupiers;
 };
 
 class BoardBuilder {
@@ -32,7 +34,6 @@ public:
     // if haven't set size create should refuse.
     shared_ptr<Board> create();
 private:
-	list<shared_ptr<CellOccupier> > m_snake_occupiers;
     int m_size;
 };
 

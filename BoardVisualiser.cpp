@@ -12,4 +12,5 @@ BoardVisualiserBuilder::BoardVisualiserBuilder() : m_board(){
 
 BoardVisualiserBuilder& BoardVisualiserBuilder::set_board(shared_ptr<Board> board){
 	m_board = board;
+	return *this;
 }
