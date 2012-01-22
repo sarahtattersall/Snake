@@ -76,7 +76,7 @@ void RulesTest::correctMove(){
 	m_builder4->set_player_count(m_test_player_count);
 	m_builder4->set_snake_size(m_test_snake_size);
 	shared_ptr<Rules> rules = m_builder4->create();
-	bool result = rules->move_snake(1, Coord(1,1));
+	bool result = rules->move_snake(1, Rules::DOWN);
 	CPPUNIT_ASSERT_EQUAL(result, true);
 	//SARAH: How can assure board has moved snake without access to board??
 }
@@ -87,12 +87,11 @@ void RulesTest::snakeBottomWallCrash(){
 	m_builder5->set_snake_size(m_test_snake_size);
 	shared_ptr<Rules> rules = m_builder5->create();
 	bool result;
-	Coord direction(0, 1);
 	for(int i = 0; i < 4; ++i){
-		result = rules->move_snake(0, direction);
+		result = rules->move_snake(0, Rules::DOWN);
 		CPPUNIT_ASSERT_EQUAL(result, true);
 	}
-	result = rules->move_snake(0, direction);
+	result = rules->move_snake(0, Rules::DOWN);
 	CPPUNIT_ASSERT_EQUAL(result, false);
 }
 
@@ -102,12 +101,11 @@ void RulesTest::snakeRightWallCrash(){
 	m_builder6->set_snake_size(m_test_snake_size);
 	shared_ptr<Rules> rules = m_builder6->create();
 	bool result;
-	Coord direction(1, 0);
 	for(int i = 0; i < 4; ++i){
-		result = rules->move_snake(0, direction);
+		result = rules->move_snake(0, Rules::RIGHT);
 		CPPUNIT_ASSERT_EQUAL(result, true);
 	}
-	result = rules->move_snake(0, direction);
+	result = rules->move_snake(0, Rules::RIGHT);
 	CPPUNIT_ASSERT_EQUAL(result, false);
 }
 
@@ -118,12 +116,11 @@ void RulesTest::snakeLeftWallCrash(){
 	m_builder7->set_snake_size(m_test_snake_size);
 	shared_ptr<Rules> rules = m_builder7->create();
 	bool result;
-	Coord direction(-1, 0);
 	for(int i = 0; i < 5; ++i){
-		result = rules->move_snake(0, direction);
+		result = rules->move_snake(0, Rules::LEFT);
 		CPPUNIT_ASSERT_EQUAL(result, true);
 	}
-	result = rules->move_snake(0, direction);
+	result = rules->move_snake(0, Rules::LEFT);
 	CPPUNIT_ASSERT_EQUAL(result, false);
 }
 
@@ -133,13 +130,12 @@ void RulesTest::snakeTopWallCrash(){
 	m_builder8->set_snake_size(m_test_snake_size);
 	shared_ptr<Rules> rules = m_builder8->create();
 	bool result;
-	result = rules->move_snake(0, Coord(1,0));
-	Coord direction(0, -1);
+	result = rules->move_snake(0, Rules::RIGHT);
 	for(int i = 0; i < 5; ++i){
-		result = rules->move_snake(0, direction);
+		result = rules->move_snake(0, Rules::UP);
 		CPPUNIT_ASSERT_EQUAL(result, true);
 	}
-	result = rules->move_snake(0, direction);
+	result = rules->move_snake(0, Rules::UP);
 	CPPUNIT_ASSERT_EQUAL(result, false);
 }
 
@@ -149,6 +145,6 @@ void RulesTest::snakeOnSnakeCrash(){
 	m_builder9->set_snake_size(m_test_snake_size);
 	shared_ptr<Rules> rules = m_builder9->create();
 	bool result;
-	result = rules->move_snake(0, Coord(-1,0));
+	result = rules->move_snake(0, Rules::LEFT);
 	CPPUNIT_ASSERT_EQUAL(result, false);
 }
