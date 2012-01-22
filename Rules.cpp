@@ -31,9 +31,22 @@ bool Rules::coord_out_of_bounds(Coord coord){
 // SARAH: should Rules do this or should Board have move method??
 // TODO: CHANGE Coord to ENUM UP, DOWN, LEFT, RIGHT.
 // TODO: CHANGE THE BOARD TO HAVE WALL OCCUPIERS?!?
-bool Rules::move_snake(int index, Coord direction){
+bool Rules::move_snake(int index, Direction direction){
 	Coord back = m_snakes[index].back();
-	Coord new_front = m_snakes[index].front() + direction;
+	// IS THIS THE RIGHT WAY TO DO THIS?
+	Coord* direction_coord;
+	switch(direction){
+		case UP:
+			direction_coord = new Coord(0, -1);
+		case DOWN:
+			direction_coord = new Coord(0, 1);
+		case LEFT:
+			direction_coord = new Coord(-1, 0);
+		case RIGHT:
+			direction_coord = new Coord(1, 0);
+	}
+	Coord new_front = m_snakes[index].front() + *direction_coord;
+	delete direction_coord;
 	if (coord_out_of_bounds(new_front)){
 		return false;
 	}

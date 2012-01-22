@@ -11,12 +11,13 @@ class BoardVisualiser;
 
 class Rules{
 public:
+	enum Direction { UP, DOWN, RIGHT, LEFT };
 	Rules(shared_ptr<Board> board, vector<Snake> snakes);
 	~Rules();
 	shared_ptr<Board> get_board();
 	// Returns bool for if the move succeeds. If false
 	// end of game (i.e. hit wall or snake)
-	bool move_snake(int index, Coord coord);
+	bool move_snake(int index, Direction direction);
 	// Currently just displays the board;
 	// void play();
 private:

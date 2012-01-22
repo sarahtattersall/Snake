@@ -2,7 +2,7 @@
 #include <Boost/shared_ptr.hpp>
 #include <iostream>
 #include "Rules.hpp"
-#include "SnakeGUI.hpp"
+#include "Scene.hpp"
 #include "SnakeException.hpp"
 using namespace std;
 using boost::shared_ptr;
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 		rule_builder.set_player_count(1);
 		shared_ptr<Rules> rules = rule_builder.create();
 		QApplication app(argc, argv);    
-		SnakeGUI gui(board, rules);
+		Scene scene(board, rules);
     	return app.exec();
 	}catch (SnakeException& e){
 		cout << e.what() << endl;
