@@ -1,7 +1,7 @@
 #ifndef CELL_HPP
 #define CELL_HPP
 #include "CellOccupier.hpp"
-#include <Boost/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 using boost::shared_ptr;
 class Coord;
 

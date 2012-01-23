@@ -2,7 +2,7 @@
 #define TEXTUAL_BOARD_VISUALISER_HPP
 #include "CellOccupier.hpp"
 #include "BoardVisualiser.hpp"
-#include <Boost/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <string>
 class Board;
 using std::string;

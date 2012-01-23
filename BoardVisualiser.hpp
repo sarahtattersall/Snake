@@ -1,6 +1,6 @@
 #ifndef BOARD_VISUALISER_HPP
 #define BOARD_VISUALISER_HPP
-#include <Boost/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include "Board.hpp"
 using boost::shared_ptr;
 

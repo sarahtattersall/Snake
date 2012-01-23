@@ -4,7 +4,7 @@
 #include "Coord.hpp"
 #include <vector>
 #include <list>
-#include <Boost/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 using std::vector;
 using std::list;
 using boost::shared_ptr;

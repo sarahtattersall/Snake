@@ -1,5 +1,5 @@
 #include "RulesTest.hpp"
-#include "Boost/shared_ptr.hpp"
+#include "boost/shared_ptr.hpp"
 #include "SnakeException.hpp"
 #include "TextualBoardVisualiser.hpp"
 #include <iostream>

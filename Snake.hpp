@@ -3,7 +3,7 @@
 #include "Coord.hpp"
 #include "CellOccupier.hpp"
 #include <deque>
-#include <Boost/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 using std::deque;
 using boost::shared_ptr;
 

@@ -1,5 +1,5 @@
 #include <QtGui/QApplication>
-#include <Boost/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <iostream>
 #include "Rules.hpp"
 #include "Scene.hpp"

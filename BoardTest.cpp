@@ -1,5 +1,5 @@
 #include "BoardTest.hpp"
-#include "Boost/shared_ptr.hpp"
+#include "boost/shared_ptr.hpp"
 #include "SnakeException.hpp"
 #include "CellOccupier.hpp"
 #include "Snake.hpp"
