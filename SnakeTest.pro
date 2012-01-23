@@ -19,7 +19,6 @@ HEADERS += Board.hpp \
            Snake.hpp \
            SnakeException.hpp \
            SnakeObject.hpp \
-           SnakeTest.hpp \
            TextualBoardVisualiser.hpp
 SOURCES += Board.cpp \
            BoardTest.cpp \
@@ -33,6 +32,5 @@ SOURCES += Board.cpp \
            Scene.cpp \
            Snake.cpp \
            SnakeObject.cpp \
-           SnakeTest.cpp \
            test.cpp \
            TextualBoardVisualiser.cpp
