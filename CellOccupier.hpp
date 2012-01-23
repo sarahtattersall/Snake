@@ -12,7 +12,7 @@
 // want.
 class CellOccupier{
 public:
-	enum TYPE {EMPTY, SNAKE, FOOD};
+	enum TYPE {EMPTY, SNAKE, FOOD, WALL};
 	virtual TYPE get_type() = 0;
 };
 

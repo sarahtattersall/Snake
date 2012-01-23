@@ -1,6 +1,7 @@
 #include "Rules.hpp"
 #include "SnakeException.hpp"
 #include "EmptyOccupier.hpp"
+#include "WallOccupier.hpp"
 #include "Snake.hpp"
 #include <string.h>
 #include <iostream>
@@ -23,17 +24,18 @@ shared_ptr<Board> Rules::get_board(){
 }
 
 bool Rules::coord_out_of_bounds(Coord coord){
-	bool x_out_of_bounds = coord.get_x() < 0 || coord.get_x() >= m_board->get_width();
-	bool y_out_of_bounds = coord.get_y() < 0 || coord.get_y() >= m_board->get_height();
-	return (x_out_of_bounds || y_out_of_bounds);
+	//bool x_out_of_bounds = coord.get_x() < 0 || coord.get_x() >= m_board->get_width();
+	//bool y_out_of_bounds = coord.get_y() < 0 || coord.get_y() >= m_board->get_height();
+	//return (x_out_of_bounds || y_out_of_bounds);
+    return (m_board->get(coord).get_occupier()->get_type() == CellOccupier::WALL);
 }
 
-// SARAH: should Rules do this or should Board have move method??
 // TODO: CHANGE Coord to ENUM UP, DOWN, LEFT, RIGHT.
 // TODO: CHANGE THE BOARD TO HAVE WALL OCCUPIERS?!?
 bool Rules::move_snake(int index, Direction direction){
 	Coord back = m_snakes[index].back();
-	// IS THIS THE RIGHT WAY TO DO THIS?
+	// IS THIS THE RIGHT WAY TO DO THIS? 
+    // ALSO DO YOU HAVE TO CHECK MEMORY ALLOCATION FAILURE?
 	Coord* direction_coord;
 	switch(direction){
 		case UP:
@@ -93,14 +95,31 @@ RuleBuilder& RuleBuilder::set_player_count(int count){
 	return *this;
 }
 
+void RuleBuilder::set_perimiter(){
+    int width = m_board->get_width();
+    int height = m_board->get_height();
+    for( int x = 0; x < width; ++x ){
+        m_board->insert(shared_ptr<WallOccupier> (new WallOccupier()), Coord(x, 0));
+        m_board->insert(shared_ptr<WallOccupier> (new WallOccupier()), Coord(x, height-1));
+    }
+    for( int y = 0; y < height; ++y ){
+        m_board->insert(shared_ptr<WallOccupier> (new WallOccupier()), Coord(0, y));
+        m_board->insert(shared_ptr<WallOccupier> (new WallOccupier()), Coord(width-1, y));
+    }
+}
+
 shared_ptr<Rules> RuleBuilder::create(){
 	BoardBuilder board_builder;
 	if (m_board.get() == NULL || m_player_count == 0){
 		throw RuleBuilderException();
 	}
-	if (m_snake_size >= (m_board->get_width()/2)){
+    //Subtract two for board perimiter
+	if (m_snake_size >= (m_board->get_width()/2 - 2)){
 		throw SnakeTooBigException();
 	}
+    
+    set_perimiter();
+    
 	vector<Snake> snakes;
 	Coord board_middle(m_board->get_width()/2, m_board->get_height()/2);
 	for( int player = 0; player < m_player_count; ++player){

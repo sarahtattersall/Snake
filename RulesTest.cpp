@@ -87,7 +87,7 @@ void RulesTest::snakeBottomWallCrash(){
 	m_builder5->set_snake_size(m_test_snake_size);
 	shared_ptr<Rules> rules = m_builder5->create();
 	bool result;
-	for(int i = 0; i < 4; ++i){
+	for(int i = 0; i < 3; ++i){
 		result = rules->move_snake(0, Rules::DOWN);
 		CPPUNIT_ASSERT_EQUAL(result, true);
 	}
@@ -101,7 +101,7 @@ void RulesTest::snakeRightWallCrash(){
 	m_builder6->set_snake_size(m_test_snake_size);
 	shared_ptr<Rules> rules = m_builder6->create();
 	bool result;
-	for(int i = 0; i < 4; ++i){
+	for(int i = 0; i < 3; ++i){
 		result = rules->move_snake(0, Rules::RIGHT);
 		CPPUNIT_ASSERT_EQUAL(result, true);
 	}
@@ -116,7 +116,7 @@ void RulesTest::snakeLeftWallCrash(){
 	m_builder7->set_snake_size(m_test_snake_size);
 	shared_ptr<Rules> rules = m_builder7->create();
 	bool result;
-	for(int i = 0; i < 5; ++i){
+	for(int i = 0; i < 4; ++i){
 		result = rules->move_snake(0, Rules::LEFT);
 		CPPUNIT_ASSERT_EQUAL(result, true);
 	}
@@ -131,7 +131,7 @@ void RulesTest::snakeTopWallCrash(){
 	shared_ptr<Rules> rules = m_builder8->create();
 	bool result;
 	result = rules->move_snake(0, Rules::RIGHT);
-	for(int i = 0; i < 5; ++i){
+	for(int i = 0; i < 4; ++i){
 		result = rules->move_snake(0, Rules::UP);
 		CPPUNIT_ASSERT_EQUAL(result, true);
 	}

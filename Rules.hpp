@@ -44,6 +44,8 @@ private:
 	shared_ptr<Board> m_board;
 	int m_snake_size;
 	int m_player_count;
+    // Adds wall occupiers around the board perimiter.
+    void set_perimiter();
 };
 
 #endif

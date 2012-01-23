@@ -2,7 +2,7 @@
 #include "Cell.hpp"
 #include "SnakeException.hpp"
 #include <iostream>
-#include "EmptyOccupier.hpp";
+#include "EmptyOccupier.hpp"
 //IAN: This is the only current implementation of Board
 
 
