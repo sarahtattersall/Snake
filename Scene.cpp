@@ -10,7 +10,22 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
     view.setBackgroundBrush(Qt::black);
     view.setWindowTitle("Sarah's Amazing Snake Game");
 	updateView();
+
+    m_timer = new QTimer(this);
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(move_snake()));
+    m_timer->start(1000);
+
     view.show();    
+}
+
+Scene::~Scene(){
+    delete m_timer;
+}
+
+// TODO FIX THIS ONCE MADE A SNAKE HEAD THAT KNOWS ITS DIRECTION
+void Scene::move_snake(){
+    m_rules->move_snake(0, Rules::DOWN);
+    updateView();
 }
 
 void Scene::keyPressEvent(QKeyEvent* event){
