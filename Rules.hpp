@@ -38,7 +38,8 @@ public:
 	// Don't have to set snake size will go to default if not.
 	RuleBuilder& set_snake_size(int size);
 	RuleBuilder& set_player_count(int count);
-	// RuleBuilder& set_visualiser_builder(shared_ptr<BoardVisualiserBuilder> visualiser_builder);
+    // Creates rules, adds a perimiter around the board,
+    // adds snakes to the board.
 	shared_ptr<Rules> create();
 private:
 	shared_ptr<Board> m_board;
