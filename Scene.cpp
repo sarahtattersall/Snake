@@ -5,6 +5,7 @@
 Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
 	m_board = board;
 	m_rules = rules;
+    m_key_press = false;
 	view.resize(m_board->get_width()*SnakeObject::get_width(), m_board->get_height()*SnakeObject::get_height());
 	view.setAlignment(Qt::AlignTop);
     view.setScene(this);
@@ -25,8 +26,11 @@ Scene::~Scene(){
 
 // TODO FIX THIS ONCE MADE A SNAKE HEAD THAT KNOWS ITS DIRECTION
 void Scene::move_snake(){
-    m_rules->move_snake(0, SnakeDirection::DOWN);
+    if(!m_key_press){
+        m_rules->move_snake(0, SnakeDirection::DOWN);
+    }
     updateView();
+    m_key_press = false;
 }
 
 void Scene::keyPressEvent(QKeyEvent* event){
@@ -44,7 +48,7 @@ void Scene::keyPressEvent(QKeyEvent* event){
 			m_rules->move_snake(0, SnakeDirection::RIGHT);
 			break;
 	}
-	updateView();
+    m_key_press = true;
     QGraphicsScene::keyPressEvent(event);
 }
 

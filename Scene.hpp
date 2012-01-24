@@ -31,6 +31,8 @@ private:
 	// size of objects
 	int mapToView(int x, int size);
     QTimer* m_timer;
+    // A bool to determine if a key has been pressed for the given turn.
+    bool m_key_press;
 };
 
 #endif
