@@ -1,2 +1,3 @@
 When to make pointer? E.g. in SnakeGUI Scene or pointer?
 Static size in snake object should it just be public? - probably not because don't want to be able to change it.
+Which class put enum in for up down left right?
