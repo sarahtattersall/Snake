@@ -16,7 +16,7 @@ public:
 
 class SnakeHeadOccupier : public SnakeOccupier{
 public:
-	SnakeHeadOccupier(SnakeDirection::Direction d) : SnakeOccupier(){
+	SnakeHeadOccupier(SnakeDirection::Direction d, Coord coord) : SnakeOccupier(), m_coord(coord){
         direction = d;
     }
     SnakeDirection::Direction get_direction(){
@@ -25,9 +25,17 @@ public:
     void set_direction(SnakeDirection::Direction d){
         direction = d;
     }
+    
+    void set_coord(Coord coord){
+        m_coord = coord;
+    }
+    Coord get_coord(){
+        return m_coord;
+    }
 private:
     // Which class to put the enum in :S
     SnakeDirection::Direction direction;
+    Coord m_coord;
 };
 
 

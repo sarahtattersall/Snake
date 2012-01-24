@@ -4,21 +4,23 @@
 #include <iostream>
 #include "EmptyOccupier.hpp"
 //IAN: This is the only current implementation of Board
-
-
 class SquareBoard : public Board {
 public:
     SquareBoard(const int size);
+    ~SquareBoard();
     virtual Cell& get(Coord coord);
 	virtual Cell& get(int x, int y);
     virtual int get_height();
     virtual int get_width();
 	virtual void insert(shared_ptr<CellOccupier> occupier, Coord coord);
+    virtual shared_ptr<SnakeHeadOccupier> get_snake_head();
+    virtual void move_snake(SnakeDirection::Direction direction);
 	// virtual void remove(Coord coord);
 private:
     int m_size;
     // Initializes the board with empty cells.
     void initialize_board();
+    Coord next_coord(SnakeDirection::Direction direction, Coord coord);
     vector<vector<Cell> > m_cells;
 };
 
@@ -35,6 +37,14 @@ shared_ptr<Board> BoardBuilder::create(){
 		throw BoardBuilderException();
 	}
     return shared_ptr<Board> (new SquareBoard(m_size));
+}
+
+SquareBoard::~SquareBoard(){
+    //for( list<Cell*>::iterator itr = m_snake_occupiers.begin(); itr != m_snake_occupiers.end(); ++itr){
+    // WHY DOES THIS GIVE DOUBLE FREE ERROR?
+    //    delete *itr;
+    //} 
+    //m_snake_occupiers.clear();
 }
 
 Cell& SquareBoard::get(Coord coord){
@@ -59,12 +69,13 @@ SquareBoard::SquareBoard(const int size){
 }
 
 void SquareBoard::insert(shared_ptr<CellOccupier> occupier, Coord coord){
+	m_cells[coord.get_y()][coord.get_x()].set_cell(occupier);
 	// This will only work for 1 player game! Else which list do you add it to?!? 
 	if( occupier->get_type() == CellOccupier::SNAKE ){
-		m_snake_occupiers.push_back(occupier);
-	}
-	
-	m_cells[coord.get_y()][coord.get_x()].set_cell(occupier);
+        //shared_ptr<Cell> cell (&(m_cells[coord.get_y()][coord.get_x()]));
+		//m_snake_occupiers.push_back(cell);
+        m_snake_occupiers.push_back(&(m_cells[coord.get_y()][coord.get_x()]));
+    }
 }
 
 
@@ -80,3 +91,39 @@ void SquareBoard::initialize_board(){
         }
     }
 }
+
+
+Coord SquareBoard::next_coord(SnakeDirection::Direction direction, Coord coord){
+    Coord direction_coord = SnakeDirection::to_coord(direction);
+    return direction_coord + coord;
+        
+}
+
+shared_ptr<SnakeHeadOccupier> SquareBoard::get_snake_head(){
+    return boost::static_pointer_cast<SnakeHeadOccupier>((m_snake_occupiers.begin())->get_occupier());
+}
+
+void SquareBoard::move_snake(SnakeDirection::Direction direction){
+    //shared_ptr<Cell> front_cell = *m_snake_occupiers.begin();
+    //shared_ptr<Cell> cell = *m_snake_occupiers.end();
+    //Cell& front_cell = m_snake_occupiers.front();
+    //Cell& cell = m_snake_occupiers.back();
+
+    //m_snake_occupiers.pop_back();
+    
+    //shared_ptr<SnakeHeadOccupier> head = boost::static_pointer_cast<SnakeHeadOccupier>(front_cell.get_occupier());
+    //shared_ptr<CellOccupier> tail_snake_occupier = cell.get_occupier();
+    
+    /*cell->set_cell(shared_ptr<CellOccupier> (new EmptyOccupier()));
+    front_cell->set_cell(tail_snake_occupier);
+    
+    Coord new_front = next_coord(head->get_direction(), head->get_coord());
+    Cell* new_front_cell = &m_cells[new_front.get_x()][new_front.get_y()];
+    head->set_direction(direction);
+    head->set_coord(new_front);
+    new_front_cell->set_cell(head);*/
+    //m_snake_occupiers.push_front(new_front_cell);
+}
+//AHHH!
+// How do I keep track of snakes?!?
+// If I want to insert have to insert in order into m_snake_occupiers?!

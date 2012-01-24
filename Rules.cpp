@@ -33,37 +33,22 @@ bool Rules::coord_out_of_bounds(Coord coord){
 // TODO: CHANGE Coord to ENUM UP, DOWN, LEFT, RIGHT.
 // TODO: CHANGE THE BOARD TO HAVE WALL OCCUPIERS?!?
 bool Rules::move_snake(int index, SnakeDirection::Direction direction){
-	Coord back = m_snakes[index].back();
-	// IS THIS THE RIGHT WAY TO DO THIS? 
-    // ALSO DO YOU HAVE TO CHECK MEMORY ALLOCATION FAILURE?
-	Coord* direction_coord;
-	switch(direction){
-		case SnakeDirection::UP:
-			direction_coord = new Coord(0, -1);
-			break;
-		case SnakeDirection::DOWN:
-			direction_coord = new Coord(0, 1);
-			break;
-		case SnakeDirection::LEFT:
-			direction_coord = new Coord(-1, 0);
-			break;
-		case SnakeDirection::RIGHT:
-			direction_coord = new Coord(1, 0);
-			break;
-	}
-	Coord new_front = m_snakes[index].front() + *direction_coord;
-	delete direction_coord;
+	//Coord back = m_snakes[index].back();
+	Coord direction_coord = SnakeDirection::to_coord(direction);
+	Coord new_front = m_board->get_snake_head()->get_coord() + direction_coord;
 	if (coord_out_of_bounds(new_front)){
 		return false;
 	}
 	if (m_board->get(new_front).get_occupier()->get_type() == CellOccupier::SNAKE){
 		return false;
 	}
-	shared_ptr<CellOccupier> snake_back = m_board->get(back).get_occupier();
-	m_board->insert(shared_ptr<CellOccupier> (new SnakeOccupier()), new_front);
-	m_board->insert(shared_ptr<CellOccupier> (new EmptyOccupier()), back);
-	m_snakes[index].remove_back();
-	m_snakes[index].push_front(new_front);
+	//shared_ptr<CellOccupier> snake_back = m_board->get(back).get_occupier();
+	//m_board->insert(shared_ptr<CellOccupier> (new SnakeOccupier()), new_front);
+	//m_board->insert(shared_ptr<CellOccupier> (new EmptyOccupier()), back);
+	//m_snakes[index].remove_back();
+	//m_snakes[index].push_front(new_front);
+    
+    m_board->move_snake(direction);
 	return true;
 }
 // void Rules::update_board(Snake snake){
@@ -131,9 +116,10 @@ shared_ptr<Rules> RuleBuilder::create(){
 		}
 		int x = snake_start.get_x();
 		int y = snake_start.get_y();
-		for( int i = 0; i < snakes.back().get_size(); ++i){
+        m_board->insert(shared_ptr<SnakeHeadOccupier> (new SnakeHeadOccupier(SnakeDirection::DOWN, Coord(x, y))), Coord(x, y));
+		for( int i = 1; i < snakes.back().get_size(); ++i){
 			m_board->insert(shared_ptr<SnakeOccupier> (new SnakeOccupier()), Coord(x, y - i));
-			snakes.back().push_back(Coord(x, y - i));
+			//snakes.back().push_back(Coord(x, y - i));
 		}
 	}
 	return shared_ptr<Rules> (new Rules(m_board, snakes));
