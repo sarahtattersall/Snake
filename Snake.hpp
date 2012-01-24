@@ -2,6 +2,7 @@
 #define SNAKE_HPP
 #include "Coord.hpp"
 #include "CellOccupier.hpp"
+#include "SnakeDirection.hpp"
 #include <deque>
 #include <boost/shared_ptr.hpp>
 using std::deque;
@@ -11,6 +12,22 @@ class SnakeOccupier : public CellOccupier{
 public:
 	SnakeOccupier();
   	virtual TYPE get_type() { return SNAKE; }
+};
+
+class SnakeHeadOccupier : public SnakeOccupier{
+public:
+	SnakeHeadOccupier(SnakeDirection::Direction d) : SnakeOccupier(){
+        direction = d;
+    }
+    SnakeDirection::Direction get_direction(){
+        return direction;    
+    }
+    void set_direction(SnakeDirection::Direction d){
+        direction = d;
+    }
+private:
+    // Which class to put the enum in :S
+    SnakeDirection::Direction direction;
 };
 
 

@@ -32,22 +32,22 @@ bool Rules::coord_out_of_bounds(Coord coord){
 
 // TODO: CHANGE Coord to ENUM UP, DOWN, LEFT, RIGHT.
 // TODO: CHANGE THE BOARD TO HAVE WALL OCCUPIERS?!?
-bool Rules::move_snake(int index, Direction direction){
+bool Rules::move_snake(int index, SnakeDirection::Direction direction){
 	Coord back = m_snakes[index].back();
 	// IS THIS THE RIGHT WAY TO DO THIS? 
     // ALSO DO YOU HAVE TO CHECK MEMORY ALLOCATION FAILURE?
 	Coord* direction_coord;
 	switch(direction){
-		case UP:
+		case SnakeDirection::UP:
 			direction_coord = new Coord(0, -1);
 			break;
-		case DOWN:
+		case SnakeDirection::DOWN:
 			direction_coord = new Coord(0, 1);
 			break;
-		case LEFT:
+		case SnakeDirection::LEFT:
 			direction_coord = new Coord(-1, 0);
 			break;
-		case RIGHT:
+		case SnakeDirection::RIGHT:
 			direction_coord = new Coord(1, 0);
 			break;
 	}

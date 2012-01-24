@@ -1,6 +1,7 @@
 #include "Scene.hpp"
 #include "SnakeObject.hpp"
 #include "CellOccupier.hpp"
+#include "SnakeDirection.hpp"
 Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
 	m_board = board;
 	m_rules = rules;
@@ -24,23 +25,23 @@ Scene::~Scene(){
 
 // TODO FIX THIS ONCE MADE A SNAKE HEAD THAT KNOWS ITS DIRECTION
 void Scene::move_snake(){
-    m_rules->move_snake(0, Rules::DOWN);
+    m_rules->move_snake(0, SnakeDirection::DOWN);
     updateView();
 }
 
 void Scene::keyPressEvent(QKeyEvent* event){
 	switch(event->key()){
 		case Qt::Key_Up:
-			m_rules->move_snake(0, Rules::UP);
+			m_rules->move_snake(0, SnakeDirection::UP);
 			break;
 		case Qt::Key_Down:
-			m_rules->move_snake(0, Rules::DOWN);
+			m_rules->move_snake(0, SnakeDirection::DOWN);
 			break;
 		case Qt::Key_Left:
-			m_rules->move_snake(0, Rules::LEFT);
+			m_rules->move_snake(0, SnakeDirection::LEFT);
 			break;
 		case Qt::Key_Right:
-			m_rules->move_snake(0, Rules::RIGHT);
+			m_rules->move_snake(0, SnakeDirection::RIGHT);
 			break;
 	}
 	updateView();
