@@ -74,7 +74,7 @@ int SquareBoard::get_width(){
 
 void SquareBoard::insert(CellOccupier* occupier, const Coord coord){
 	m_cells[coord.get_y()][coord.get_x()].set_occupier(occupier);
-    if( m_occupiers.find(occupier) == m_occupiers.end() ){
+    if( m_occupiers.find(occupier) != m_occupiers.end() ){
         m_occupiers.erase(m_occupiers.find(occupier));
     }
     m_occupiers.insert(pair<CellOccupier*,Coord>(occupier, coord));

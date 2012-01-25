@@ -29,6 +29,7 @@ private:
 	BoardBuilder* m_builder2;
 	BoardBuilder* m_builder3;
 	BoardBuilder* m_builder4;
+    CellOccupier* m_snake_occupier;
 	int m_test_size;
 };
 
