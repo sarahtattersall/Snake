@@ -17,13 +17,13 @@ public:
 
   Coord move(Direction direction) {
     switch(direction){
-    case SnakeDirection::UP:
+    case UP:
       return Coord(m_x, m_y-1);
-    case SnakeDirection::DOWN:
+    case DOWN:
       return Coord(m_x, m_y+1);
-    case SnakeDirection::LEFT:
+    case LEFT:
       return Coord(m_x-1, m_y);
-    case SnakeDirection::RIGHT:
+    case RIGHT:
       return Coord(m_x+1, m_y);
     }
     return *this;
