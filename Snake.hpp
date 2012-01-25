@@ -9,10 +9,15 @@ class Board;
 using std::deque;
 using boost::shared_ptr;
 
-class SnakeOccupier : public CellOccupier{
+class SnakeTail : public CellOccupier{
 public:
-	SnakeOccupier();
+	SnakeTail() : CellOccupier() {};
   	virtual TYPE get_type() { return SNAKE; }
+    SnakeTail* get_next(){
+        return m_next;
+    }
+private:
+    SnakeTail* m_next;
 };
 
 class Snake : public CellOccupier{
@@ -21,6 +26,18 @@ public:
         m_size = size;
         m_direction = d;
     }
+    
+    ~Snake(){
+        SnakeTail front = m_tail;
+        SnakeTail next_tail = m_tail->get_next();
+        //??? Something went here
+        while( next_tail != NULL ){
+            SnakeTail* current = next_tail;
+            SnakeTail* next_tail = current->get_next();
+            delete current;
+        }
+    }
+    
   	virtual TYPE get_type() { return SNAKE; }
     
     Coord::Direction get_direction(){
@@ -35,6 +52,7 @@ public:
 private:
     int m_size;
     Coord::Direction m_direction;
+    SnakeTail m_tail;
 };
 
 

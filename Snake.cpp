@@ -1,8 +1,6 @@
 #include "Snake.hpp"
 #include <iostream>
 
-SnakeOccupier::SnakeOccupier() : CellOccupier(){
-}
 /*
 Snake::Snake(int size) {
 	m_size = size;
