@@ -39,6 +39,10 @@ bool Rules::move_snake(int index, Coord::Direction direction){
 	return true;
 }
 
+bool Rules::move_snake(int index){
+    return true;
+}
+
 RuleBuilder::RuleBuilder(){
 	m_player_count = 0;
 	m_snake_size = 0;

@@ -27,7 +27,7 @@ Scene::~Scene(){
 // TODO FIX THIS ONCE MADE A SNAKE HEAD THAT KNOWS ITS DIRECTION
 void Scene::move_snake(){
     if(!m_key_press){
-        m_rules->move_snake(0, m_board->get_snake_head()->get_direction());
+        m_rules->move_snake(0);
     }
     updateView();
     m_key_press = false;
@@ -36,16 +36,16 @@ void Scene::move_snake(){
 void Scene::keyPressEvent(QKeyEvent* event){
 	switch(event->key()){
 		case Qt::Key_Up:
-			m_rules->move_snake(0, SnakeDirection::UP);
+			m_rules->move_snake(0, Coord::UP);
 			break;
 		case Qt::Key_Down:
-			m_rules->move_snake(0, SnakeDirection::DOWN);
+			m_rules->move_snake(0, Coord::DOWN);
 			break;
 		case Qt::Key_Left:
-			m_rules->move_snake(0, SnakeDirection::LEFT);
+			m_rules->move_snake(0, Coord::LEFT);
 			break;
 		case Qt::Key_Right:
-			m_rules->move_snake(0, SnakeDirection::RIGHT);
+			m_rules->move_snake(0, Coord::RIGHT);
 			break;
 	}
     m_key_press = true;
@@ -60,7 +60,7 @@ void Scene::updateView(){
 	QTransform transform;
 	for( int row = 0; row < m_board->get_height(); ++row ){
 		for( int col = 0; col < m_board->get_width(); ++col ){
-			shared_ptr<CellOccupier> occupier = m_board->get(col, row).get_occupier();
+			CellOccupier* occupier = m_board->get(col, row).get_occupier();
 			int x = mapToView(col, SnakeObject::get_width());
 			int y = mapToView(row, SnakeObject::get_height());
 			// Would rather remove if not snake?

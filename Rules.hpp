@@ -21,17 +21,15 @@ public:
 	// Returns bool for if the move succeeds. If false
 	// end of game (i.e. hit wall or snake)
 	bool move_snake(int index, Coord::Direction direction);
-	// Currently just displays the board;
-	// void play();
+    // Overloaded method. If no direction is given moves in the current 
+    // snakes direction
+    bool move_snake(int index);
 private:
 	ptr_vector<Snake> m_snakes;
 	shared_ptr<Board> m_board;
 	// Determines if a Coord is out of bounds for the board
 	bool coord_out_of_bounds(Coord coord);
     WallOccupier* m_wall;
-	// shared_ptr<BoardVisualiser> m_visualiser;
-	// Updates board with snakes coordinates.
-	// void update_board(Snake snake);
 };
 
 
