@@ -4,27 +4,20 @@
 class SnakeDirection{
 public:
     enum Direction { UP, DOWN, RIGHT, LEFT };
-	// IS THIS THE RIGHT WAY TO DO THIS? 
-    // ALSO DO YOU HAVE TO CHECK MEMORY ALLOCATION FAILURE?
+private:
     static Coord to_coord(Direction direction){
-        Coord* direction_coord;
         switch(direction){
             case SnakeDirection::UP:
-                direction_coord = new Coord(0, -1);
-                break;
+                return Coord(0, -1);
             case SnakeDirection::DOWN:
-                direction_coord = new Coord(0, 1);
-                break;
+                return Coord(0, 1);
             case SnakeDirection::LEFT:
-                direction_coord = new Coord(-1, 0);
-                break;
+                return Coord(-1, 0);
             case SnakeDirection::RIGHT:
-                direction_coord = new Coord(1, 0);
-                break;
+                return Coord(1, 0);
         }
-        Coord coord = *direction_coord;
-        delete direction_coord;
-        return coord;
+	//FATAL("Invalid enum constant");
+        return Coord(0,0);
     }
 };
 
