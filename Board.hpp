@@ -6,11 +6,11 @@
 #include <vector>
 #include <list>
 #include <boost/shared_ptr.hpp>
-#include <boost/ptr_container/ptr_list.hpp>
+//#include <boost/ptr_container/ptr_list.hpp>
 using std::vector;
 using std::list;
 using boost::shared_ptr;
-using boost::ptr_list;
+//using boost::ptr_list;
 
 
 //IAN: Made this class a pure abstract interface
@@ -30,7 +30,7 @@ public:
 	// virtual void remove(Coord coord) = 0;
 protected:
 	//list<shared_ptr<Cell> > m_snake_occupiers;
-    ptr_list<Cell> m_snake_occupiers;
+    list<Cell*> m_snake_occupiers;
 };
 
 class BoardBuilder {

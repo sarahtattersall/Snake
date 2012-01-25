@@ -100,30 +100,27 @@ Coord SquareBoard::next_coord(SnakeDirection::Direction direction, Coord coord){
 }
 
 shared_ptr<SnakeHeadOccupier> SquareBoard::get_snake_head(){
-    return boost::static_pointer_cast<SnakeHeadOccupier>((m_snake_occupiers.begin())->get_occupier());
+    return boost::static_pointer_cast<SnakeHeadOccupier>((m_snake_occupiers.front())->get_occupier());
 }
 
 void SquareBoard::move_snake(SnakeDirection::Direction direction){
     //shared_ptr<Cell> front_cell = *m_snake_occupiers.begin();
     //shared_ptr<Cell> cell = *m_snake_occupiers.end();
-    //Cell& front_cell = m_snake_occupiers.front();
-    //Cell& cell = m_snake_occupiers.back();
+    Cell* front_cell = m_snake_occupiers.front();
+    Cell* cell = m_snake_occupiers.back();
 
-    //m_snake_occupiers.pop_back();
+    m_snake_occupiers.pop_back();
     
-    //shared_ptr<SnakeHeadOccupier> head = boost::static_pointer_cast<SnakeHeadOccupier>(front_cell.get_occupier());
-    //shared_ptr<CellOccupier> tail_snake_occupier = cell.get_occupier();
+    shared_ptr<SnakeHeadOccupier> head = boost::static_pointer_cast<SnakeHeadOccupier>(front_cell->get_occupier());
+    shared_ptr<CellOccupier> tail_snake_occupier = cell->get_occupier();
     
-    /*cell->set_cell(shared_ptr<CellOccupier> (new EmptyOccupier()));
+    cell->set_cell(shared_ptr<CellOccupier> (new EmptyOccupier()));
     front_cell->set_cell(tail_snake_occupier);
     
     Coord new_front = next_coord(head->get_direction(), head->get_coord());
     Cell* new_front_cell = &m_cells[new_front.get_x()][new_front.get_y()];
     head->set_direction(direction);
     head->set_coord(new_front);
-    new_front_cell->set_cell(head);*/
-    //m_snake_occupiers.push_front(new_front_cell);
+    new_front_cell->set_cell(head);
+    m_snake_occupiers.push_front(new_front_cell);
 }
-//AHHH!
-// How do I keep track of snakes?!?
-// If I want to insert have to insert in order into m_snake_occupiers?!
