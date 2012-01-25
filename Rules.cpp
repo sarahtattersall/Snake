@@ -6,11 +6,16 @@
 #include <string.h>
 #include <iostream>
 using namespace std;
-Rules::Rules(shared_ptr<Board> board, vector<Snake> snakes){
+
+Rules::Rules(shared_ptr<Board> board, ptr_vector<Snake> snakes, WallOccupier* wall){
 	m_board = board;
 	m_snakes = snakes;
+    m_wall = wall;
 }
 
+Rules::~Rules(){
+    delete m_wall;
+}
 
 shared_ptr<Board> Rules::get_board(){
 	return m_board;
@@ -20,8 +25,9 @@ bool Rules::coord_out_of_bounds(Coord coord){
     return (m_board->get(coord).get_occupier()->get_type() == CellOccupier::WALL);
 }
 
-bool Rules::move_snake(int index, SnakeDirection::Direction direction){
-	Coord direction_coord = SnakeDirection::to_coord(direction);
+bool Rules::move_snake(int index, Coord::Direction direction){
+    
+	/*Coord direction_coord = SnakeDirection::to_coord(direction);
 	Coord new_front = m_board->get_snake_head()->get_coord() + direction_coord;
 	if (coord_out_of_bounds(new_front)){
 		return false;
@@ -29,13 +35,14 @@ bool Rules::move_snake(int index, SnakeDirection::Direction direction){
 	if (m_board->get(new_front).get_occupier()->get_type() == CellOccupier::SNAKE){
 		return false;
 	}
-    m_board->move_snake(direction);
+    m_board->move_snake(direction);*/
 	return true;
 }
 
 RuleBuilder::RuleBuilder(){
 	m_player_count = 0;
 	m_snake_size = 0;
+    m_wall = new WallOccupier();
 }
 
 RuleBuilder& RuleBuilder::set_board(shared_ptr<Board> board){
@@ -59,12 +66,12 @@ void RuleBuilder::set_perimiter(){
     int width = m_board->get_width();
     int height = m_board->get_height();
     for( int x = 0; x < width; ++x ){
-        m_board->insert(shared_ptr<WallOccupier> (new WallOccupier()), Coord(x, 0));
-        m_board->insert(shared_ptr<WallOccupier> (new WallOccupier()), Coord(x, height-1));
+        m_board->insert(m_wall, Coord(x, 0));
+        m_board->insert(m_wall, Coord(x, height-1));
     }
     for( int y = 0; y < height; ++y ){
-        m_board->insert(shared_ptr<WallOccupier> (new WallOccupier()), Coord(0, y));
-        m_board->insert(shared_ptr<WallOccupier> (new WallOccupier()), Coord(width-1, y));
+        m_board->insert(m_wall, Coord(0, y));
+        m_board->insert(m_wall, Coord(width-1, y));
     }
 }
 
@@ -80,14 +87,15 @@ shared_ptr<Rules> RuleBuilder::create(){
 
   set_perimiter();
 
-  vector<Snake*> snakes;
+  //vector<Snake*> snakes;
+  ptr_vector<Snake> snakes;
   Coord board_middle(m_board->get_width()/2, m_board->get_height()/2);
   for( int player = 0; player < m_player_count; ++player){
     Coord snake_start(board_middle.get_x() - player, board_middle.get_y());
-    Snake* snake = new Snake(m_snake_size, SnakeDirection::DOWN);
+    Snake* snake = new Snake(m_snake_size, Coord::DOWN);
     snakes.push_back(snake);
     m_board->insert(snake, snake_start);
     snake->build_tail(m_board);
   }
-  return shared_ptr<Rules> (new Rules(m_board, snakes));
+  return shared_ptr<Rules> (new Rules(m_board, snakes, m_wall));
 }

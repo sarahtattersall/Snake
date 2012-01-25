@@ -3,7 +3,7 @@
 
 SnakeOccupier::SnakeOccupier() : CellOccupier(){
 }
-
+/*
 Snake::Snake(int size) {
 	m_size = size;
 }
@@ -31,6 +31,7 @@ Coord Snake::back(){
 Coord Snake::front(){
 	return m_coords.front();
 }
+*/
 // vector<shared_ptr<SnakeOccupier> > Snake::get_occupiers(){
 // 	return m_occupiers;
 // }

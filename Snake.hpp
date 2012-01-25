@@ -5,6 +5,7 @@
 #include "SnakeDirection.hpp"
 #include <deque>
 #include <boost/shared_ptr.hpp>
+class Board;
 using std::deque;
 using boost::shared_ptr;
 
@@ -14,35 +15,33 @@ public:
   	virtual TYPE get_type() { return SNAKE; }
 };
 
-class SnakeHeadOccupier : public SnakeOccupier{
+class Snake : public CellOccupier{
 public:
-	SnakeHeadOccupier(SnakeDirection::Direction d, Coord coord) : SnakeOccupier(), m_coord(coord){
-        direction = d;
+	Snake(int size, Coord::Direction d) : CellOccupier(){
+        m_size = size;
+        m_direction = d;
     }
-    SnakeDirection::Direction get_direction(){
-        return direction;    
-    }
-    void set_direction(SnakeDirection::Direction d){
-        direction = d;
-    }
+  	virtual TYPE get_type() { return SNAKE; }
     
-    void set_coord(Coord coord){
-        m_coord = coord;
+    Coord::Direction get_direction(){
+        return m_direction;    
     }
-    Coord get_coord(){
-        return m_coord;
+    void set_direction(Coord::Direction d){
+        m_direction = d;
+    }
+    void build_tail(shared_ptr<Board> board){
+    //TODO: Fill in later
     }
 private:
-    // Which class to put the enum in :S
-    SnakeDirection::Direction direction;
-    Coord m_coord;
+    int m_size;
+    Coord::Direction m_direction;
 };
 
 
 // TODO: SNAKE DOESNT NEED TO HOLD COORDINATES JUST MAKE SNAKE OCCUPIERS
 // IN BOARD A LINKED LIST, MOVE THE HEAD AND REINSERT TAIL NEXT TO HEAD.
 // TRY AND MAKE IT CIRCULAR
-class Snake{
+/*class Snake{
 public:
 	Snake(int size = 3);
 	int get_size();
@@ -58,5 +57,5 @@ private:
 	int m_size;
 	deque<Coord> m_coords;
 };
-
+*/
 #endif

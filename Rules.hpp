@@ -4,19 +4,23 @@
 #include "Board.hpp"
 #include "SnakeDirection.hpp"
 #include "BoardVisualiser.hpp"
+#include "WallOccupier.hpp"
 #include <boost/shared_ptr.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 using std::vector;
 using boost::shared_ptr;
+using boost::ptr_vector;
 
 class BoardVisualiser;
 
 class Rules{
 public:
-	Rules(shared_ptr<Board> board, vector<Snake> snakes);
+	Rules(shared_ptr<Board> board, ptr_vector<Snake> snakes, WallOccupier* wall);
+    ~Rules();
 	shared_ptr<Board> get_board();
 	// Returns bool for if the move succeeds. If false
 	// end of game (i.e. hit wall or snake)
-	bool move_snake(int index, SnakeDirection::Direction direction);
+	bool move_snake(int index, Coord::Direction direction);
 	// Currently just displays the board;
 	// void play();
 private:
@@ -24,6 +28,7 @@ private:
 	shared_ptr<Board> m_board;
 	// Determines if a Coord is out of bounds for the board
 	bool coord_out_of_bounds(Coord coord);
+    WallOccupier* m_wall;
 	// shared_ptr<BoardVisualiser> m_visualiser;
 	// Updates board with snakes coordinates.
 	// void update_board(Snake snake);
@@ -46,6 +51,7 @@ private:
 	int m_player_count;
     // Adds wall occupiers around the board perimiter.
     void set_perimiter();
+    WallOccupier* m_wall;
 };
 
 #endif
