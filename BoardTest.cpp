@@ -13,6 +13,7 @@ void BoardTest::setUp(){
 	m_builder2 = new BoardBuilder();
 	m_builder3 = new BoardBuilder();
 	m_builder4= new BoardBuilder();
+    m_snake_occupier = new SnakeOccupier();
 	m_test_size = 10;
 }
 
@@ -48,7 +49,6 @@ void BoardTest::insertInRightCell(){
 	m_builder4->set_size(m_test_size);
 	shared_ptr<Board> board4 = m_builder4->create();
 	Coord coord(3,3);
-	shared_ptr<CellOccupier> cell_occupier(new SnakeOccupier());
-	board4->insert(cell_occupier, coord);
-	CPPUNIT_ASSERT_EQUAL(board4->get(coord).get_occupier(), cell_occupier);
+	board4->insert(m_snake_occupier, coord);
+	CPPUNIT_ASSERT_EQUAL(board4->get(coord).get_occupier()->get_type(), CellOccupier::SNAKE);
 }
