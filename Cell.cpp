@@ -1,15 +1,15 @@
 #include "Cell.hpp"
 #include "EmptyOccupier.hpp"
 
-Cell::Cell(){
-    m_occupier = shared_ptr<CellOccupier> (new EmptyOccupier());
-}
-
-void Cell::set_cell(shared_ptr<CellOccupier> occupier){
+Cell::Cell(CellOccupier* occupier){
     m_occupier = occupier;
 }
 
-shared_ptr<CellOccupier> Cell::get_occupier(){
+void Cell::set_cell(CellOccupier* occupier){
+    m_occupier = occupier;
+}
+
+CellOccupier* Cell::get_occupier(){
 	return m_occupier;
 }
 

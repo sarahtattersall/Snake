@@ -1,12 +1,15 @@
 #include "Board.hpp"
 #include "Cell.hpp"
 #include "SnakeException.hpp"
-#include <iostream>
 #include "EmptyOccupier.hpp"
+#include <iostream>
+#include <map>
+using std::map;
 //IAN: This is the only current implementation of Board
 class SquareBoard : public Board {
 public:
     SquareBoard(const int size);
+    ~SquareBoard()
     virtual Cell& get(Coord coord);
     virtual Cell& get(int x, int y);
     virtual int get_height();
@@ -18,10 +21,13 @@ public:
     virtual CellOccupier* lookup(Coord coord);
 private:
     int m_size;
+    vector<vector<Cell> > m_cells;
+    // Stores occupiers to coordinates
+    map<CellOccupier*, Coord> m_occupiers;
     // Initializes the board with empty cells.
     void initialize_board();
     Coord next_coord(SnakeDirection::Direction direction, Coord coord);
-    vector<vector<Cell> > m_cells;
+    EmptyOccupier* m_empty;
 };
 
 BoardBuilder::BoardBuilder(){
@@ -37,6 +43,16 @@ shared_ptr<Board> BoardBuilder::create(){
 		throw BoardBuilderException();
 	}
     return shared_ptr<Board> (new SquareBoard(m_size));
+}
+
+SquareBoard::SquareBoard(const int size){
+    m_size = size;
+    m_empty = new EmptyOccupier();
+    initialize_board();
+}
+
+SquareBoard::~SquareBoard(){
+    delete m_empty;
 }
 
 Cell& SquareBoard::get(Coord coord){
@@ -55,19 +71,32 @@ int SquareBoard::get_width(){
 	return m_size;
 }
 
-SquareBoard::SquareBoard(const int size){
-    m_size = size;
-    initialize_board();
-}
-
 void SquareBoard::insert(shared_ptr<CellOccupier> occupier, Coord coord){
 	m_cells[coord.get_y()][coord.get_x()].set_cell(occupier);
-	// This will only work for 1 player game! Else which list do you add it to?!?
-	if( occupier->get_type() == CellOccupier::SNAKE ){
-        m_snake_occupiers.push_back(&(m_cells[coord.get_y()][coord.get_x()]));
-    }
+    m_occupiers[occupier] = coord;
 }
 
+void SquareBoard::move(CellOccupier* occupier, Coord coord){
+    Coord old_coord = m_occipiers.find(occupier)->second;
+    m_cells[old_coord.get_y()][old_coord.get_x()].set_occupier(m_empty);
+    m_cells[coord.get_y()][coord.get_x()].set_occupier(occupier);
+    //TODO: Check this overwrites!
+    m_occupiers[occupier] = coord;
+}
+
+void SquareBoard::remove(CellOccupier* occupier){
+    Coord coord = m_occupiers.find(occupier)->second;
+    m_cells[coord.get_y()][coord.get_x()].set_occupier(m_empty);
+    m_occupiers.erase(m_occupiers.find(occupier));
+}
+
+Coord SqaureBoard::find(CellOccupier* occupier){
+    return m_occupiers.find(occupier)->second;
+}
+
+CellOccupier* SquareBoard::lookup(Coord coord){
+    return m_cells[coord.get_y()][coord.get_x()];
+}
 
 void SquareBoard::initialize_board(){
 	m_cells.resize(m_size);
@@ -79,6 +108,8 @@ void SquareBoard::initialize_board(){
 }
 
 
+// TODO: DELETE THIS
+/*
 Coord SquareBoard::next_coord(SnakeDirection::Direction direction, Coord coord){
     Coord direction_coord = SnakeDirection::to_coord(direction);
     return direction_coord + coord;
@@ -108,3 +139,4 @@ void SquareBoard::move_snake(SnakeDirection::Direction direction){
     new_front_cell->set_cell(head);
     m_snake_occupiers.push_front(new_front_cell);
 }
+*/

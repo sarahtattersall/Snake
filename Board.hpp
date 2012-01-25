@@ -23,14 +23,11 @@ public:
 	virtual Cell& get(int x, int y)= 0;
 	virtual int get_height() = 0;
 	virtual int get_width() = 0;
-	virtual void insert(shared_ptr<CellOccupier> occupier, Coord coord) = 0;
-    virtual shared_ptr<SnakeHeadOccupier> get_snake_head() = 0;
-    virtual void move_snake(SnakeDirection::Direction direction) = 0;
-	// Removes occupier in cell and sets it to empty.
-	// virtual void remove(Coord coord) = 0;
-protected:
-	//list<shared_ptr<Cell> > m_snake_occupiers;
-    list<Cell*> m_snake_occupiers;
+    virtual void insert(CellOccupier* occupier, Coord coord) = 0;
+    virtual void move(CellOccupier* occupier, Coord coord) = 0;
+    virtual void remove(CellOccupier* occupier) = 0;
+    virtual Coord find(CellOccupier* occupier) = 0;
+    virtual CellOccupier* lookup(Coord coord) = 0;
 };
 
 class BoardBuilder {
