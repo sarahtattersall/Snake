@@ -101,7 +101,7 @@ void SquareBoard::move_snake(SnakeDirection::Direction direction){
     front_cell->set_cell(tail_snake_occupier);
     
     Coord new_front = next_coord(head->get_direction(), head->get_coord());
-    Cell* new_front_cell = &m_cells[new_front.get_x()][new_front.get_y()];
+    Cell* new_front_cell = &m_cells[new_front.get_y()][new_front.get_x()];
     head->set_direction(direction);
     head->set_coord(new_front);
     new_front_cell->set_cell(head);

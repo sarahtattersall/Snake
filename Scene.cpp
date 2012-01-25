@@ -27,7 +27,7 @@ Scene::~Scene(){
 // TODO FIX THIS ONCE MADE A SNAKE HEAD THAT KNOWS ITS DIRECTION
 void Scene::move_snake(){
     if(!m_key_press){
-        m_rules->move_snake(0, SnakeDirection::DOWN);
+        m_rules->move_snake(0, m_board->get_snake_head()->get_direction());
     }
     updateView();
     m_key_press = false;
