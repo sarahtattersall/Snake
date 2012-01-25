@@ -7,7 +7,6 @@
 class SquareBoard : public Board {
 public:
     SquareBoard(const int size);
-    ~SquareBoard();
     virtual Cell& get(Coord coord);
 	virtual Cell& get(int x, int y);
     virtual int get_height();
@@ -39,14 +38,6 @@ shared_ptr<Board> BoardBuilder::create(){
     return shared_ptr<Board> (new SquareBoard(m_size));
 }
 
-SquareBoard::~SquareBoard(){
-    //for( list<Cell*>::iterator itr = m_snake_occupiers.begin(); itr != m_snake_occupiers.end(); ++itr){
-    // WHY DOES THIS GIVE DOUBLE FREE ERROR?
-    //    delete *itr;
-    //} 
-    //m_snake_occupiers.clear();
-}
-
 Cell& SquareBoard::get(Coord coord){
 	return m_cells[coord.get_y()][coord.get_x()];
 }
@@ -72,16 +63,10 @@ void SquareBoard::insert(shared_ptr<CellOccupier> occupier, Coord coord){
 	m_cells[coord.get_y()][coord.get_x()].set_cell(occupier);
 	// This will only work for 1 player game! Else which list do you add it to?!? 
 	if( occupier->get_type() == CellOccupier::SNAKE ){
-        //shared_ptr<Cell> cell (&(m_cells[coord.get_y()][coord.get_x()]));
-		//m_snake_occupiers.push_back(cell);
         m_snake_occupiers.push_back(&(m_cells[coord.get_y()][coord.get_x()]));
     }
 }
 
-
-// void SquareBoard::remove(Coord coord){
-// 	m_cells[coord.get_x()][coord.get_y()].set_cell(EmptyOccupier());
-// }
 
 void SquareBoard::initialize_board(){
 	m_cells.resize(m_size);
@@ -104,8 +89,6 @@ shared_ptr<SnakeHeadOccupier> SquareBoard::get_snake_head(){
 }
 
 void SquareBoard::move_snake(SnakeDirection::Direction direction){
-    //shared_ptr<Cell> front_cell = *m_snake_occupiers.begin();
-    //shared_ptr<Cell> cell = *m_snake_occupiers.end();
     Cell* front_cell = m_snake_occupiers.front();
     Cell* cell = m_snake_occupiers.back();
 

@@ -9,31 +9,18 @@ using namespace std;
 Rules::Rules(shared_ptr<Board> board, vector<Snake> snakes){
 	m_board = board;
 	m_snakes = snakes;
-	// Initialised board with snakes
-	// for(vector<Snake>::iterator itr = m_snakes.begin(); itr != m_snakes.end(); ++itr){
-	// 		update_board(*itr);
-	// 	}
 }
 
-Rules::~Rules(){
-	// delete m_board;
-}
 
 shared_ptr<Board> Rules::get_board(){
 	return m_board;
 }
 
 bool Rules::coord_out_of_bounds(Coord coord){
-	//bool x_out_of_bounds = coord.get_x() < 0 || coord.get_x() >= m_board->get_width();
-	//bool y_out_of_bounds = coord.get_y() < 0 || coord.get_y() >= m_board->get_height();
-	//return (x_out_of_bounds || y_out_of_bounds);
     return (m_board->get(coord).get_occupier()->get_type() == CellOccupier::WALL);
 }
 
-// TODO: CHANGE Coord to ENUM UP, DOWN, LEFT, RIGHT.
-// TODO: CHANGE THE BOARD TO HAVE WALL OCCUPIERS?!?
 bool Rules::move_snake(int index, SnakeDirection::Direction direction){
-	//Coord back = m_snakes[index].back();
 	Coord direction_coord = SnakeDirection::to_coord(direction);
 	Coord new_front = m_board->get_snake_head()->get_coord() + direction_coord;
 	if (coord_out_of_bounds(new_front)){
@@ -42,21 +29,9 @@ bool Rules::move_snake(int index, SnakeDirection::Direction direction){
 	if (m_board->get(new_front).get_occupier()->get_type() == CellOccupier::SNAKE){
 		return false;
 	}
-	//shared_ptr<CellOccupier> snake_back = m_board->get(back).get_occupier();
-	//m_board->insert(shared_ptr<CellOccupier> (new SnakeOccupier()), new_front);
-	//m_board->insert(shared_ptr<CellOccupier> (new EmptyOccupier()), back);
-	//m_snakes[index].remove_back();
-	//m_snakes[index].push_front(new_front);
-    
     m_board->move_snake(direction);
 	return true;
 }
-// void Rules::update_board(Snake snake){
-	// vector<shared_ptr<SnakeOccupier> > occupiers = snake.get_occupiers();
-	// for( vector<shared_ptr<SnakeOccupier> >::iterator itr = occupiers.begin(); itr != occupiers.end(); ++itr ){
-	// 	m_board->insert(*itr, (*itr)->get_coord());
-	// }
-//}
 
 RuleBuilder::RuleBuilder(){
 	m_player_count = 0;

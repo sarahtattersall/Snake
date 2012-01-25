@@ -13,7 +13,6 @@ class BoardVisualiser;
 class Rules{
 public:
 	Rules(shared_ptr<Board> board, vector<Snake> snakes);
-	~Rules();
 	shared_ptr<Board> get_board();
 	// Returns bool for if the move succeeds. If false
 	// end of game (i.e. hit wall or snake)
