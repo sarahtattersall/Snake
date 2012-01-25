@@ -37,6 +37,7 @@ public:
                 SnakeTail* next_tail = current->get_next();
                 delete current;
             }
+            delete front;
         }
     }
     
