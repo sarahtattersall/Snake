@@ -28,13 +28,15 @@ public:
     }
     
     ~Snake(){
-        SnakeTail front = m_tail;
-        SnakeTail next_tail = m_tail->get_next();
-        //??? Something went here
-        while( next_tail != NULL ){
-            SnakeTail* current = next_tail;
-            SnakeTail* next_tail = current->get_next();
-            delete current;
+        if( m_tail != NULL ){
+            SnakeTail front = m_tail;
+            SnakeTail next_tail = m_tail->get_next();
+            //??? Something went here
+            while( next_tail != NULL ){
+                SnakeTail* current = next_tail;
+                SnakeTail* next_tail = current->get_next();
+                delete current;
+            }
         }
     }
     
