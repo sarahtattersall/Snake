@@ -8,13 +8,14 @@ class SquareBoard : public Board {
 public:
     SquareBoard(const int size);
     virtual Cell& get(Coord coord);
-	virtual Cell& get(int x, int y);
+    virtual Cell& get(int x, int y);
     virtual int get_height();
     virtual int get_width();
-	virtual void insert(shared_ptr<CellOccupier> occupier, Coord coord);
-    virtual shared_ptr<SnakeHeadOccupier> get_snake_head();
-    virtual void move_snake(SnakeDirection::Direction direction);
-	// virtual void remove(Coord coord);
+    virtual void insert(CellOccupier* occupier, Coord coord);
+    virtual void move(CellOccupier* occupier, Coord coord);
+    virtual void remove(CellOccupier* occupier);
+    virtual Coord find(CellOccupier* occupier);
+    virtual CellOccupier* lookup(Coord coord);
 private:
     int m_size;
     // Initializes the board with empty cells.
@@ -61,7 +62,7 @@ SquareBoard::SquareBoard(const int size){
 
 void SquareBoard::insert(shared_ptr<CellOccupier> occupier, Coord coord){
 	m_cells[coord.get_y()][coord.get_x()].set_cell(occupier);
-	// This will only work for 1 player game! Else which list do you add it to?!? 
+	// This will only work for 1 player game! Else which list do you add it to?!?
 	if( occupier->get_type() == CellOccupier::SNAKE ){
         m_snake_occupiers.push_back(&(m_cells[coord.get_y()][coord.get_x()]));
     }
@@ -81,7 +82,7 @@ void SquareBoard::initialize_board(){
 Coord SquareBoard::next_coord(SnakeDirection::Direction direction, Coord coord){
     Coord direction_coord = SnakeDirection::to_coord(direction);
     return direction_coord + coord;
-        
+
 }
 
 shared_ptr<SnakeHeadOccupier> SquareBoard::get_snake_head(){
@@ -93,13 +94,13 @@ void SquareBoard::move_snake(SnakeDirection::Direction direction){
     Cell* cell = m_snake_occupiers.back();
 
     m_snake_occupiers.pop_back();
-    
+
     shared_ptr<SnakeHeadOccupier> head = boost::static_pointer_cast<SnakeHeadOccupier>(front_cell->get_occupier());
     shared_ptr<CellOccupier> tail_snake_occupier = cell->get_occupier();
-    
+
     cell->set_cell(shared_ptr<CellOccupier> (new EmptyOccupier()));
     front_cell->set_cell(tail_snake_occupier);
-    
+
     Coord new_front = next_coord(head->get_direction(), head->get_coord());
     Cell* new_front_cell = &m_cells[new_front.get_y()][new_front.get_x()];
     head->set_direction(direction);

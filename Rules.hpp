@@ -20,7 +20,7 @@ public:
 	// Currently just displays the board;
 	// void play();
 private:
-	vector<Snake> m_snakes;
+	ptr_vector<Snake> m_snakes;
 	shared_ptr<Board> m_board;
 	// Determines if a Coord is out of bounds for the board
 	bool coord_out_of_bounds(Coord coord);
