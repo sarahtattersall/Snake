@@ -5,7 +5,7 @@ Cell::Cell(CellOccupier* occupier){
     m_occupier = occupier;
 }
 
-void Cell::set_cell(CellOccupier* occupier){
+void Cell::set_occupier(CellOccupier* occupier){
     m_occupier = occupier;
 }
 

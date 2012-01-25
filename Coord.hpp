@@ -5,8 +5,8 @@ class Coord{
 public:
   enum Direction { UP, DOWN, RIGHT, LEFT };
   Coord(int x, int y);
-  int get_x();
-  int get_y();
+  int get_x() const;
+  int get_y() const;
   // Overrides + operator
   Coord operator+(const Coord& coord) const;
   // Overrides - operator

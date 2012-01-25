@@ -6,7 +6,7 @@ class Coord;
 class Cell{
 public:
     bool is_occupied();
-    void set_cell(CellOccupier* occupier);
+    void set_occupier(CellOccupier* occupier);
 	CellOccupier* get_occupier();
     Cell(CellOccupier* occupier);
 private:

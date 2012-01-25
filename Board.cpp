@@ -5,11 +5,12 @@
 #include <iostream>
 #include <map>
 using std::map;
+using std::pair;
 //IAN: This is the only current implementation of Board
 class SquareBoard : public Board {
 public:
     SquareBoard(const int size);
-    ~SquareBoard()
+    ~SquareBoard();
     virtual Cell& get(Coord coord);
     virtual Cell& get(int x, int y);
     virtual int get_height();
@@ -71,17 +72,23 @@ int SquareBoard::get_width(){
 	return m_size;
 }
 
-void SquareBoard::insert(shared_ptr<CellOccupier> occupier, Coord coord){
-	m_cells[coord.get_y()][coord.get_x()].set_cell(occupier);
-    m_occupiers[occupier] = coord;
+void SquareBoard::insert(CellOccupier* occupier, const Coord coord){
+	m_cells[coord.get_y()][coord.get_x()].set_occupier(occupier);
+    if( m_occupiers.find(occupier) == m_occupiers.end() ){
+        m_occupiers.erase(m_occupiers.find(occupier));
+    }
+    m_occupiers.insert(pair<CellOccupier*,Coord>(occupier, coord));
 }
 
-void SquareBoard::move(CellOccupier* occupier, Coord coord){
-    Coord old_coord = m_occipiers.find(occupier)->second;
+void SquareBoard::move(CellOccupier* occupier, const Coord coord){
+    Coord old_coord = m_occupiers.find(occupier)->second;
     m_cells[old_coord.get_y()][old_coord.get_x()].set_occupier(m_empty);
     m_cells[coord.get_y()][coord.get_x()].set_occupier(occupier);
     //TODO: Check this overwrites!
-    m_occupiers[occupier] = coord;
+    if( m_occupiers.find(occupier) == m_occupiers.end() ){
+        m_occupiers.erase(m_occupiers.find(occupier));
+    }
+    m_occupiers.insert(pair<CellOccupier*,Coord>(occupier, coord));
 }
 
 void SquareBoard::remove(CellOccupier* occupier){
@@ -90,19 +97,19 @@ void SquareBoard::remove(CellOccupier* occupier){
     m_occupiers.erase(m_occupiers.find(occupier));
 }
 
-Coord SqaureBoard::find(CellOccupier* occupier){
+Coord SquareBoard::find(CellOccupier* occupier){
     return m_occupiers.find(occupier)->second;
 }
 
 CellOccupier* SquareBoard::lookup(Coord coord){
-    return m_cells[coord.get_y()][coord.get_x()];
+    return m_cells[coord.get_y()][coord.get_x()].get_occupier();
 }
 
 void SquareBoard::initialize_board(){
 	m_cells.resize(m_size);
     for (int i = 0; i < m_size; ++i){
         for( int j = 0; j < m_size; ++j){
-            m_cells[i].push_back(Cell());
+            m_cells[i].push_back(Cell(m_empty));
         }
     }
 }
@@ -129,14 +136,14 @@ void SquareBoard::move_snake(SnakeDirection::Direction direction){
     shared_ptr<SnakeHeadOccupier> head = boost::static_pointer_cast<SnakeHeadOccupier>(front_cell->get_occupier());
     shared_ptr<CellOccupier> tail_snake_occupier = cell->get_occupier();
 
-    cell->set_cell(shared_ptr<CellOccupier> (new EmptyOccupier()));
-    front_cell->set_cell(tail_snake_occupier);
+    cell->set_occupier(shared_ptr<CellOccupier> (new EmptyOccupier()));
+    front_cell->set_occupier(tail_snake_occupier);
 
     Coord new_front = next_coord(head->get_direction(), head->get_coord());
     Cell* new_front_cell = &m_cells[new_front.get_y()][new_front.get_x()];
     head->set_direction(direction);
     head->set_coord(new_front);
-    new_front_cell->set_cell(head);
+    new_front_cell->set_occupier(head);
     m_snake_occupiers.push_front(new_front_cell);
 }
 */

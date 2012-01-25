@@ -4,11 +4,11 @@ Coord::Coord(int x, int y){
 	m_y = y;
 }
 
-int Coord::get_x(){
+int Coord::get_x() const{
 	return m_x;
 }
 
-int Coord::get_y(){
+int Coord::get_y() const{
 	return m_y;
 }
 
