@@ -31,13 +31,13 @@ public:
         if( m_tail != NULL ){
             SnakeTail front = m_tail;
             SnakeTail next_tail = m_tail->get_next();
-            //??? Something went here
+            front->m_next = NULL; // Break the loop.
             while( next_tail != NULL ){
                 SnakeTail* current = next_tail;
                 SnakeTail* next_tail = current->get_next();
                 delete current;
             }
-            delete front;
+            //delete front; don't need this, will be done by last loop
         }
     }
     
