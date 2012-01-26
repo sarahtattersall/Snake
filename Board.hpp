@@ -24,6 +24,8 @@ public:
 	virtual int get_height() = 0;
 	virtual int get_width() = 0;
     virtual void insert(CellOccupier* occupier, Coord coord) = 0;
+    // moves the occupier to the new coord and sets the occupiers previous
+    // cell to empty
     virtual void move(CellOccupier* occupier, Coord coord) = 0;
     virtual void remove(CellOccupier* occupier) = 0;
     virtual Coord find(CellOccupier* occupier) = 0;
