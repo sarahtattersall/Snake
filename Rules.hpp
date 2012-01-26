@@ -15,7 +15,7 @@ class BoardVisualiser;
 
 class Rules{
 public:
-	Rules(shared_ptr<Board> board, ptr_vector<Snake> snakes, WallOccupier* wall);
+	Rules(shared_ptr<Board> board, vector<Snake*> snakes, WallOccupier* wall);
     ~Rules();
 	shared_ptr<Board> get_board();
 	// Returns bool for if the move succeeds. If false

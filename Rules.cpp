@@ -7,9 +7,12 @@
 #include <iostream>
 using namespace std;
 
-Rules::Rules(shared_ptr<Board> board, ptr_vector<Snake> snakes, WallOccupier* wall){
+Rules::Rules(shared_ptr<Board> board, vector<Snake*> snakes, WallOccupier* wall){
 	m_board = board;
-	m_snakes = snakes;
+    for(vector<Snake*>::iterator itr = snakes.begin(); itr != snakes.end(); ++itr){
+        m_snakes.push_back(*itr);
+    }
+	//m_snakes = snakes;
     m_wall = wall;
 }
 
@@ -42,7 +45,6 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
     if (coord_out_of_bounds(new_front)){
 		return false;
 	}
-    CellOccupier* cell = m_board->lookup(new_front);
 	if (m_board->lookup(new_front)->get_type() == CellOccupier::SNAKE){
 		return false;
 	}
@@ -107,8 +109,8 @@ shared_ptr<Rules> RuleBuilder::create(){
 
   set_perimiter();
 
-  //vector<Snake*> snakes;
-  ptr_vector<Snake> snakes;
+  vector<Snake*> snakes;
+  //ptr_vector<Snake> snakes;
   Coord board_middle(m_board->get_width()/2, m_board->get_height()/2);
   for( int player = 0; player < m_player_count; ++player){
     Coord snake_start(board_middle.get_x() - player, board_middle.get_y());
