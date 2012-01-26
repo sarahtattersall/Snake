@@ -1,4 +1,2 @@
 When to make pointer? E.g. in SnakeGUI Scene or pointer?
-Static size in snake object should it just be public? - probably not because don't want to be able to change it.
-Which class put enum in for up down left right?
-Board holding snake objects - have to be able to have access to the coordinates because you need to find the next cell.  Either hold coordinates or make cell/snake occupier know coordinates??
+Multimap or keep a vector of EmptyOccupiers in Rules
