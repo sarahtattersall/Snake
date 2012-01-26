@@ -4,7 +4,7 @@
 #include "EmptyOccupier.hpp"
 #include <iostream>
 #include <map>
-using std::map;
+using std::multimap;
 using std::pair;
 //IAN: This is the only current implementation of Board
 class SquareBoard : public Board {
@@ -24,7 +24,7 @@ private:
     int m_size;
     vector<vector<Cell> > m_cells;
     // Stores occupiers to coordinates
-    map<CellOccupier*, Coord> m_occupiers;
+    multimap<CellOccupier*, Coord> m_occupiers;
     // Initializes the board with empty cells.
     void initialize_board();
     //Coord next_coord(SnakeDirection::Direction direction, Coord coord);
@@ -85,9 +85,9 @@ void SquareBoard::move(CellOccupier* occupier, const Coord coord){
     m_cells[old_coord.get_y()][old_coord.get_x()].set_occupier(m_empty);
     m_cells[coord.get_y()][coord.get_x()].set_occupier(occupier);
     //TODO: Check this overwrites!
-    if( m_occupiers.find(occupier) == m_occupiers.end() ){
-        m_occupiers.erase(m_occupiers.find(occupier));
-    }
+    //if( m_occupiers.find(occupier) == m_occupiers.end() ){
+    //    m_occupiers.erase(m_occupiers.find(occupier));
+    //}
     m_occupiers.insert(pair<CellOccupier*,Coord>(occupier, coord));
 }
 
@@ -110,6 +110,7 @@ void SquareBoard::initialize_board(){
     for (int i = 0; i < m_size; ++i){
         for( int j = 0; j < m_size; ++j){
             m_cells[i].push_back(Cell(m_empty));
+            m_occupiers.insert(pair<CellOccupier*,Coord>(m_empty, Coord(j,i)));
         }
     }
 }
