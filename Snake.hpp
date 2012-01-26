@@ -11,6 +11,7 @@ using boost::shared_ptr;
 
 class SnakeTail : public CellOccupier{
 public:
+    friend class Snake;
 	SnakeTail() : CellOccupier() {};
   	virtual TYPE get_type() { return SNAKE; }
     SnakeTail* get_next(){
@@ -29,12 +30,12 @@ public:
     
     ~Snake(){
         if( m_tail != NULL ){
-            SnakeTail front = m_tail;
-            SnakeTail next_tail = m_tail->get_next();
+            SnakeTail* front = m_tail;
+            SnakeTail* next_tail = m_tail->get_next();
             front->m_next = NULL; // Break the loop.
             while( next_tail != NULL ){
                 SnakeTail* current = next_tail;
-                SnakeTail* next_tail = current->get_next();
+                next_tail = current->get_next();
                 delete current;
             }
             //delete front; don't need this, will be done by last loop
@@ -55,7 +56,7 @@ public:
 private:
     int m_size;
     Coord::Direction m_direction;
-    SnakeTail m_tail;
+    SnakeTail* m_tail;
 };
 
 
