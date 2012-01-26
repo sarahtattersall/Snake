@@ -22,81 +22,21 @@ private:
 };
 
 
-//TODO: Move into CPP
 //TODO: Made Snake a SnakeTail for quick fix to make linked list circular. Fix.
-class Snake : public SnakeTail{
+class Snake : public CellOccupier{
 public:
-	Snake(int size, Coord::Direction d) : SnakeTail(){
-        m_size = size;
-        m_direction = d;
-    }
-    
-    ~Snake(){
-        if( m_tail != NULL ){
-            /*(SnakeTail* front = m_tail;
-            SnakeTail* next_tail = m_tail->get_next();
-            front->m_next = NULL; // Break the loop.
-            while( next_tail != NULL ){
-                SnakeTail* current = next_tail;
-                next_tail = current->get_next();
-                delete current;
-            }*/
-            //delete front; don't need this, will be done by last loop
-        }
-    }
-    
+	Snake(int size, Coord::Direction d);
+    ~Snake();
   	virtual TYPE get_type() { return SNAKE; }
     
-    Coord::Direction get_direction(){
-        return m_direction;    
-    }
-    void set_direction(Coord::Direction d){
-        m_direction = d;
-    }
-    void build_tail(shared_ptr<Board> board){
-        if( m_size > 1 ){
-            Coord coord = board->find(this);
-            Coord::Direction direction = Coord::inverse(m_direction);
-            coord = coord.move(direction);
-            SnakeTail* tail = new SnakeTail();
-            board->insert(tail, coord);
-            m_tail = tail;
-            SnakeTail* next;
-            for(int i = 0; i < m_size - 2; ++i){
-                coord = coord.move(direction);
-                next = new SnakeTail();
-                board->insert(next, coord);
-                tail->m_next = next;
-                tail = next;
-            }
-            // TODO: Fix cast
-            tail->m_next = (SnakeTail*) this;
-        }
-    }
+    Coord::Direction get_direction();
+    void set_direction(Coord::Direction d);
+    void build_tail(shared_ptr<Board> board);
 
-    SnakeTail* find_tail(){
-        if( m_tail != NULL ){
-            // Is this dangerous? Don't want to be able to alter it? Make it const?
-            find_prev(this);
-        } else{
-            // Not sure about this.
-            return m_tail;        
-        }
-        return NULL;
-    }
-
-    int get_size(){
-        return m_size;    
-    }
-
+    SnakeTail* find_tail();
+    int get_size();
     // TODO: TEST THIS LOGIC
-    void move_tail(){
-        SnakeTail* tail = find_tail();
-        SnakeTail* new_tail = find_prev(tail);
-        new_tail->m_next = tail->m_next;
-        tail->m_next = m_tail;
-        m_tail = tail;
-    }
+    void move_tail();
 
 private:
     int m_size;
@@ -104,34 +44,6 @@ private:
     SnakeTail* m_tail;
     // Would it have been better to be doubly linked?
     // Although I know Ian said not...?!?
-    SnakeTail* find_prev(SnakeTail* tail){
-        SnakeTail* next = m_tail;
-        while(next->m_next != tail ){
-            next = next->m_next;
-        }
-        return next;
-    }
+    SnakeTail* find_prev(SnakeTail* tail);
 };
-
-
-// TODO: SNAKE DOESNT NEED TO HOLD COORDINATES JUST MAKE SNAKE OCCUPIERS
-// IN BOARD A LINKED LIST, MOVE THE HEAD AND REINSERT TAIL NEXT TO HEAD.
-// TRY AND MAKE IT CIRCULAR
-/*class Snake{
-public:
-	Snake(int size = 3);
-	int get_size();
-	// Adds coord at head of snake
-	void push_front(Coord coord);
-	// Adds coord at back of snake
-	void push_back(Coord coord);
-	void remove_back();
-	Coord back();
-	Coord front();
-	
-private:
-	int m_size;
-	deque<Coord> m_coords;
-};
-*/
 #endif

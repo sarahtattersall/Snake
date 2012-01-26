@@ -2,6 +2,7 @@ TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
 INCLUDEPATH += .
+CONFIG += qt debug
 
 # Input
 HEADERS += Board.hpp \
@@ -26,5 +27,6 @@ SOURCES += Board.cpp \
            main.cpp \
            Rules.cpp \
            Scene.cpp \
+           Snake.cpp \
            SnakeObject.cpp \
            TextualBoardVisualiser.cpp
