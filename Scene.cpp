@@ -27,7 +27,7 @@ Scene::~Scene(){
 // TODO FIX THIS ONCE MADE A SNAKE HEAD THAT KNOWS ITS DIRECTION
 void Scene::move_snake(){
     if(!m_key_press){
-        m_rules->move_snake(0);
+    //    m_rules->move_snake(0);
     }
     updateView();
     m_key_press = false;
@@ -60,7 +60,7 @@ void Scene::updateView(){
 	QTransform transform;
 	for( int row = 0; row < m_board->get_height(); ++row ){
 		for( int col = 0; col < m_board->get_width(); ++col ){
-			CellOccupier* occupier = m_board->get(col, row).get_occupier();
+			CellOccupier* occupier = m_board->lookup(Coord(col, row));
 			int x = mapToView(col, SnakeObject::get_width());
 			int y = mapToView(row, SnakeObject::get_height());
 			// Would rather remove if not snake?
