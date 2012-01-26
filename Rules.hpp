@@ -30,6 +30,7 @@ private:
 	// Determines if a Coord is out of bounds for the board
 	bool coord_out_of_bounds(Coord coord);
     WallOccupier* m_wall;
+    bool compute_move(Snake& snake, Coord::Direction direction);
 };
 
 

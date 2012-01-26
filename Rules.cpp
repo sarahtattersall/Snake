@@ -26,22 +26,38 @@ bool Rules::coord_out_of_bounds(Coord coord){
 }
 
 bool Rules::move_snake(int index, Coord::Direction direction){
-    
-	/*Coord direction_coord = SnakeDirection::to_coord(direction);
-	Coord new_front = m_board->get_snake_head()->get_coord() + direction_coord;
-	if (coord_out_of_bounds(new_front)){
-		return false;
-	}
-	if (m_board->get(new_front).get_occupier()->get_type() == CellOccupier::SNAKE){
-		return false;
-	}
-    m_board->move_snake(direction);*/
-	return true;
+    Snake& snake = m_snakes[index];
+    return compute_move(snake, direction);
 }
 
 bool Rules::move_snake(int index){
-    return true;
+    Snake& snake = m_snakes[index];
+    return compute_move(snake, snake.get_direction());
 }
+
+bool Rules::compute_move(Snake& snake, Coord::Direction direction){
+    Coord old_front = m_board->find(&snake);
+    Coord new_front = old_front.move(direction);
+
+    if (coord_out_of_bounds(new_front)){
+		return false;
+	}
+    CellOccupier* cell = m_board->lookup(new_front);
+	if (m_board->lookup(new_front)->get_type() == CellOccupier::SNAKE){
+		return false;
+	}
+
+    m_board->move(&snake, new_front);
+    snake.set_direction(direction);
+    /*if(snake.get_size() > 1){
+        SnakeTail* tail = snake.find_tail();
+        m_board->move(tail, old_front);
+        // Not entirely sure if this should be the snake?
+        snake.move_tail();         
+    }*/
+	return true;
+}
+
 
 RuleBuilder::RuleBuilder(){
 	m_player_count = 0;

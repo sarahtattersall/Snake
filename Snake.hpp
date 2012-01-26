@@ -21,23 +21,26 @@ private:
     SnakeTail* m_next;
 };
 
-class Snake : public CellOccupier{
+
+//TODO: Move into CPP
+//TODO: Made Snake a SnakeTail for quick fix to make linked list circular. Fix.
+class Snake : public SnakeTail{
 public:
-	Snake(int size, Coord::Direction d) : CellOccupier(){
+	Snake(int size, Coord::Direction d) : SnakeTail(){
         m_size = size;
         m_direction = d;
     }
     
     ~Snake(){
         if( m_tail != NULL ){
-            SnakeTail* front = m_tail;
+            /*(SnakeTail* front = m_tail;
             SnakeTail* next_tail = m_tail->get_next();
             front->m_next = NULL; // Break the loop.
             while( next_tail != NULL ){
                 SnakeTail* current = next_tail;
                 next_tail = current->get_next();
                 delete current;
-            }
+            }*/
             //delete front; don't need this, will be done by last loop
         }
     }
@@ -70,10 +73,44 @@ public:
             tail->m_next = (SnakeTail*) this;
         }
     }
+
+    SnakeTail* find_tail(){
+        if( m_tail != NULL ){
+            // Is this dangerous? Don't want to be able to alter it? Make it const?
+            find_prev(this);
+        } else{
+            // Not sure about this.
+            return m_tail;        
+        }
+        return NULL;
+    }
+
+    int get_size(){
+        return m_size;    
+    }
+
+    // TODO: TEST THIS LOGIC
+    void move_tail(){
+        SnakeTail* tail = find_tail();
+        SnakeTail* new_tail = find_prev(tail);
+        new_tail->m_next = tail->m_next;
+        tail->m_next = m_tail;
+        m_tail = tail;
+    }
+
 private:
     int m_size;
     Coord::Direction m_direction;
     SnakeTail* m_tail;
+    // Would it have been better to be doubly linked?
+    // Although I know Ian said not...?!?
+    SnakeTail* find_prev(SnakeTail* tail){
+        SnakeTail* next = m_tail;
+        while(next->m_next != tail ){
+            next = next->m_next;
+        }
+        return next;
+    }
 };
 
 
