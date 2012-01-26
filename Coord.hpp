@@ -28,6 +28,20 @@ public:
     }
     return *this;
   }
+
+static Direction inverse(Direction direction){
+    switch(direction){
+        case UP:
+            return DOWN;
+        case DOWN:
+            return UP;
+        case LEFT:
+            return RIGHT;
+        case RIGHT:
+            return LEFT;
+    }
+    return direction;
+ }
 private:
 	int m_x;
 	int m_y;

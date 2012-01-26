@@ -2,7 +2,6 @@
 #define BOARD_BUILDER_HPP
 #include "Cell.hpp"
 #include "Coord.hpp"
-#include "Snake.hpp"
 #include <vector>
 #include <list>
 #include <boost/shared_ptr.hpp>

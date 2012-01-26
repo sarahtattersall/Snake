@@ -3,9 +3,9 @@
 #include "Coord.hpp"
 #include "CellOccupier.hpp"
 #include "SnakeDirection.hpp"
+#include "Board.hpp"
 #include <deque>
 #include <boost/shared_ptr.hpp>
-class Board;
 using std::deque;
 using boost::shared_ptr;
 
@@ -51,7 +51,24 @@ public:
         m_direction = d;
     }
     void build_tail(shared_ptr<Board> board){
-    //TODO: Fill in later
+        if( m_size > 1 ){
+            Coord coord = board->find(this);
+            Coord::Direction direction = Coord::inverse(m_direction);
+            coord = coord.move(direction);
+            SnakeTail* tail = new SnakeTail();
+            board->insert(tail, coord);
+            m_tail = tail;
+            SnakeTail* next;
+            for(int i = 0; i < m_size - 2; ++i){
+                coord = coord.move(direction);
+                next = new SnakeTail();
+                board->insert(next, coord);
+                tail->m_next = next;
+                tail = next;
+            }
+            // TODO: Fix cast
+            tail->m_next = (SnakeTail*) this;
+        }
     }
 private:
     int m_size;

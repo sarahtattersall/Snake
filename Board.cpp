@@ -27,7 +27,7 @@ private:
     map<CellOccupier*, Coord> m_occupiers;
     // Initializes the board with empty cells.
     void initialize_board();
-    Coord next_coord(SnakeDirection::Direction direction, Coord coord);
+    //Coord next_coord(SnakeDirection::Direction direction, Coord coord);
     EmptyOccupier* m_empty;
 };
 
