@@ -102,6 +102,10 @@ shared_ptr<Rules> RuleBuilder::create(){
   if (m_board.get() == NULL || m_player_count == 0){
     throw RuleBuilderException();
   }
+  //DEFAULT
+  if (m_snake_size == 0){
+    m_snake_size = 3;
+  }
   //Subtract two for board perimiter
   if (m_snake_size >= (m_board->get_width()/2 - 2)){
     throw SnakeTooBigException();
