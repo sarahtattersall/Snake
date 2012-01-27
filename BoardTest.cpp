@@ -83,5 +83,5 @@ void BoardTest::correctLookup(){
     m_builder7->set_size(m_test_size);
     shared_ptr<Board> board7 = m_builder7->create();
     board7->insert(m_snake_occupier, Coord(0,0));
-    CPPUNIT_ASSERT_EQUAL( board7-7lookup(Coord(0,0)), m_snake_occupier );
+    CPPUNIT_ASSERT_EQUAL( board7->lookup(Coord(0,0)), m_snake_occupier );
 }
