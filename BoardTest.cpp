@@ -61,5 +61,7 @@ void BoardTest::correctMove(){
     shared_ptr<Board> board5 = m_builder5->create();
     board5->insert(m_snake_occupier, Coord(0,0));
     board5->move(m_snake_occupier, Coord(1,0));
-    CPPUNIT_ASSERT_EQUAL( board5->find(m_snake_occupier), Coord(1,0) );
+    Coord coord = board5->find(m_snake_occupier);
+    CPPUNIT_ASSERT_EQUAL( coord.get_x(), 1 );
+    CPPUNIT_ASSERT_EQUAL( coord.get_y(), 0 );
 }

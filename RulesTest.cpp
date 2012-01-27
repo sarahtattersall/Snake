@@ -19,7 +19,7 @@ void RulesTest::setUp(){
 	m_builder7 = new RuleBuilder();
 	m_builder8 = new RuleBuilder();
 	m_builder9 = new RuleBuilder();
-	m_test_board_size = 10;
+	m_test_board_size = 20;
 	m_test_player_count = 2;
 	m_test_snake_size = 2;
 	m_test_board2 = make_board();
