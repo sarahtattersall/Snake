@@ -27,3 +27,8 @@ Coord Coord::operator=(const Coord& coord){
 	m_y = coord.m_y;
     return *this;
 }
+
+bool Coord::operator==(const Coord& coord){
+    return ((m_x == coord.m_x) && (m_y == coord.m_y));
+
+}

@@ -15,6 +15,8 @@ public:
   // Overrides = operator
   Coord operator=(const Coord& coord);
 
+  bool operator==(const Coord& coord);
+
   Coord move(Direction direction) {
     switch(direction){
     case UP:
