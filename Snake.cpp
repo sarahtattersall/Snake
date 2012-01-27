@@ -6,14 +6,14 @@ Snake::Snake(int size, Coord::Direction d) : CellOccupier(){
 
 Snake::~Snake(){
     if( m_tail != NULL ){
-        /*(SnakeTail* front = m_tail;
+        SnakeTail* front = m_tail;
         SnakeTail* next_tail = m_tail->get_next();
         front->m_next = NULL; // Break the loop.
         while( next_tail != NULL ){
             SnakeTail* current = next_tail;
             next_tail = current->get_next();
             delete current;
-        }*/
+        }
         //delete front; don't need this, will be done by last loop
     }
 }
@@ -40,15 +40,13 @@ void Snake::build_tail(shared_ptr<Board> board){
             tail->m_next = next;
             tail = next;
         }
-        // TODO: Fix cast
-        tail->m_next = (SnakeTail*) this;
+        tail->m_next = m_tail;
     }
 }
 
 SnakeTail* Snake::find_tail(){
     if( m_tail != NULL ){
-        // Is this dangerous? Don't want to be able to alter it? Make it const?
-        //return find_prev(this);
+        return find_prev(m_tail);
     } else{
         // Not sure about this.
         return m_tail;        

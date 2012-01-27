@@ -12,7 +12,6 @@ Rules::Rules(shared_ptr<Board> board, vector<Snake*> snakes, WallOccupier* wall)
     for(vector<Snake*>::iterator itr = snakes.begin(); itr != snakes.end(); ++itr){
         m_snakes.push_back(*itr);
     }
-	//m_snakes = snakes;
     m_wall = wall;
 }
 
@@ -51,12 +50,12 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
 
     m_board->move(&snake, new_front);
     snake.set_direction(direction);
-    /*if(snake.get_size() > 1){
+    if(snake.get_size() > 1){
         SnakeTail* tail = snake.find_tail();
         m_board->move(tail, old_front);
-        // Not entirely sure if this should be the snake?
+        // Not entirely sure if this should be in snake?
         snake.move_tail();         
-    }*/
+    }
 	return true;
 }
 
