@@ -85,9 +85,9 @@ void SquareBoard::move(CellOccupier* occupier, const Coord coord){
     m_cells[old_coord.get_y()][old_coord.get_x()].set_occupier(m_empty);
     m_cells[coord.get_y()][coord.get_x()].set_occupier(occupier);
     //TODO: Check this overwrites!
-    //if( m_occupiers.find(occupier) == m_occupiers.end() ){
-    //    m_occupiers.erase(m_occupiers.find(occupier));
-    //}
+    if( m_occupiers.find(occupier) != m_occupiers.end() ){
+        m_occupiers.erase(m_occupiers.find(occupier));
+    }
     m_occupiers.insert(pair<CellOccupier*,Coord>(occupier, coord));
 }
 
