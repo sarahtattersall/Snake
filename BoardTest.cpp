@@ -43,7 +43,7 @@ void BoardTest::createdEmpty(){
 	shared_ptr<Board> board3 = m_builder3->create();
 	for(int i = 0; i < board3->get_height(); ++i){
 		for(int j = 0; j < board3->get_width(); ++j){
-			CPPUNIT_ASSERT_EQUAL(board3->lookup(j,i)->get_type(),  CellOccupier::EMPTY);
+			CPPUNIT_ASSERT_EQUAL(board3->lookup(Coord(j,i))->get_type(),  CellOccupier::EMPTY);
 		}
 	}
 }
