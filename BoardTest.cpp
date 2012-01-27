@@ -14,6 +14,8 @@ void BoardTest::setUp(){
 	m_builder3 = new BoardBuilder();
 	m_builder4 = new BoardBuilder();
 	m_builder5 = new BoardBuilder();
+	m_builder6 = new BoardBuilder();
+	m_builder7 = new BoardBuilder();
     m_snake_occupier = new SnakeTail();
 	m_test_size = 10;
 }
@@ -24,6 +26,8 @@ void BoardTest::tearDown(){
 	delete m_builder3;
 	delete m_builder4;
 	delete m_builder5;
+	delete m_builder6;
+	delete m_builder7;
     delete m_snake_occupier;
 }
 
@@ -64,4 +68,20 @@ void BoardTest::correctMove(){
     Coord coord = board5->find(m_snake_occupier);
     CPPUNIT_ASSERT_EQUAL( coord.get_x(), 1 );
     CPPUNIT_ASSERT_EQUAL( coord.get_y(), 0 );
+}
+
+void BoardTest::correctFind(){
+    m_builder6->set_size(m_test_size);
+    shared_ptr<Board> board6 = m_builder6->create();
+    board6->insert(m_snake_occupier, Coord(0,0));
+    Coord coord = board6->find(m_snake_occupier);
+    CPPUNIT_ASSERT_EQUAL( coord.get_x(), 0 );
+    CPPUNIT_ASSERT_EQUAL( coord.get_y(), 0 );
+}
+
+void BoardTest::correctLookup(){
+    m_builder7->set_size(m_test_size);
+    shared_ptr<Board> board7 = m_builder7->create();
+    board6->insert(m_snake_occupier, Coord(0,0));
+    CPPUNIT_ASSERT_EQUAL( board5-7lookup(Coord(0,0)), m_snake_occupier );
 }
