@@ -12,8 +12,9 @@ void BoardTest::setUp(){
 	m_builder1 = new BoardBuilder();
 	m_builder2 = new BoardBuilder();
 	m_builder3 = new BoardBuilder();
-	m_builder4= new BoardBuilder();
-    m_snake_occupier = new SnakeOccupier();
+	m_builder4 = new BoardBuilder();
+	m_builder5 = new BoardBuilder();
+    m_snake_occupier = new SnakeTail();
 	m_test_size = 10;
 }
 
@@ -22,28 +23,29 @@ void BoardTest::tearDown(){
 	delete m_builder2;
 	delete m_builder3;
 	delete m_builder4;
+	delete m_builder5;
     delete m_snake_occupier;
 }
 
 void BoardTest::sizeTest(){
-	/*m_builder1->set_size(m_test_size);
+	m_builder1->set_size(m_test_size);
 	shared_ptr<Board> board1 = m_builder1->create();
 	CPPUNIT_ASSERT_EQUAL(board1->get_width(), m_test_size);
-	CPPUNIT_ASSERT_EQUAL(board1->get_height(), m_test_size);*/
+	CPPUNIT_ASSERT_EQUAL(board1->get_height(), m_test_size);
 }
 
 void BoardTest::builderFailsTest(){
-	/*CPPUNIT_ASSERT_THROW(m_builder2->create(), BoardBuilderException);*/
+	CPPUNIT_ASSERT_THROW(m_builder2->create(), BoardBuilderException);
 }
 
 void BoardTest::createdEmpty(){
-	/*m_builder3->set_size(m_test_size);
+    m_builder3->set_size(m_test_size);
 	shared_ptr<Board> board3 = m_builder3->create();
-	for(int i = 0; i < board3->get_width(); ++i){
-		for(int j = 0; j < board3->get_height(); ++j){
-			CPPUNIT_ASSERT_EQUAL(board3->get(i,j).get_occupier()->get_type(),  CellOccupier::EMPTY );
+	for(int i = 0; i < board3->get_height(); ++i){
+		for(int j = 0; j < board3->get_width(); ++j){
+			CPPUNIT_ASSERT_EQUAL(board3->lookup(j,i)->get_type(),  CellOccupier::EMPTY);
 		}
-	}*/
+	}
 }
 
 void BoardTest::insertInRightCell(){
@@ -52,4 +54,12 @@ void BoardTest::insertInRightCell(){
 	Coord coord(3,3);
 	board4->insert(m_snake_occupier, coord);
 	CPPUNIT_ASSERT_EQUAL(board4->get(coord).get_occupier()->get_type(), CellOccupier::SNAKE);
+}
+
+void BoardTest::correctMove(){
+    m_builder5->set_size(m_test_size);
+    shared_ptr<Board> board5 = m_builder5->create();
+    board5->insert(m_snake_occupier, Coord(0,0));
+    board5->move(m_snake_occupier, Coord(1,0));
+    CPPUNIT_ASSERT_EQUAL( board5->find(m_snake_occupier), Coord(1,0) );
 }
