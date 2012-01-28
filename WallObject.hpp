@@ -1,13 +1,13 @@
-#ifndef SNAKE_OBJECT_HPP
-#define SNAKE_OBJECT_HPP
+#ifndef WALL_OBJECT_HPP
+#define WALL_OBJECT_HPP
 
 #include "CellObject.hpp"
 #include <QPainter>
 #include <QObject>
-class SnakeObject : public CellObject{
+class WallObject : public CellObject{
 public:
 	// Takes coords for scene.
-	SnakeObject(int x, int y);
+	WallObject(int x, int y);
 	virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
 };
 

@@ -8,6 +8,7 @@ CONFIG += qt debug
 HEADERS += Board.hpp \
            BoardVisualiser.hpp \
            Cell.hpp \
+		   CellObject.hpp \
            CellOccupier.hpp \
            Coord.hpp \
            EmptyOccupier.hpp \
@@ -17,10 +18,12 @@ HEADERS += Board.hpp \
            SnakeDirection.hpp \
            SnakeException.hpp \
            SnakeObject.hpp \
-           TextualBoardVisualiser.hpp
+           TextualBoardVisualiser.hpp \
+		   WallObject.hpp
 SOURCES += Board.cpp \
            BoardVisualiser.cpp \
            Cell.cpp \
+		   CellObject.cpp \
            CellOccupier.cpp \
            Coord.cpp \
            EmptyOccupier.cpp \
@@ -29,4 +32,5 @@ SOURCES += Board.cpp \
            Scene.cpp \
            Snake.cpp \
            SnakeObject.cpp \
-           TextualBoardVisualiser.cpp
+           TextualBoardVisualiser.cpp \
+		   WallObject.cpp

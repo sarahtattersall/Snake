@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 {
 	try{
 		BoardBuilder board_builder;
-		board_builder.set_size(100);
+		board_builder.set_size(40);
 		shared_ptr<Board> board =  board_builder.create();
 	    RuleBuilder rule_builder;
 	    rule_builder.set_board(board);

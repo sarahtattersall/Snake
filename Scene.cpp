@@ -1,5 +1,6 @@
 #include "Scene.hpp"
 #include "SnakeObject.hpp"
+#include "WallObject.hpp"
 #include "CellOccupier.hpp"
 #include "SnakeDirection.hpp"
 Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
@@ -71,6 +72,8 @@ void Scene::update_view(){
 			}
 			if(occupier->get_type() == CellOccupier::SNAKE){
 				addItem(new SnakeObject(x, y));
+			} else if(occupier->get_type() == CellOccupier::WALL){
+				addItem(new WallObject(x, y));
 			}
 		}
 	}
