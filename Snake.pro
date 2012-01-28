@@ -26,7 +26,6 @@ SOURCES += Board.cpp \
 		   CellObject.cpp \
            CellOccupier.cpp \
            Coord.cpp \
-           EmptyOccupier.cpp \
            main.cpp \
            Rules.cpp \
            Scene.cpp \
