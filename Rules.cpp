@@ -5,6 +5,7 @@
 #include "Snake.hpp"
 #include <string.h>
 #include <iostream>
+#include <stdlib.h>
 using namespace std;
 
 Rules::Rules(shared_ptr<Board> board, vector<Snake*> snakes, WallOccupier* wall){
@@ -13,6 +14,8 @@ Rules::Rules(shared_ptr<Board> board, vector<Snake*> snakes, WallOccupier* wall)
         m_snakes.push_back(*itr);
     }
     m_wall = wall;
+	m_food = new FoodOccupier();
+	place_food();
 }
 
 Rules::~Rules(){
@@ -21,6 +24,16 @@ Rules::~Rules(){
 
 shared_ptr<Board> Rules::get_board(){
 	return m_board;
+}
+
+void Rules::place_food(){
+	int x = rand() % m_board->get_width();
+	int y = rand() % m_board->get_height();
+	if( m_board->lookup(Coord(x,y))->get_type() == CellOccupier::EMPTY ){
+		m_board->insert(m_food, Coord(x,y));
+	} else {
+		place_food();
+	}
 }
 
 bool Rules::coord_out_of_bounds(Coord coord){

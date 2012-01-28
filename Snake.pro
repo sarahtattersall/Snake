@@ -12,6 +12,7 @@ HEADERS += Board.hpp \
            CellOccupier.hpp \
            Coord.hpp \
            EmptyOccupier.hpp \
+		   FoodObject.hpp \
 		   FoodOccupier.hpp \
            Rules.hpp \
            Scene.hpp \
@@ -26,6 +27,7 @@ SOURCES += Board.cpp \
            Cell.cpp \
 		   CellObject.cpp \
            Coord.cpp \
+		   FoodObject.cpp \
            main.cpp \
            Rules.cpp \
            Scene.cpp \

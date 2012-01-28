@@ -5,6 +5,7 @@
 #include "SnakeDirection.hpp"
 #include "BoardVisualiser.hpp"
 #include "WallOccupier.hpp"
+#include "FoodOccupier.hpp"
 #include <boost/shared_ptr.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 using std::vector;
@@ -27,10 +28,12 @@ public:
 private:
 	ptr_vector<Snake> m_snakes;
 	shared_ptr<Board> m_board;
+    WallOccupier* m_wall;
+	FoodOccupier* m_food;
 	// Determines if a Coord is out of bounds for the board
 	bool coord_out_of_bounds(Coord coord);
-    WallOccupier* m_wall;
     bool compute_move(Snake& snake, Coord::Direction direction);
+	void place_food();
 	
 };
 

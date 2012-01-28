@@ -1,4 +1,5 @@
 #include "Scene.hpp"
+#include "FoodObject.hpp"
 #include "SnakeObject.hpp"
 #include "WallObject.hpp"
 #include "CellOccupier.hpp"
@@ -88,6 +89,8 @@ void Scene::update_view(){
 				addItem(new SnakeObject(x, y));
 			} else if(occupier->get_type() == CellOccupier::WALL){
 				addItem(new WallObject(x, y));
+			} else if(occupier->get_type() == CellOccupier::FOOD){
+				addItem(new FoodObject(x, y));
 			}
 		}
 	}
