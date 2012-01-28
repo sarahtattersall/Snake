@@ -24,7 +24,6 @@ SOURCES += Board.cpp \
            BoardVisualiser.cpp \
            Cell.cpp \
 		   CellObject.cpp \
-           CellOccupier.cpp \
            Coord.cpp \
            main.cpp \
            Rules.cpp \
