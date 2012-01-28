@@ -34,6 +34,7 @@ public:
     SnakeTail* find_tail();
     int get_size();
     void move_tail();
+	void grow(shared_ptr<Board> board);
 
 private:
     int m_size;

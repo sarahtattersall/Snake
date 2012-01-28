@@ -70,3 +70,15 @@ SnakeTail* Snake::find_prev(SnakeTail* tail){
     }
     return next;
 }
+
+void Snake::grow(shared_ptr<Board> board){
+	Coord front = board->find(this);
+	SnakeTail* new_tail = new SnakeTail();
+	SnakeTail* end_of_tail = find_prev(m_tail);
+	end_of_tail->m_next = new_tail;
+	new_tail->m_next = m_tail;
+	m_tail =  new_tail;
+	board->move(this, front.move(m_direction));
+	board->insert(new_tail, front);
+	
+}

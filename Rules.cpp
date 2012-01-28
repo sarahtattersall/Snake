@@ -54,6 +54,7 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
     Coord old_front = m_board->find(&snake);
     Coord new_front = old_front.move(direction);
 	bool set_food = false;
+	snake.set_direction(direction); // Need to set this here so grow moves snake in right direction
 
     if (coord_out_of_bounds(new_front)){
 		return false;
@@ -63,21 +64,20 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
 		return false;
 	} else if (m_board->lookup(new_front)->get_type() == CellOccupier::FOOD){
 		m_board->remove(m_food);
+		//Should grow move the head? a bit bad logic in this because overwriting where head is before moving head
+		snake.grow(m_board);
 		set_food = true;
-	}
-    m_board->move(&snake, new_front);
-    snake.set_direction(direction);
-	
-    if(snake.get_size() > 1){
-        SnakeTail* tail = snake.find_tail();
-        m_board->move(tail, old_front);
-        // Not entirely sure if this should be in snake?
-        snake.move_tail();         
-    }
-
-	if(set_food){
 		place_food();
+	} else {
+	    m_board->move(&snake, new_front);
+		if(snake.get_size() > 1){
+	        SnakeTail* tail = snake.find_tail();
+	        m_board->move(tail, old_front);
+	        // Not entirely sure if this should be in snake?
+	        snake.move_tail();         
+	    }
 	}
+
 	return true;
 }
 
