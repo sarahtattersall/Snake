@@ -21,8 +21,6 @@ private:
     SnakeTail* m_next;
 };
 
-
-//TODO: Made Snake a SnakeTail for quick fix to make linked list circular. Fix.
 class Snake : public CellOccupier{
 public:
 	Snake(int size, Coord::Direction d);
@@ -35,7 +33,6 @@ public:
 
     SnakeTail* find_tail();
     int get_size();
-    // TODO: TEST THIS LOGIC
     void move_tail();
 
 private:

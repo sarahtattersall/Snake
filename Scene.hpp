@@ -34,10 +34,6 @@ private:
     QTimer* m_timer;
     // A bool to determine if a key has been pressed for the given turn.
     bool m_key_press;
-
-	//FOR DEBUGGING:
-	Log* m_log;
-	static int s_count;
 };
 
 #endif

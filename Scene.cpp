@@ -2,10 +2,7 @@
 #include "SnakeObject.hpp"
 #include "CellOccupier.hpp"
 #include "SnakeDirection.hpp"
-int Scene::s_count = 0;
 Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
-	m_log = new Log("Log.log");
-	
 	m_board = board;
 	m_rules = rules;
     m_key_press = false;
@@ -27,16 +24,10 @@ Scene::~Scene(){
     delete m_timer;
 }
 
-// TODO FIX THIS ONCE MADE A SNAKE HEAD THAT KNOWS ITS DIRECTION
 void Scene::move_snake(){
-	m_log->Write("Count is %d", s_count);
-	s_count++;
     if(!m_key_press){
-		m_log->Write("Calling move_snake");
         m_rules->move_snake(0);
-		m_log->Write("Returned from move_snake");
     }
-	m_log->Write("Calling updateView");
     update_view();
     m_key_press = false;
 }
@@ -65,7 +56,7 @@ int Scene::map_to_view(int x, int size){
 }
 
 void Scene::update_view(){
-	m_log->Write("Entering updateView");
+	//m_log->Write("Entering updateView");
 	QTransform transform;
 	for( int row = 0; row < m_board->get_height(); ++row ){
 		for( int col = 0; col < m_board->get_width(); ++col ){
@@ -83,5 +74,5 @@ void Scene::update_view(){
 			}
 		}
 	}
-	m_log->Write("Leaving updateView");
+	//m_log->Write("Leaving updateView");
 }

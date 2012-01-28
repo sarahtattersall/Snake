@@ -47,9 +47,9 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
 	if (m_board->lookup(new_front)->get_type() == CellOccupier::SNAKE){
 		return false;
 	}
-
     m_board->move(&snake, new_front);
     snake.set_direction(direction);
+	
     if(snake.get_size() > 1){
         SnakeTail* tail = snake.find_tail();
         m_board->move(tail, old_front);

@@ -14,7 +14,6 @@ Snake::~Snake(){
             next_tail = current->get_next();
             delete current;
         }
-        //delete front; don't need this, will be done by last loop
     }
 }
 
@@ -58,12 +57,9 @@ int Snake::get_size(){
     return m_size;    
 }
 
-// TODO: TEST THIS LOGIC
+
 void Snake::move_tail(){
     SnakeTail* tail = find_tail();
-    SnakeTail* new_tail = find_prev(tail);
-    new_tail->m_next = tail->m_next;
-    tail->m_next = m_tail;
     m_tail = tail;
 }
 

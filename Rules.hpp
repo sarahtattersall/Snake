@@ -31,6 +31,7 @@ private:
 	bool coord_out_of_bounds(Coord coord);
     WallOccupier* m_wall;
     bool compute_move(Snake& snake, Coord::Direction direction);
+	
 };
 
 
