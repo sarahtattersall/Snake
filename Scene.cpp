@@ -2,7 +2,10 @@
 #include "SnakeObject.hpp"
 #include "CellOccupier.hpp"
 #include "SnakeDirection.hpp"
+int Scene::s_count = 0;
 Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
+	m_log = new Log("Log.log");
+	
 	m_board = board;
 	m_rules = rules;
     m_key_press = false;
@@ -11,7 +14,7 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
     view.setScene(this);
     view.setBackgroundBrush(Qt::black);
     view.setWindowTitle("Sarah's Amazing Snake Game");
-	updateView();
+	update_view();
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(move_snake()));
@@ -26,10 +29,15 @@ Scene::~Scene(){
 
 // TODO FIX THIS ONCE MADE A SNAKE HEAD THAT KNOWS ITS DIRECTION
 void Scene::move_snake(){
+	m_log->Write("Count is %d", s_count);
+	s_count++;
     if(!m_key_press){
+		m_log->Write("Calling move_snake");
         m_rules->move_snake(0);
+		m_log->Write("Returned from move_snake");
     }
-    updateView();
+	m_log->Write("Calling updateView");
+    update_view();
     m_key_press = false;
 }
 
@@ -52,17 +60,18 @@ void Scene::keyPressEvent(QKeyEvent* event){
     QGraphicsScene::keyPressEvent(event);
 }
 
-int Scene::mapToView(int x, int size){
+int Scene::map_to_view(int x, int size){
 	return x*size;
 }
 
-void Scene::updateView(){
+void Scene::update_view(){
+	m_log->Write("Entering updateView");
 	QTransform transform;
 	for( int row = 0; row < m_board->get_height(); ++row ){
 		for( int col = 0; col < m_board->get_width(); ++col ){
 			CellOccupier* occupier = m_board->lookup(Coord(col, row));
-			int x = mapToView(col, SnakeObject::get_width());
-			int y = mapToView(row, SnakeObject::get_height());
+			int x = map_to_view(col, SnakeObject::get_width());
+			int y = map_to_view(row, SnakeObject::get_height());
 			// Would rather remove if not snake?
 			QGraphicsItem* item = itemAt(x, y, transform);
 			if(item){
@@ -74,4 +83,5 @@ void Scene::updateView(){
 			}
 		}
 	}
+	m_log->Write("Leaving updateView");
 }

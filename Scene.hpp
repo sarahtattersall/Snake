@@ -3,6 +3,7 @@
 
 #include "Rules.hpp"
 #include "Board.hpp"
+#include "Log.hpp"
 
 #include <boost/shared_ptr.hpp>
 #include <QGraphicsScene>
@@ -26,13 +27,17 @@ private:
 	QPainter painter;
 	shared_ptr<Board> m_board;
 	shared_ptr<Rules> m_rules;
-	void updateView();
+	void update_view();
 	// Maps board point x to the view, taking into consideration
 	// size of objects
-	int mapToView(int x, int size);
+	int map_to_view(int x, int size);
     QTimer* m_timer;
     // A bool to determine if a key has been pressed for the given turn.
     bool m_key_press;
+
+	//FOR DEBUGGING:
+	Log* m_log;
+	static int s_count;
 };
 
 #endif
