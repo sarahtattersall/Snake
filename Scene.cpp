@@ -34,19 +34,21 @@ void Scene::move_snake(){
 }
 
 void Scene::keyPressEvent(QKeyEvent* event){
-	switch(event->key()){
-		case Qt::Key_Up:
-			m_rules->move_snake(0, Coord::UP);
-			break;
-		case Qt::Key_Down:
-			m_rules->move_snake(0, Coord::DOWN);
-			break;
-		case Qt::Key_Left:
-			m_rules->move_snake(0, Coord::LEFT);
-			break;
-		case Qt::Key_Right:
-			m_rules->move_snake(0, Coord::RIGHT);
-			break;
+	if(!m_key_press){
+		switch(event->key()){
+			case Qt::Key_Up:
+				m_rules->move_snake(0, Coord::UP);
+				break;
+			case Qt::Key_Down:
+				m_rules->move_snake(0, Coord::DOWN);
+				break;
+			case Qt::Key_Left:
+				m_rules->move_snake(0, Coord::LEFT);
+				break;
+			case Qt::Key_Right:
+				m_rules->move_snake(0, Coord::RIGHT);
+				break;
+		}
 	}
     m_key_press = true;
     QGraphicsScene::keyPressEvent(event);
