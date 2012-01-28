@@ -26,22 +26,6 @@ void Snake::set_direction(Coord::Direction d){
 }
 void Snake::build_tail(shared_ptr<Board> board){
     if( m_size > 1 ){
-        /*Coord coord = board->find(this);
-        Coord::Direction direction = Coord::inverse(m_direction);
-        coord = coord.move(direction);
-        SnakeTail* tail = new SnakeTail();
-        board->insert(tail, coord);
-        m_tail = tail;
-        SnakeTail* next;
-        for(int i = 0; i < m_size - 2; ++i){
-            coord = coord.move(direction);
-            next = new SnakeTail();
-            board->insert(next, coord);
-            tail->m_next = next;
-            tail = next;
-        }
-        tail->m_next = m_tail;
-		*/
 		for(int i = 0; i < m_size - 1; ++i){
 			grow(board);
 		}
@@ -51,9 +35,6 @@ void Snake::build_tail(shared_ptr<Board> board){
 SnakeTail* Snake::find_tail(){
     if( m_tail != NULL ){
         return find_prev(m_tail);
-    } else{
-        // Not sure about this.
-        return m_tail;        
     }
     return NULL;
 }
