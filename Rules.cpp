@@ -3,10 +3,11 @@
 #include "EmptyOccupier.hpp"
 #include "WallOccupier.hpp"
 #include "Snake.hpp"
-#include <string.h>
 #include <iostream>
+#include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
-using namespace std;
+#include <time.h>
 
 Rules::Rules(shared_ptr<Board> board, vector<Snake*> snakes, WallOccupier* wall){
 	m_board = board;
@@ -15,6 +16,7 @@ Rules::Rules(shared_ptr<Board> board, vector<Snake*> snakes, WallOccupier* wall)
     }
     m_wall = wall;
 	m_food = new FoodOccupier();
+	srand(time(NULL));
 	place_food();
 }
 
