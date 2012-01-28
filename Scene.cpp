@@ -72,7 +72,6 @@ int Scene::map_to_view(int x, int size){
 }
 
 void Scene::update_view(){
-	//m_log->Write("Entering updateView");
 	QTransform transform;
 	for( int row = 0; row < m_board->get_height(); ++row ){
 		for( int col = 0; col < m_board->get_width(); ++col ){
@@ -92,5 +91,4 @@ void Scene::update_view(){
 			}
 		}
 	}
-	//m_log->Write("Leaving updateView");
 }
