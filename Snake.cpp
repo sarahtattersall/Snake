@@ -2,6 +2,7 @@
 Snake::Snake(int size, Coord::Direction d) : CellOccupier(){
     m_size = size;
     m_direction = d;
+	m_tail = NULL;
 }
 
 Snake::~Snake(){
@@ -25,7 +26,7 @@ void Snake::set_direction(Coord::Direction d){
 }
 void Snake::build_tail(shared_ptr<Board> board){
     if( m_size > 1 ){
-        Coord coord = board->find(this);
+        /*Coord coord = board->find(this);
         Coord::Direction direction = Coord::inverse(m_direction);
         coord = coord.move(direction);
         SnakeTail* tail = new SnakeTail();
@@ -40,6 +41,10 @@ void Snake::build_tail(shared_ptr<Board> board){
             tail = next;
         }
         tail->m_next = m_tail;
+		*/
+		for(int i = 0; i < m_size - 1; ++i){
+			grow(board);
+		}
     }
 }
 
@@ -73,12 +78,18 @@ SnakeTail* Snake::find_prev(SnakeTail* tail){
 
 void Snake::grow(shared_ptr<Board> board){
 	Coord front = board->find(this);
-	SnakeTail* new_tail = new SnakeTail();
-	SnakeTail* end_of_tail = find_prev(m_tail);
-	end_of_tail->m_next = new_tail;
-	new_tail->m_next = m_tail;
-	m_tail =  new_tail;
-	board->move(this, front.move(m_direction));
-	board->insert(new_tail, front);
-	
+	if( m_tail != NULL ){
+		SnakeTail* new_tail = new SnakeTail();
+		SnakeTail* end_of_tail = find_prev(m_tail);
+		end_of_tail->m_next = new_tail;
+		new_tail->m_next = m_tail;
+		m_tail =  new_tail;
+		board->move(this, front.move(m_direction));
+		board->insert(new_tail, front);
+	} else {
+		m_tail = new SnakeTail();
+		m_tail->m_next = m_tail;
+		board->move(this, front.move(m_direction));
+		board->insert(m_tail, front);
+	}
 }
