@@ -53,12 +53,17 @@ bool Rules::move_snake(int index){
 bool Rules::compute_move(Snake& snake, Coord::Direction direction){
     Coord old_front = m_board->find(&snake);
     Coord new_front = old_front.move(direction);
+	bool set_food = false;
 
     if (coord_out_of_bounds(new_front)){
 		return false;
 	}
+	// Is it better to just do one lookup?
 	if (m_board->lookup(new_front)->get_type() == CellOccupier::SNAKE){
 		return false;
+	} else if (m_board->lookup(new_front)->get_type() == CellOccupier::FOOD){
+		m_board->remove(m_food);
+		set_food = true;
 	}
     m_board->move(&snake, new_front);
     snake.set_direction(direction);
@@ -69,6 +74,10 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
         // Not entirely sure if this should be in snake?
         snake.move_tail();         
     }
+
+	if(set_food){
+		place_food();
+	}
 	return true;
 }
 
