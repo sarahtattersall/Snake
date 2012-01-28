@@ -17,7 +17,7 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(move_snake()));
-    m_timer->start(500);
+    m_timer->start(200);
 
     view.show();    
 }
