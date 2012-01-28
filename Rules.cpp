@@ -39,7 +39,7 @@ void Rules::place_food(){
 }
 
 bool Rules::coord_out_of_bounds(Coord coord){
-    return (m_board->get(coord).get_occupier()->get_type() == CellOccupier::WALL);
+    return (m_board->lookup(coord)->get_type() == CellOccupier::WALL);
 }
 
 bool Rules::move_snake(int index, Coord::Direction direction){
