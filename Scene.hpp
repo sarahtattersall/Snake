@@ -34,6 +34,7 @@ private:
     QTimer* m_timer;
     // A bool to determine if a key has been pressed for the given turn.
     bool m_key_press;
+	void end_game();
 };
 
 #endif

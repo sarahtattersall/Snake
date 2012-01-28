@@ -16,7 +16,7 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(move_snake()));
-    m_timer->start(1000);
+    m_timer->start(500);
 
     view.show();    
 }
@@ -26,32 +26,45 @@ Scene::~Scene(){
 }
 
 void Scene::move_snake(){
+	bool result = true;
     if(!m_key_press){
-        m_rules->move_snake(0);
+        result = m_rules->move_snake(0);
     }
     update_view();
     m_key_press = false;
+	if(!result){
+		end_game();
+	}
+}
+
+void Scene::end_game(){
+	m_timer->stop();
 }
 
 void Scene::keyPressEvent(QKeyEvent* event){
+	bool result;
 	if(!m_key_press){
 		switch(event->key()){
 			case Qt::Key_Up:
-				m_rules->move_snake(0, Coord::UP);
+				result = m_rules->move_snake(0, Coord::UP);
 				break;
 			case Qt::Key_Down:
-				m_rules->move_snake(0, Coord::DOWN);
+				result = m_rules->move_snake(0, Coord::DOWN);
 				break;
 			case Qt::Key_Left:
-				m_rules->move_snake(0, Coord::LEFT);
+				result = m_rules->move_snake(0, Coord::LEFT);
 				break;
 			case Qt::Key_Right:
-				m_rules->move_snake(0, Coord::RIGHT);
+				result = m_rules->move_snake(0, Coord::RIGHT);
 				break;
 		}
+		if(!result){
+			end_game();
+		}else{
+			m_key_press = true;
+		    QGraphicsScene::keyPressEvent(event);
+		}
 	}
-    m_key_press = true;
-    QGraphicsScene::keyPressEvent(event);
 }
 
 int Scene::map_to_view(int x, int size){
