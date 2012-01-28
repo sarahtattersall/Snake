@@ -12,6 +12,7 @@ HEADERS += Board.hpp \
            CellOccupier.hpp \
            Coord.hpp \
            EmptyOccupier.hpp \
+		   FoodOccupier.hpp \
            Rules.hpp \
            Scene.hpp \
            Snake.hpp \
