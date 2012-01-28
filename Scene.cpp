@@ -9,7 +9,7 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
 	m_rules = rules;
     m_key_press = false;
 	view.resize(m_board->get_width()*SnakeObject::get_width(), m_board->get_height()*SnakeObject::get_height());
-	view.setAlignment(Qt::AlignTop);
+	view.setAlignment(Qt::AlignTop | Qt::AlignLeft);
     view.setScene(this);
     view.setBackgroundBrush(Qt::black);
     view.setWindowTitle("Sarah's Amazing Snake Game");
