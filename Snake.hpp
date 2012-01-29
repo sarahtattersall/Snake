@@ -23,6 +23,7 @@ private:
 
 class Snake : public CellOccupier{
 public:
+	enum Speed { FAST = 1, MEDIUM, SLOW };
 	Snake(int size, Coord::Direction d);
     ~Snake();
   	virtual TYPE get_type() { return SNAKE; }
@@ -32,12 +33,14 @@ public:
     void build_tail(shared_ptr<Board> board);
 
     SnakeTail* find_tail();
-    int get_size();
+    int get_size() const;
+	int get_speed() const;
     void move_tail();
 	void grow(shared_ptr<Board> board);
 
 private:
     int m_size;
+	Speed m_speed;
     Coord::Direction m_direction;
     SnakeTail* m_tail;
     // Would it have been better to be doubly linked?

@@ -3,6 +3,7 @@ Snake::Snake(int size, Coord::Direction d) : CellOccupier(){
     m_size = size;
     m_direction = d;
 	m_tail = NULL;
+	m_speed = FAST;
 }
 
 Snake::~Snake(){
@@ -39,7 +40,7 @@ SnakeTail* Snake::find_tail(){
     return NULL;
 }
 
-int Snake::get_size(){
+int Snake::get_size() const{
     return m_size;    
 }
 
@@ -73,4 +74,8 @@ void Snake::grow(shared_ptr<Board> board){
 		board->move(this, front.move(m_direction));
 		board->insert(m_tail, front);
 	}
+}
+
+int Snake::get_speed() const{
+	return m_speed;
 }

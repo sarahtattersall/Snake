@@ -20,7 +20,9 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
 	
 	update_view();
     view.show();  
-    m_timer->start(200);
+
+	const Snake& snake = m_rules->get_snake(0);
+    m_timer->start(100*snake.get_speed());
   
 }
 

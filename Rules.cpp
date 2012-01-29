@@ -28,6 +28,15 @@ shared_ptr<Board> Rules::get_board(){
 	return m_board;
 }
 
+int Rules::snake_count(){
+	return m_snakes.size();
+}
+
+const Snake& Rules::get_snake(int index){
+	const Snake& snake = m_snakes[index];
+	return snake;
+}
+
 void Rules::place_food(){
 	int x = rand() % m_board->get_width();
 	int y = rand() % m_board->get_height();
