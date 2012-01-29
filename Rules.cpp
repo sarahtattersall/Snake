@@ -66,7 +66,7 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
 		return false;
 	} else if (m_board->lookup(new_front)->get_type() == CellOccupier::FOOD){
 		m_board->remove(m_food);
-		//Should grow move the head? a bit bad logic in this because overwriting where head is before moving head
+		//Should grow move the head? Current it does.
 		snake.grow(m_board);
 		set_food = true;
 		place_food();
@@ -95,8 +95,6 @@ RuleBuilder& RuleBuilder::set_board(shared_ptr<Board> board){
 	return *this;
 }
 
-// Snakes start in the middle of the board and duplicate snakes branch right from this
-// Not the best implementation. Decide a better way later.
 RuleBuilder& RuleBuilder::set_snake_size(int size){
 	m_snake_size = size;
 	return *this;
@@ -121,30 +119,30 @@ void RuleBuilder::set_perimiter(){
 }
 
 shared_ptr<Rules> RuleBuilder::create(){
-  BoardBuilder board_builder;
-  if (m_board.get() == NULL || m_player_count == 0){
-    throw RuleBuilderException();
-  }
-  //DEFAULT
-  if (m_snake_size == 0){
-    m_snake_size = 3;
-  }
-  //Subtract two for board perimiter
-  if (m_snake_size >= (m_board->get_width()/2 - 2)){
-    throw SnakeTooBigException();
-  }
+	BoardBuilder board_builder;
+	if (m_board.get() == NULL || m_player_count == 0){
+		throw RuleBuilderException();
+	}
+	//DEFAULT
+	if (m_snake_size == 0){
+		m_snake_size = 3;
+	}
+	//Subtract two for board perimiter
+	if (m_snake_size >= (m_board->get_width()/2 - 2)){
+	    throw SnakeTooBigException();
+	}
 
-  set_perimiter();
+	set_perimiter();
 
-  vector<Snake*> snakes;
-  //ptr_vector<Snake> snakes;
-  Coord board_middle(m_board->get_width()/2, m_board->get_height()/2);
-  for( int player = 0; player < m_player_count; ++player){
-    Coord snake_start(board_middle.get_x() - player, board_middle.get_y());
-    Snake* snake = new Snake(m_snake_size, Coord::DOWN);
-    snakes.push_back(snake);
-    m_board->insert(snake, snake_start);
-    snake->build_tail(m_board);
-  }
-  return shared_ptr<Rules> (new Rules(m_board, snakes, m_wall));
+	// Has to be vector else ptr_vector is deleted when copied to Rules
+	vector<Snake*> snakes;
+	Coord board_middle(m_board->get_width()/2, m_board->get_height()/2);
+	for( int player = 0; player < m_player_count; ++player){
+	    Coord snake_start(board_middle.get_x() - player, board_middle.get_y());
+	    Snake* snake = new Snake(m_snake_size, Coord::DOWN);
+	    snakes.push_back(snake);
+	    m_board->insert(snake, snake_start);
+   		snake->build_tail(m_board);
+	}
+	return shared_ptr<Rules> (new Rules(m_board, snakes, m_wall));
 }
