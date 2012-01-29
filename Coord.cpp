@@ -28,7 +28,16 @@ Coord Coord::operator=(const Coord& coord){
     return *this;
 }
 
-bool Coord::operator==(const Coord& coord){
-    return ((m_x == coord.m_x) && (m_y == coord.m_y));
-
+Coord Coord::move(Direction direction){
+    switch(direction){
+	    case UP:
+	      return Coord(m_x, m_y-1);
+	    case DOWN:
+	      return Coord(m_x, m_y+1);
+	    case LEFT:
+	      return Coord(m_x-1, m_y);
+	    case RIGHT:
+	      return Coord(m_x+1, m_y);
+	}
+    return *this;
 }

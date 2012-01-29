@@ -10,40 +10,12 @@ public:
   // Overrides + operator
   Coord operator+(const Coord& coord) const;
   // Overrides - operator
-  // type of this is const
   Coord operator-(const Coord& coord) const;
   // Overrides = operator
   Coord operator=(const Coord& coord);
 
-  bool operator==(const Coord& coord);
+  Coord move(Direction direction);
 
-  Coord move(Direction direction) {
-    switch(direction){
-    case UP:
-      return Coord(m_x, m_y-1);
-    case DOWN:
-      return Coord(m_x, m_y+1);
-    case LEFT:
-      return Coord(m_x-1, m_y);
-    case RIGHT:
-      return Coord(m_x+1, m_y);
-    }
-    return *this;
-  }
-
-static Direction inverse(Direction direction){
-    switch(direction){
-        case UP:
-            return DOWN;
-        case DOWN:
-            return UP;
-        case LEFT:
-            return RIGHT;
-        case RIGHT:
-            return LEFT;
-    }
-    return direction;
- }
 private:
 	int m_x;
 	int m_y;
