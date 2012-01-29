@@ -8,18 +8,20 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
 	m_board = board;
 	m_rules = rules;
     m_key_press = false;
+
 	view.resize(m_board->get_width()*SnakeObject::get_width(), m_board->get_height()*SnakeObject::get_height());
 	view.setAlignment(Qt::AlignTop | Qt::AlignLeft);
     view.setScene(this);
     view.setBackgroundBrush(Qt::black);
     view.setWindowTitle("Sarah's Amazing Snake Game");
-	update_view();
-
-    m_timer = new QTimer(this);
+	
+	m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(move_snake()));
+	
+	update_view();
+    view.show();  
     m_timer->start(200);
-
-    view.show();    
+  
 }
 
 Scene::~Scene(){
