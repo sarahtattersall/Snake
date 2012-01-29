@@ -1,6 +1,6 @@
 #ifndef BOARD_BUILDER_HPP
 #define BOARD_BUILDER_HPP
-#include "Cell.hpp"
+#include "CellOccupier.hpp"
 #include "Coord.hpp"
 #include <vector>
 #include <list>
