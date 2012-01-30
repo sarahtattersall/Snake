@@ -14,15 +14,12 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
     view.setScene(this);
     view.setBackgroundBrush(Qt::black);
     view.setWindowTitle("Sarah's Amazing Snake Game");
-	
 	m_timer = new QTimer(this);
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(move_snake()));
+	connect(m_timer, SIGNAL(timeout()), this, SLOT(move_snake()));
 	
 	update_view();
     view.show();  
 
-	const Snake& snake = m_rules->get_snake(0);
-    m_timer->start(100*snake.get_speed());
   
 }
 
@@ -47,27 +44,32 @@ void Scene::end_game(){
 }
 
 void Scene::keyPressEvent(QKeyEvent* event){
+	if( event->key() == Qt::Key_S){
+		const Snake& snake = m_rules->get_snake(0);
+	    m_timer->start(100*snake.get_speed());
+	}else{
 	bool result;
-	if(!m_key_press){
-		switch(event->key()){
-			case Qt::Key_Up:
-				result = m_rules->move_snake(0, Coord::UP);
-				break;
-			case Qt::Key_Down:
-				result = m_rules->move_snake(0, Coord::DOWN);
-				break;
-			case Qt::Key_Left:
-				result = m_rules->move_snake(0, Coord::LEFT);
-				break;
-			case Qt::Key_Right:
-				result = m_rules->move_snake(0, Coord::RIGHT);
-				break;
-		}
-		if(!result){
-			end_game();
-		}else{
-			m_key_press = true;
-		    QGraphicsScene::keyPressEvent(event);
+		if(!m_key_press){
+			switch(event->key()){
+				case Qt::Key_Up:
+					result = m_rules->move_snake(0, Coord::UP);
+					break;
+				case Qt::Key_Down:
+					result = m_rules->move_snake(0, Coord::DOWN);
+					break;
+				case Qt::Key_Left:
+					result = m_rules->move_snake(0, Coord::LEFT);
+					break;
+				case Qt::Key_Right:
+					result = m_rules->move_snake(0, Coord::RIGHT);
+					break;
+			}
+			if(!result){
+				end_game();
+			}else{
+				m_key_press = true;
+			    QGraphicsScene::keyPressEvent(event);
+			}
 		}
 	}
 }
