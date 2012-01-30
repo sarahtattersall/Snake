@@ -27,6 +27,7 @@ private:
 	shared_ptr<Board> m_board;
 	shared_ptr<Rules> m_rules;
     QTimer* m_timer;
+	bool m_playing;
     // A bool to determine if a key has been pressed for the given turn.
     bool m_key_press;
 

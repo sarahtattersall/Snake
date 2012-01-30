@@ -8,6 +8,7 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
 	m_board = board;
 	m_rules = rules;
     m_key_press = false;
+	m_playing = false;
 
 	view.resize(m_board->get_width()*SnakeObject::get_width(), m_board->get_height()*SnakeObject::get_height());
 	view.setAlignment(Qt::AlignTop | Qt::AlignLeft);
@@ -41,12 +42,14 @@ void Scene::move_snake(){
 
 void Scene::end_game(){
 	m_timer->stop();
+	m_playing = false;
 }
 
 void Scene::keyPressEvent(QKeyEvent* event){
-	if( event->key() == Qt::Key_S){
+	if( event->key() == Qt::Key_S && !m_playing ){
 		const Snake& snake = m_rules->get_snake(0);
 	    m_timer->start(100*snake.get_speed());
+		m_playing = true;
 	}else{
 	bool result;
 		if(!m_key_press){
