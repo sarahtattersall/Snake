@@ -1,4 +1,4 @@
 When to make pointer? E.g. in SnakeGUI Scene or pointer?
 Multimap or keep a vector of EmptyOccupiers in Rules
 Are there some things you cant do in .hpp file that you can in .cpp?
-what does "..." do? e.g. fn( int x, ...);
+what does "..." do? e.g. fn( int x, ...); ellipses - are they ever usefuL? Website says to avoid?
