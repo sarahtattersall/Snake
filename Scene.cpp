@@ -52,7 +52,7 @@ void Scene::keyPressEvent(QKeyEvent* event){
 		m_playing = true;
 	}else{
 	bool result;
-		if(!m_key_press){
+		if(!m_key_press && m_playing){
 			switch(event->key()){
 				case Qt::Key_Up:
 					result = m_rules->move_snake(0, Coord::UP);
