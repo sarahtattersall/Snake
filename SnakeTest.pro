@@ -7,16 +7,17 @@ PKGCONFIG += cppunit
 
 # Input
 HEADERS += Board.hpp \
-           BoardTest.hpp \
+		   BoardTest.hpp \
            BoardVisualiser.hpp \
            Cell.hpp \
+		   CellObject.hpp \
            CellOccupier.hpp \
            Coord.hpp \
            EmptyOccupier.hpp \
 		   FoodObject.hpp \
 		   FoodOccupier.hpp \
            Rules.hpp \
-           RulesTest.hpp \
+		   RulesTest.hpp \
            Scene.hpp \
            Snake.hpp \
            SnakeDirection.hpp \
@@ -25,16 +26,14 @@ HEADERS += Board.hpp \
            TextualBoardVisualiser.hpp \
 		   WallObject.hpp
 SOURCES += Board.cpp \
-           BoardTest.cpp \
+		   BoardTest.cpp \
            BoardVisualiser.cpp \
            Cell.cpp \
-           CellOccupier.cpp \
+		   CellObject.cpp \
            Coord.cpp \
-           EmptyOccupier.cpp \
-		   FoodOccupier.cpp \
 		   FoodObject.cpp \
            Rules.cpp \
-           RulesTest.cpp \
+		   RulesTest.cpp \
            Scene.cpp \
            Snake.cpp \
            SnakeObject.cpp \
