@@ -16,6 +16,7 @@ void BoardTest::setUp(){
 	m_builder5 = new BoardBuilder();
 	m_builder6 = new BoardBuilder();
 	m_builder7 = new BoardBuilder();
+	m_builder8 = new BoardBuilder();
     m_snake_occupier = new SnakeTail();
 	m_test_size = 10;
 }
@@ -28,6 +29,7 @@ void BoardTest::tearDown(){
 	delete m_builder5;
 	delete m_builder6;
 	delete m_builder7;
+	delete m_builder8;
     delete m_snake_occupier;
 }
 
@@ -57,7 +59,7 @@ void BoardTest::insertInRightCell(){
 	shared_ptr<Board> board4 = m_builder4->create();
 	Coord coord(3,3);
 	board4->insert(m_snake_occupier, coord);
-	CPPUNIT_ASSERT_EQUAL(board4->get(coord).get_occupier()->get_type(), CellOccupier::SNAKE);
+	CPPUNIT_ASSERT_EQUAL(board4->lookup(coord)->get_type(), CellOccupier::SNAKE);
 }
 
 void BoardTest::correctMove(){
@@ -84,4 +86,15 @@ void BoardTest::correctLookup(){
     shared_ptr<Board> board7 = m_builder7->create();
     board7->insert(m_snake_occupier, Coord(0,0));
     CPPUNIT_ASSERT_EQUAL( board7->lookup(Coord(0,0)), m_snake_occupier );
+}
+
+void BoardTest::clear(){
+	m_builder8->set_size(m_test_size);
+	shared_ptr<Board> board8 = m_builder8->create();
+	board8->clear();
+	for( int i = 0; i < board8->get_height(); ++i){
+		for( int j = 0; j < board8->get_width(); ++j){
+			CPPUNIT_ASSERT_EQUAL(board8->lookup(Coord(j,i))->get_type(), CellOccupier::EMPTY);
+		}
+	}
 }

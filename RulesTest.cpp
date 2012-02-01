@@ -89,7 +89,7 @@ void RulesTest::snakeBottomWallCrash(){
 	bool result;
     // -2 as perimeter is around outside of board and still want a space 
     // to move down
-	for(int i = 0; i < ((m_test_board_size/2) - 2); ++i){
+	for(int i = 0; i < ((m_test_board_size/2) - m_test_snake_size - 1 ); ++i){
 		result = rules->move_snake(0, Coord::DOWN);
 		CPPUNIT_ASSERT_EQUAL(result, true);
 	}
@@ -133,7 +133,7 @@ void RulesTest::snakeTopWallCrash(){
 	shared_ptr<Rules> rules = m_builder8->create();
 	bool result;
 	result = rules->move_snake(0, Coord::RIGHT);
-	for(int i = 0; i < ((m_test_board_size/2) - 1); ++i){
+	for(int i = 0; i < ((m_test_board_size/2) + m_test_snake_size -2); ++i){
 		result = rules->move_snake(0, Coord::UP);
 		CPPUNIT_ASSERT_EQUAL(result, true);
 	}
