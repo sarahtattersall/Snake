@@ -36,6 +36,7 @@ private:
 	bool coord_out_of_bounds(Coord coord);
     bool compute_move(Snake& snake, Coord::Direction direction);
 	void place_food();
+	int m_snake_start_size;
 	
 };
 

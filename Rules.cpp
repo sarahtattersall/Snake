@@ -11,6 +11,7 @@
 
 Rules::Rules(shared_ptr<Board> board, vector<Snake*> snakes, WallOccupier* wall){
 	m_board = board;
+	m_snake_start_size = snakes[0]->get_size();
     for(vector<Snake*>::iterator itr = snakes.begin(); itr != snakes.end(); ++itr){
         m_snakes.push_back(*itr);
     }

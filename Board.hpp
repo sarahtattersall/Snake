@@ -19,6 +19,8 @@ public:
     virtual void remove(CellOccupier* occupier) = 0;
     virtual Coord find(CellOccupier* occupier) = 0;
     virtual CellOccupier* lookup(Coord coord) = 0;
+	// Clears the contents of te board.
+	virtual void clear() = 0;
 };
 
 class BoardBuilder {

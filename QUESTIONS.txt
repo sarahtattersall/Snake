@@ -2,3 +2,5 @@ When to make pointer? E.g. in SnakeGUI Scene or pointer?
 Multimap or keep a vector of EmptyOccupiers in Rules
 Are there some things you cant do in .hpp file that you can in .cpp?
 what does "..." do? e.g. fn( int x, ...); ellipses - are they ever usefuL? Website says to avoid?
+Best way to reset game? Delete rules and remake?!?
+Seems a bit pointless to have a rules reset game when you've already just set it up? Included a game_over boolean. Can't make new board because you don't know what type board was (e.g. square, rectangular etc.)

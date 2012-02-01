@@ -20,6 +20,7 @@ public:
     virtual void remove(CellOccupier* occupier);
     virtual Coord find(CellOccupier* occupier);
     virtual CellOccupier* lookup(Coord coord);
+	virtual void clear();
 private:
     int m_size;
     vector<vector<Cell> > m_cells;
@@ -104,4 +105,16 @@ void SquareBoard::initialize_board(){
             m_occupiers.insert(pair<CellOccupier*,Coord>(m_empty, Coord(j,i)));
         }
     }
+}
+
+void SquareBoard::clear(){
+    for (int i = 0; i < m_size; ++i){
+        for( int j = 0; j < m_size; ++j){
+            m_occupiers.insert(pair<CellOccupier*,Coord>(m_empty, Coord(j,i)));
+		}
+	}
+	for(multimap<CellOccupier*, Coord>::iterator itr = m_occupiers.begin();
+    	itr != m_occupiers.end(); ++itr ){
+			m_occupiers.erase(itr);
+	}
 }
