@@ -16,7 +16,7 @@ class BoardVisualiser;
 
 class Rules{
 public:
-    Rules(shared_ptr<Board> board, vector<Snake*> snakes, WallOccupier* wall);
+    Rules(shared_ptr<Board> board, vector<Snake*> snakes);
     ~Rules();
     shared_ptr<Board> get_board();
     // Returns bool for if the move succeeds. If false
@@ -28,6 +28,7 @@ public:
     int snake_count();
     const Snake& get_snake(int index);
     bool snake_dead();
+    void build_wall();
 private:
     ptr_vector<Snake> m_snakes;
     shared_ptr<Board> m_board;
@@ -56,9 +57,6 @@ private:
     shared_ptr<Board> m_board;
     int m_snake_size;
     int m_player_count;
-    // Adds wall occupiers around the board perimiter.
-    void set_perimiter();
-    WallOccupier* m_wall;
 };
 
 #endif

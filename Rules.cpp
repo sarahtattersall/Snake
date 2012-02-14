@@ -9,13 +9,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-Rules::Rules(shared_ptr<Board> board, vector<Snake*> snakes, WallOccupier* wall){
+Rules::Rules(shared_ptr<Board> board, vector<Snake*> snakes){
     m_board = board;
     m_snake_start_size = snakes[0]->get_size();
     for(vector<Snake*>::iterator itr = snakes.begin(); itr != snakes.end(); ++itr){
         m_snakes.push_back(*itr);
     }
-    m_wall = wall;
+    m_wall = new WallOccupier();
     m_food = new FoodOccupier();
     srand(time(NULL));
     place_food();
@@ -104,11 +104,23 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
     return true;
 }
 
+void Rules::build_wall(){
+    int width = m_board->get_width();
+    int height = m_board->get_height();
+    for( int x = 0; x < width; ++x ){
+        m_board->insert(m_wall, Coord(x, 0));
+        m_board->insert(m_wall, Coord(x, height-1));
+    }
+    for( int y = 0; y < height; ++y ){
+        m_board->insert(m_wall, Coord(0, y));
+        m_board->insert(m_wall, Coord(width-1, y));
+    }
+}
+
 
 RuleBuilder::RuleBuilder(){
     m_player_count = 0;
     m_snake_size = 0;
-    m_wall = new WallOccupier();
 }
 
 RuleBuilder& RuleBuilder::set_board(shared_ptr<Board> board){
@@ -126,19 +138,6 @@ RuleBuilder& RuleBuilder::set_player_count(int count){
     return *this;
 }
 
-void RuleBuilder::set_perimiter(){
-    int width = m_board->get_width();
-    int height = m_board->get_height();
-    for( int x = 0; x < width; ++x ){
-        m_board->insert(m_wall, Coord(x, 0));
-        m_board->insert(m_wall, Coord(x, height-1));
-    }
-    for( int y = 0; y < height; ++y ){
-        m_board->insert(m_wall, Coord(0, y));
-        m_board->insert(m_wall, Coord(width-1, y));
-    }
-}
-
 shared_ptr<Rules> RuleBuilder::create(){
     BoardBuilder board_builder;
     if (m_board.get() == NULL || m_player_count == 0){
@@ -153,8 +152,6 @@ shared_ptr<Rules> RuleBuilder::create(){
         throw SnakeTooBigException();
     }
 
-// Build rules with board and then 
-    set_perimiter();
 
     // Has to be vector else ptr_vector is deleted when copied to Rules
     vector<Snake*> snakes;
@@ -167,5 +164,7 @@ shared_ptr<Rules> RuleBuilder::create(){
         snake->build_tail(m_board);
     }
     // Hand in initialiser object that can build wall and snakes.
-    return shared_ptr<Rules> (new Rules(m_board, snakes, m_wall));
+    shared_ptr<Rules> rules = shared_ptr<Rules> (new Rules(m_board, snakes));
+    rules->build_wall();
+    return rules;
 }
