@@ -47,38 +47,38 @@ void Scene::end_game(){
 }
 
 void Scene::keyPressEvent(QKeyEvent* event){
-  if( event->key() == Qt::Key_S && !m_playing ){
-      if(m_rules->snake_dead()){
-          m_rules->reset();
-      }
-      const Snake& snake = m_rules->get_snake(0);
-      m_timer->start(100*snake.get_speed());
-      m_playing = true;
-  }else{
-  bool result;
-    if(!m_key_press && m_playing){
-      switch(event->key()){
-        case Qt::Key_Up:
-          result = m_rules->move_snake(0, Coord::UP);
-          break;
-        case Qt::Key_Down:
-          result = m_rules->move_snake(0, Coord::DOWN);
-          break;
-        case Qt::Key_Left:
-          result = m_rules->move_snake(0, Coord::LEFT);
-          break;
-        case Qt::Key_Right:
-          result = m_rules->move_snake(0, Coord::RIGHT);
-          break;
-      }
-      if(!result){
-        end_game();
-      }else{
-        m_key_press = true;
-          QGraphicsScene::keyPressEvent(event);
-      }
+    if( event->key() == Qt::Key_S && !m_playing ){
+        if(m_rules->snake_dead()){
+            m_rules->reset();
+        }
+        const Snake& snake = m_rules->get_snake(0);
+        m_timer->start(100*snake.get_speed());
+        m_playing = true;
+    } else{
+        bool result;
+        if(!m_key_press && m_playing){
+            switch(event->key()){
+                case Qt::Key_Up:
+                    result = m_rules->move_snake(0, Coord::UP);
+                    break;
+                case Qt::Key_Down:
+                    result = m_rules->move_snake(0, Coord::DOWN);
+                    break;
+                case Qt::Key_Left:
+                    result = m_rules->move_snake(0, Coord::LEFT);
+                    break;
+                case Qt::Key_Right:
+                    result = m_rules->move_snake(0, Coord::RIGHT);
+                    break;
+                }
+            if(!result){
+                end_game();
+            } else{
+                m_key_press = true;
+                QGraphicsScene::keyPressEvent(event);
+            }
+        }
     }
-  }
 }
 
 int Scene::map_to_view(int x, int size){
