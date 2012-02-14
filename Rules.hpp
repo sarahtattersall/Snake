@@ -16,7 +16,7 @@ class BoardVisualiser;
 
 class Rules{
 public:
-    Rules(shared_ptr<Board> board, vector<Snake*> snakes);
+    Rules(shared_ptr<Board> board);
     ~Rules();
     shared_ptr<Board> get_board();
     // Returns bool for if the move succeeds. If false
@@ -29,6 +29,7 @@ public:
     const Snake& get_snake(int index);
     bool snake_dead();
     void build_wall();
+    void set_snakes(int players, int snake_size);
 private:
     ptr_vector<Snake> m_snakes;
     shared_ptr<Board> m_board;
@@ -38,7 +39,7 @@ private:
     bool coord_out_of_bounds(Coord coord);
     bool compute_move(Snake& snake, Coord::Direction direction);
     void place_food();
-    int m_snake_start_size;
+    //int m_snake_start_size;
     
 };
 

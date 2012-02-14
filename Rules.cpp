@@ -9,12 +9,12 @@
 #include <stdlib.h>
 #include <time.h>
 
-Rules::Rules(shared_ptr<Board> board, vector<Snake*> snakes){
+Rules::Rules(shared_ptr<Board> board){
     m_board = board;
-    m_snake_start_size = snakes[0]->get_size();
-    for(vector<Snake*>::iterator itr = snakes.begin(); itr != snakes.end(); ++itr){
-        m_snakes.push_back(*itr);
-    }
+    //m_snake_start_size = snakes[0]->get_size();
+    // for(vector<Snake*>::iterator itr = snakes.begin(); itr != snakes.end(); ++itr){
+    //     m_snakes.push_back(*itr);
+    // }
     m_wall = new WallOccupier();
     m_food = new FoodOccupier();
     srand(time(NULL));
@@ -117,6 +117,18 @@ void Rules::build_wall(){
     }
 }
 
+void Rules::set_snakes(int players, int snake_size){
+    vector<Snake*> snakes;
+    Coord board_middle(m_board->get_width()/2, m_board->get_height()/2);
+    for( int player = 0; player < players; ++player){
+        Coord snake_start(board_middle.get_x() - player, board_middle.get_y());
+        Snake* snake = new Snake(snake_size, Coord::DOWN);
+        m_snakes.push_back(snake);
+        m_board->insert(snake, snake_start);
+        snake->build_tail(m_board);
+    }
+}
+
 
 RuleBuilder::RuleBuilder(){
     m_player_count = 0;
@@ -151,20 +163,9 @@ shared_ptr<Rules> RuleBuilder::create(){
     if (m_snake_size >= (m_board->get_width()/2 - 2)){
         throw SnakeTooBigException();
     }
-
-
-    // Has to be vector else ptr_vector is deleted when copied to Rules
-    vector<Snake*> snakes;
-    Coord board_middle(m_board->get_width()/2, m_board->get_height()/2);
-    for( int player = 0; player < m_player_count; ++player){
-        Coord snake_start(board_middle.get_x() - player, board_middle.get_y());
-        Snake* snake = new Snake(m_snake_size, Coord::DOWN);
-        snakes.push_back(snake);
-        m_board->insert(snake, snake_start);
-        snake->build_tail(m_board);
-    }
     // Hand in initialiser object that can build wall and snakes.
-    shared_ptr<Rules> rules = shared_ptr<Rules> (new Rules(m_board, snakes));
+    shared_ptr<Rules> rules = shared_ptr<Rules> (new Rules(m_board));
     rules->build_wall();
+    rules->set_snakes(m_player_count, m_snake_size);
     return rules;
 }
