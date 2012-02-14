@@ -3,7 +3,7 @@
 #include "CellOccupier.hpp"
 class EmptyOccupier : public CellOccupier{
 public:
-  	virtual TYPE get_type() { return EMPTY; }
+    virtual TYPE get_type() { return EMPTY; }
 };
 
 #endif

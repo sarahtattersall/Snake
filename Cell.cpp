@@ -10,7 +10,7 @@ void Cell::set_occupier(CellOccupier* occupier){
 }
 
 CellOccupier* Cell::get_occupier(){
-	return m_occupier;
+    return m_occupier;
 }
 
 bool Cell::is_occupied(){

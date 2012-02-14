@@ -16,7 +16,7 @@ private:
             case SnakeDirection::RIGHT:
                 return Coord(1, 0);
         }
-	//FATAL("Invalid enum constant");
+    //FATAL("Invalid enum constant");
         return Coord(0,0);
     }
 };

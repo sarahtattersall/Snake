@@ -11,7 +11,7 @@ class Log {
     Log(char* filename);
     ~Log();
     void Write(char* logline);
-	void Write(const char* logline, ...);
+    void Write(const char* logline, ...);
   private:
     ofstream m_stream;
 };

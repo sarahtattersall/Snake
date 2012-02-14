@@ -14,31 +14,31 @@ TextualBoardVisualiser::TextualBoardVisualiser(shared_ptr<Board> board) : BoardV
 // when it comes time to fix this, you might want to look into MVC and friends
 // (Model View Controller).
 string TextualBoardVisualiser::textual_display(CellOccupier::TYPE type){
-	if( type == CellOccupier::EMPTY){
-		return string(" ");
-	} else if (type == CellOccupier::SNAKE){
-		return string("S");
-	} else if (type == CellOccupier::FOOD){
-		return string("F");
-	} else{
-		throw TextualRepresentationError();
-	}
+    if( type == CellOccupier::EMPTY){
+        return string(" ");
+    } else if (type == CellOccupier::SNAKE){
+        return string("S");
+    } else if (type == CellOccupier::FOOD){
+        return string("F");
+    } else{
+        throw TextualRepresentationError();
+    }
 }
 
 void TextualBoardVisualiser::display(){
-	// Not assuming it's a square
-	for( int i = 0; i < m_board->get_height(); ++i){
-		for( int j = 0; j < m_board->get_width(); ++j){
-			cout << textual_display(m_board->lookup(Coord(j, i))->get_type()) << ", ";
-		}
-		cout << endl;
-	}
+    // Not assuming it's a square
+    for( int i = 0; i < m_board->get_height(); ++i){
+        for( int j = 0; j < m_board->get_width(); ++j){
+            cout << textual_display(m_board->lookup(Coord(j, i))->get_type()) << ", ";
+        }
+        cout << endl;
+    }
 }
 
 shared_ptr<BoardVisualiser> TextualBoardVisualiserBuilder::create(){
-	if (m_board.get() == NULL){
-		throw TextualBoardVisualiserBuilderException();
-	}
-	return shared_ptr<BoardVisualiser> (new TextualBoardVisualiser(m_board));
-	// Error?
+    if (m_board.get() == NULL){
+        throw TextualBoardVisualiserBuilderException();
+    }
+    return shared_ptr<BoardVisualiser> (new TextualBoardVisualiser(m_board));
+    // Error?
 }

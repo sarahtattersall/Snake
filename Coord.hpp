@@ -17,8 +17,8 @@ public:
   Coord move(Direction direction);
 
 private:
-	int m_x;
-	int m_y;
+    int m_x;
+    int m_y;
 };
 
 #endif

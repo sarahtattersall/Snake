@@ -12,8 +12,8 @@ using boost::shared_ptr;
 class SnakeTail : public CellOccupier{
 public:
     friend class Snake;
-	SnakeTail() : CellOccupier() {};
-  	virtual TYPE get_type() { return SNAKE; }
+    SnakeTail() : CellOccupier() {};
+    virtual TYPE get_type() { return SNAKE; }
     SnakeTail* get_next(){
         return m_next;
     }
@@ -23,10 +23,10 @@ private:
 
 class Snake : public CellOccupier{
 public:
-	enum Speed { FAST = 1, MEDIUM, SLOW };
-	Snake(int size, Coord::Direction d);
+    enum Speed { FAST = 1, MEDIUM, SLOW };
+    Snake(int size, Coord::Direction d);
     ~Snake();
-  	virtual TYPE get_type() { return SNAKE; }
+    virtual TYPE get_type() { return SNAKE; }
     
     Coord::Direction get_direction();
     void set_direction(Coord::Direction d);
@@ -34,16 +34,16 @@ public:
 
     SnakeTail* find_tail();
     int get_size() const;
-		int get_speed() const;
+        int get_speed() const;
     void move_tail();
-		void grow(shared_ptr<Board> board);
-		void set_alive(bool alive);
-		bool is_alive();
+        void grow(shared_ptr<Board> board);
+        void set_alive(bool alive);
+        bool is_alive();
 
 private:
     int m_size;
-		bool m_alive;
-		Speed m_speed;
+        bool m_alive;
+        Speed m_speed;
     Coord::Direction m_direction;
     SnakeTail* m_tail;
     // Would it have been better to be doubly linked?

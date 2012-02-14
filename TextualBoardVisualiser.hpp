@@ -10,13 +10,13 @@ using boost::shared_ptr;
 
 class TextualBoardVisualiser : public BoardVisualiser {
 public:
-	TextualBoardVisualiser(shared_ptr<Board> board);
-	// Displays a textual representation of the board
-	void display();
+    TextualBoardVisualiser(shared_ptr<Board> board);
+    // Displays a textual representation of the board
+    void display();
 private:
-	// Returns a string displaying a textual representation
-	// of the cell occupiers type.
-	string textual_display(CellOccupier::TYPE type);
+    // Returns a string displaying a textual representation
+    // of the cell occupiers type.
+    string textual_display(CellOccupier::TYPE type);
 };
 
 class TextualBoardVisualiserBuilder : public BoardVisualiserBuilder {
