@@ -107,14 +107,16 @@ void SquareBoard::initialize_board(){
     }
 }
 
-void SquareBoard::clear(){
-    for (int i = 0; i < m_size; ++i){
-        for( int j = 0; j < m_size; ++j){
-            m_occupiers.insert(pair<CellOccupier*,Coord>(m_empty, Coord(j,i)));
-        }
-    }
+void SquareBoard::clear(){    
     for(multimap<CellOccupier*, Coord>::iterator itr = m_occupiers.begin();
         itr != m_occupiers.end(); ++itr ){
             m_occupiers.erase(itr);
+    }
+    for (int i = 0; i < m_size; ++i){
+        for( int j = 0; j < m_size; ++j){
+            Coord coord = Coord(j,i);
+            m_cells[coord.get_y()][coord.get_x()].set_occupier(m_empty);
+            m_occupiers.insert(pair<CellOccupier*,Coord>(m_empty, coord));
+        }
     }
 }
