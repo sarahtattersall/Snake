@@ -19,6 +19,7 @@ class RulesTest : public CppUnit::TestFixture
     CPPUNIT_TEST( snakeRightWallCrash );
     CPPUNIT_TEST( snakeTopWallCrash );
     CPPUNIT_TEST( snakeOnSnakeCrash );
+    CPPUNIT_TEST( rulesReset );
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -37,6 +38,7 @@ protected:
     // Snakes are lined up next to each other
     // Rightmost snake crashes into snake next to it.
     void snakeOnSnakeCrash();
+    void rulesReset();
 private:
     shared_ptr<Board> make_board();
     RuleBuilder* m_builder1;
@@ -48,6 +50,8 @@ private:
     RuleBuilder* m_builder7;
     RuleBuilder* m_builder8;
     RuleBuilder* m_builder9;
+    RuleBuilder* m_builder10;
+    RuleBuilder* m_builder11;
     shared_ptr<Board> m_test_board2;
     shared_ptr<Board> m_test_board3;
     shared_ptr<Board> m_test_board4;
@@ -56,6 +60,8 @@ private:
     shared_ptr<Board> m_test_board7;
     shared_ptr<Board> m_test_board8;
     shared_ptr<Board> m_test_board9;
+    shared_ptr<Board> m_test_board10;
+    shared_ptr<Board> m_test_board11;
     int m_test_board_size;
     int m_test_player_count;
     int m_test_snake_size;

@@ -19,6 +19,8 @@ void RulesTest::setUp(){
     m_builder7 = new RuleBuilder();
     m_builder8 = new RuleBuilder();
     m_builder9 = new RuleBuilder();
+    m_builder10 = new RuleBuilder();
+    m_builder11 = new RuleBuilder();
     m_test_board_size = 20;
     m_test_player_count = 2;
     m_test_snake_size = 2;
@@ -30,7 +32,8 @@ void RulesTest::setUp(){
     m_test_board7 = make_board();
     m_test_board8 = make_board();
     m_test_board9 = make_board();
-    
+    m_test_board10 = make_board();
+    m_test_board11 = make_board();
 }
 
 shared_ptr<Board> RulesTest::make_board(){
@@ -49,6 +52,8 @@ void RulesTest::tearDown(){
     delete m_builder7;
     delete m_builder8;
     delete m_builder9;
+    delete m_builder10;
+    delete m_builder11;
 }
 
 
@@ -149,4 +154,44 @@ void RulesTest::snakeOnSnakeCrash(){
     bool result;
     result = rules->move_snake(0, Coord::LEFT);
     CPPUNIT_ASSERT_EQUAL(result, false);
+}
+
+void RulesTest::rulesReset(){
+    m_builder10->set_board(m_test_board10);
+    m_builder10->set_player_count(m_test_player_count);
+    m_builder10->set_snake_size(m_test_snake_size);
+    shared_ptr<Rules> rules_10 = m_builder10->create();
+    m_builder11->set_board(m_test_board11);
+    m_builder11->set_player_count(m_test_player_count);
+    m_builder11->set_snake_size(m_test_snake_size);
+    shared_ptr<Rules> rules_11 = m_builder11->create();
+    
+    
+    
+    Coord board_middle(m_test_board10->get_width()/2, m_test_board10->get_height()/2);
+    CPPUNIT_ASSERT_EQUAL(CellOccupier::SNAKE,m_test_board10->lookup(Coord(board_middle.get_x(),board_middle.get_y() + 1))->get_type());
+    CPPUNIT_ASSERT_EQUAL(CellOccupier::SNAKE,m_test_board10->lookup(Coord(board_middle.get_x(),board_middle.get_y()))->get_type());
+    
+    
+    bool result;
+    result = rules_10->move_snake(0, Coord::RIGHT);
+    for(int i = 0; i < ((m_test_board_size/2) + m_test_snake_size -2); ++i){
+        result = rules_10->move_snake(0, Coord::UP);
+        CPPUNIT_ASSERT_EQUAL(result, true);
+    }
+    result = rules_10->move_snake(0, Coord::UP);
+    CPPUNIT_ASSERT_EQUAL(result, false);
+    rules_10->reset();
+    CPPUNIT_ASSERT_EQUAL(CellOccupier::SNAKE,m_test_board10->lookup(Coord(board_middle.get_x(),board_middle.get_y() + 1))->get_type());
+    CPPUNIT_ASSERT_EQUAL(CellOccupier::SNAKE,m_test_board10->lookup(Coord(board_middle.get_x(),board_middle.get_y()))->get_type());
+    
+    for(int i = 0; i < m_test_board10->get_height(); ++i){
+        for(int j = 0; j < m_test_board10->get_width(); ++j){
+            Coord coord(j,i);
+            if(m_test_board10->lookup(coord)->get_type() == CellOccupier::SNAKE){
+                CPPUNIT_ASSERT_EQUAL( m_test_board11->lookup(coord)->get_type(),
+                m_test_board10->lookup(coord)->get_type());
+            }
+        }
+    }
 }

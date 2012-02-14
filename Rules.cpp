@@ -123,7 +123,6 @@ void Rules::set_snakes(int players){
 }
 void Rules::set_snakes(int players, int snake_size){
     m_prev_snake_size = snake_size;
-    vector<Snake*> snakes;
     Coord board_middle(m_board->get_width()/2, m_board->get_height()/2);
     for( int player = 0; player < players; ++player){
         Coord snake_start(board_middle.get_x() - player, board_middle.get_y());
