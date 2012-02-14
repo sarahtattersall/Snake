@@ -30,6 +30,10 @@ public:
     bool snake_dead();
     void build_wall();
     void set_snakes(int players, int snake_size);
+    // Uses m_prev_snake_size to determine snake start size
+    // then calls set_snakes(players, snake_size)
+    void set_snakes(int players);
+    void reset();
 private:
     ptr_vector<Snake> m_snakes;
     shared_ptr<Board> m_board;
@@ -39,6 +43,7 @@ private:
     bool coord_out_of_bounds(Coord coord);
     bool compute_move(Snake& snake, Coord::Direction direction);
     void place_food();
+    int m_prev_snake_size;
     //int m_snake_start_size;
     
 };

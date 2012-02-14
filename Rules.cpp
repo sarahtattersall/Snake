@@ -15,6 +15,7 @@ Rules::Rules(shared_ptr<Board> board){
     // for(vector<Snake*>::iterator itr = snakes.begin(); itr != snakes.end(); ++itr){
     //     m_snakes.push_back(*itr);
     // }
+    m_prev_snake_size = 0;
     m_wall = new WallOccupier();
     m_food = new FoodOccupier();
     srand(time(NULL));
@@ -117,7 +118,11 @@ void Rules::build_wall(){
     }
 }
 
+void Rules::set_snakes(int players){
+    set_snakes(players, m_prev_snake_size);
+}
 void Rules::set_snakes(int players, int snake_size){
+    m_prev_snake_size = snake_size;
     vector<Snake*> snakes;
     Coord board_middle(m_board->get_width()/2, m_board->get_height()/2);
     for( int player = 0; player < players; ++player){
@@ -129,6 +134,13 @@ void Rules::set_snakes(int players, int snake_size){
     }
 }
 
+void Rules::reset(){
+    m_board->clear();
+    build_wall();
+    int players = m_snakes.size();
+    m_snakes.clear();
+    set_snakes(players);
+}
 
 RuleBuilder::RuleBuilder(){
     m_player_count = 0;

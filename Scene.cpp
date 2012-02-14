@@ -48,9 +48,12 @@ void Scene::end_game(){
 
 void Scene::keyPressEvent(QKeyEvent* event){
   if( event->key() == Qt::Key_S && !m_playing ){
-    const Snake& snake = m_rules->get_snake(0);
+      if(m_rules->snake_dead()){
+          m_rules->reset();
+      }
+      const Snake& snake = m_rules->get_snake(0);
       m_timer->start(100*snake.get_speed());
-    m_playing = true;
+      m_playing = true;
   }else{
   bool result;
     if(!m_key_press && m_playing){
