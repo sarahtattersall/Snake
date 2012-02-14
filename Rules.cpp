@@ -62,6 +62,15 @@ bool Rules::move_snake(int index){
     return compute_move(snake, snake.get_direction());
 }
 
+bool Rules::snake_dead(){
+    for(ptr_vector<Snake>::iterator itr = m_snakes.begin(); itr != m_snakes.end(); ++itr){
+        if(!(*itr).is_alive()){
+            return true;
+        }
+    }
+    return false;
+}
+
 bool Rules::compute_move(Snake& snake, Coord::Direction direction){
     Coord old_front = m_board->find(&snake);
     Coord new_front = old_front.move(direction);
@@ -69,10 +78,12 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
     snake.set_direction(direction); // Need to set this here so grow moves snake in right direction
 
     if (coord_out_of_bounds(new_front)){
+        snake.set_alive(false);
         return false;
     }
     // Is it better to just do one lookup?
     if (m_board->lookup(new_front)->get_type() == CellOccupier::SNAKE){
+        snake.set_alive(false);
         return false;
     } else if (m_board->lookup(new_front)->get_type() == CellOccupier::FOOD){
         m_board->remove(m_food);

@@ -12,7 +12,7 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
 
     view.resize(m_board->get_width()*SnakeObject::get_width(), m_board->get_height()*SnakeObject::get_height());
     view.setAlignment(Qt::AlignTop | Qt::AlignLeft);
-      view.setScene(this);
+    view.setScene(this);
     view.setBackgroundBrush(Qt::black);
     view.setWindowTitle("Sarah's Amazing Snake Game");
     m_timer = new QTimer(this);
@@ -29,20 +29,21 @@ Scene::~Scene(){
 }
 
 void Scene::move_snake(){
-  bool result = true;
+    bool result = true;
     if(!m_key_press){
         result = m_rules->move_snake(0);
     }
     update_view();
     m_key_press = false;
-  if(!result){
-    end_game();
-  }
+    if(!result){
+        end_game();
+    }
 }
 
 void Scene::end_game(){
-  m_timer->stop();
-  m_playing = false;
+    m_timer->stop();
+    m_playing = false;
+    update_view();
 }
 
 void Scene::keyPressEvent(QKeyEvent* event){
@@ -82,25 +83,30 @@ int Scene::map_to_view(int x, int size){
 }
 
 void Scene::update_view(){
-  QTransform transform;
-  for( int row = 0; row < m_board->get_height(); ++row ){
-    for( int col = 0; col < m_board->get_width(); ++col ){
-      CellOccupier* occupier = m_board->lookup(Coord(col, row));
-      int x = map_to_view(col, SnakeObject::get_width());
-      int y = map_to_view(row, SnakeObject::get_height());
-      // Would rather remove if not snake?
-      QGraphicsItem* item = itemAt(x, y, transform);
-      if(item){
-        removeItem(item);
-        delete item;
-      }
-      if(occupier->get_type() == CellOccupier::SNAKE){
-        addItem(new SnakeObject(x, y));
-      } else if(occupier->get_type() == CellOccupier::WALL){
-        addItem(new WallObject(x, y));
-      } else if(occupier->get_type() == CellOccupier::FOOD){
-        addItem(new FoodObject(x, y));
-      }
+    QTransform transform;
+    bool dead = m_rules->snake_dead();
+    for( int row = 0; row < m_board->get_height(); ++row ){
+        for( int col = 0; col < m_board->get_width(); ++col ){
+            CellOccupier* occupier = m_board->lookup(Coord(col, row));
+            int x = map_to_view(col, SnakeObject::get_width());
+            int y = map_to_view(row, SnakeObject::get_height());
+            // Would rather remove if not snake?
+            QGraphicsItem* item = itemAt(x, y, transform);
+            if(item){
+                removeItem(item);
+                delete item;
+            }
+            if(occupier->get_type() == CellOccupier::SNAKE){
+                if(!dead){
+                    addItem(new SnakeObject(x, y));
+                } else{
+                    addItem(new SnakeDeadObject(x, y));
+                }
+            } else if(occupier->get_type() == CellOccupier::WALL){
+                addItem(new WallObject(x, y));
+            } else if(occupier->get_type() == CellOccupier::FOOD){
+                addItem(new FoodObject(x, y));
+            }
+        }
     }
-  }
 }

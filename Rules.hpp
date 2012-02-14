@@ -27,6 +27,7 @@ public:
     bool move_snake(int index);
     int snake_count();
     const Snake& get_snake(int index);
+    bool snake_dead();
 private:
     ptr_vector<Snake> m_snakes;
     shared_ptr<Board> m_board;

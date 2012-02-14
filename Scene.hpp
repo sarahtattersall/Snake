@@ -21,7 +21,7 @@ public:
     ~Scene();
 public slots:
     void move_snake();
-private:    
+private:
     QGraphicsView view;
     QPainter painter;
     shared_ptr<Board> m_board;

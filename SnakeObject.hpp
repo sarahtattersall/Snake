@@ -13,7 +13,7 @@ public:
 
 class SnakeDeadObject : public CellObject{
 public:
-    SnakeObject(int x, int y);
+    SnakeDeadObject(int x, int y);
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
 };
 
