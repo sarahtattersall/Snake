@@ -1,9 +1,10 @@
 #include "Snake.hpp"
 Snake::Snake(int size, Coord::Direction d) : CellOccupier(){
     m_size = size;
+		m_alive = true;
     m_direction = d;
-	m_tail = NULL;
-	m_speed = FAST;
+		m_tail = NULL;
+		m_speed = FAST;
 }
 
 Snake::~Snake(){
@@ -27,9 +28,9 @@ void Snake::set_direction(Coord::Direction d){
 }
 void Snake::build_tail(shared_ptr<Board> board){
     if( m_size > 1 ){
-		for(int i = 0; i < m_size - 1; ++i){
-			grow(board);
-		}
+			for(int i = 0; i < m_size - 1; ++i){
+				grow(board);
+			}
     }
 }
 
@@ -78,4 +79,12 @@ void Snake::grow(shared_ptr<Board> board){
 
 int Snake::get_speed() const{
 	return m_speed;
+}
+
+void Snake::set_alive(bool alive){
+	m_alive = alive;
+}
+
+bool Snake::is_alive(){
+	return m_alive;
 }

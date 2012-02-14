@@ -34,13 +34,16 @@ public:
 
     SnakeTail* find_tail();
     int get_size() const;
-	int get_speed() const;
+		int get_speed() const;
     void move_tail();
-	void grow(shared_ptr<Board> board);
+		void grow(shared_ptr<Board> board);
+		void set_alive(bool alive);
+		bool is_alive();
 
 private:
     int m_size;
-	Speed m_speed;
+		bool m_alive;
+		Speed m_speed;
     Coord::Direction m_direction;
     SnakeTail* m_tail;
     // Would it have been better to be doubly linked?

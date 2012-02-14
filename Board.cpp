@@ -20,7 +20,7 @@ public:
     virtual void remove(CellOccupier* occupier);
     virtual Coord find(CellOccupier* occupier);
     virtual CellOccupier* lookup(Coord coord);
-	virtual void clear();
+    virtual void clear();
 private:
     int m_size;
     vector<vector<Cell> > m_cells;
@@ -41,9 +41,9 @@ BoardBuilder& BoardBuilder::set_size(const int size){
     return *this;
 }
 shared_ptr<Board> BoardBuilder::create(){
-	if(m_size == 0){
-		throw BoardBuilderException();
-	}
+    if(m_size == 0){
+        throw BoardBuilderException();
+    }
     return shared_ptr<Board> (new SquareBoard(m_size));
 }
 
@@ -58,15 +58,15 @@ SquareBoard::~SquareBoard(){
 }
 
 int SquareBoard::get_height(){
-	return m_size;
+    return m_size;
 }
 
 int SquareBoard::get_width(){
-	return m_size;
+    return m_size;
 }
 
 void SquareBoard::insert(CellOccupier* occupier, const Coord coord){
-	m_cells[coord.get_y()][coord.get_x()].set_occupier(occupier);
+    m_cells[coord.get_y()][coord.get_x()].set_occupier(occupier);
     if( m_occupiers.find(occupier) != m_occupiers.end() ){
         m_occupiers.erase(m_occupiers.find(occupier));
     }
@@ -98,7 +98,7 @@ CellOccupier* SquareBoard::lookup(Coord coord){
 }
 
 void SquareBoard::initialize_board(){
-	m_cells.resize(m_size);
+    m_cells.resize(m_size);
     for (int i = 0; i < m_size; ++i){
         for( int j = 0; j < m_size; ++j){
             m_cells[i].push_back(Cell(m_empty));
@@ -111,10 +111,10 @@ void SquareBoard::clear(){
     for (int i = 0; i < m_size; ++i){
         for( int j = 0; j < m_size; ++j){
             m_occupiers.insert(pair<CellOccupier*,Coord>(m_empty, Coord(j,i)));
-		}
-	}
-	for(multimap<CellOccupier*, Coord>::iterator itr = m_occupiers.begin();
-    	itr != m_occupiers.end(); ++itr ){
-			m_occupiers.erase(itr);
-	}
+        }
+    }
+    for(multimap<CellOccupier*, Coord>::iterator itr = m_occupiers.begin();
+        itr != m_occupiers.end(); ++itr ){
+            m_occupiers.erase(itr);
+    }
 }

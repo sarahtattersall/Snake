@@ -142,6 +142,7 @@ shared_ptr<Rules> RuleBuilder::create(){
 	    throw SnakeTooBigException();
 	}
 
+// Build rules with board and then 
 	set_perimiter();
 
 	// Has to be vector else ptr_vector is deleted when copied to Rules
@@ -154,5 +155,6 @@ shared_ptr<Rules> RuleBuilder::create(){
 	    m_board->insert(snake, snake_start);
    		snake->build_tail(m_board);
 	}
+	// Hand in initialiser object that can build wall and snakes.
 	return shared_ptr<Rules> (new Rules(m_board, snakes, m_wall));
 }

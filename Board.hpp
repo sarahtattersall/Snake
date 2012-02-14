@@ -10,8 +10,8 @@ using boost::shared_ptr;
 //IAN: Made this class a pure abstract interface
 class Board {
 public:
-	virtual int get_height() = 0;
-	virtual int get_width() = 0;
+    virtual int get_height() = 0;
+    virtual int get_width() = 0;
     virtual void insert(CellOccupier* occupier, Coord coord) = 0;
     // Moves the occupier to the new coord and sets the occupiers previous
     // cell to empty
@@ -19,8 +19,8 @@ public:
     virtual void remove(CellOccupier* occupier) = 0;
     virtual Coord find(CellOccupier* occupier) = 0;
     virtual CellOccupier* lookup(Coord coord) = 0;
-	// Clears the contents of te board.
-	virtual void clear() = 0;
+    // Clears the contents of te board.
+    virtual void clear() = 0;
 };
 
 class BoardBuilder {

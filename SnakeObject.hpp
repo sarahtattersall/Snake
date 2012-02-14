@@ -11,4 +11,10 @@ public:
 	virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
 };
 
+class SnakeDeadObject : public CellObject{
+public:
+	SnakeObject(int x, int y);
+	virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+};
+
 #endif
