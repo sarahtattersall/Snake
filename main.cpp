@@ -4,6 +4,8 @@
 #include "Rules.hpp"
 #include "Scene.hpp"
 #include "SnakeException.hpp"
+//#include "TextualBoardVisualiser.hpp"
+//#include "Coord.hpp"
 using namespace std;
 using boost::shared_ptr;
 
@@ -20,6 +22,7 @@ int main(int argc, char *argv[])
         QApplication app(argc, argv);    
         Scene scene(board, rules);
         return app.exec();
+        return 0;
     }catch (SnakeException& e){
         cout << e.what() << endl;
     }

@@ -19,9 +19,7 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
     connect(m_timer, SIGNAL(timeout()), this, SLOT(move_snake()));
   
     update_view();
-    view.show();  
-
-  
+    view.show();
 }
 
 Scene::~Scene(){

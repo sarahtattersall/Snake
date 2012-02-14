@@ -20,6 +20,8 @@ string TextualBoardVisualiser::textual_display(CellOccupier::TYPE type){
         return string("S");
     } else if (type == CellOccupier::FOOD){
         return string("F");
+    } else if (type == CellOccupier::WALL){
+        return string("W");
     } else{
         throw TextualRepresentationError();
     }
