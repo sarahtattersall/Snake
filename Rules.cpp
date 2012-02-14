@@ -139,6 +139,7 @@ void Rules::reset(){
     int players = m_snakes.size();
     m_snakes.clear();
     set_snakes(players);
+    place_food();
 }
 
 RuleBuilder::RuleBuilder(){
