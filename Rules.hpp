@@ -1,11 +1,9 @@
 #ifndef RULES_HPP
 #define RULES_HPP
-#include "Snake.hpp"
 #include "Board.hpp"
 #include "SnakeDirection.hpp"
 #include "BoardVisualiser.hpp"
-#include "WallOccupier.hpp"
-#include "FoodOccupier.hpp"
+#include "CellOccupier.hpp"
 #include <boost/shared_ptr.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 using std::vector;

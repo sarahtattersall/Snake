@@ -1,8 +1,6 @@
 #include "Rules.hpp"
 #include "SnakeException.hpp"
-#include "EmptyOccupier.hpp"
-#include "WallOccupier.hpp"
-#include "Snake.hpp"
+#include "CellOccupier.hpp"
 #include <iostream>
 #include <string.h>
 #include <stdio.h>

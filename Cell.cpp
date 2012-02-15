@@ -1,5 +1,5 @@
 #include "Cell.hpp"
-#include "EmptyOccupier.hpp"
+#include "CellOccupier.hpp"
 
 Cell::Cell(CellOccupier* occupier){
     m_occupier = occupier;

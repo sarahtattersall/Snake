@@ -1,13 +1,14 @@
 #include "Board.hpp"
 #include "Cell.hpp"
 #include "SnakeException.hpp"
-#include "EmptyOccupier.hpp"
+//#include "CellOccupier.hpp"
 #include <map>
 #include <vector>
 using std::multimap;
 using std::vector;
 using std::pair;
 
+class CellOccupier;
 //IAN: This is the only current implementation of Board
 class SquareBoard : public Board {
 public:

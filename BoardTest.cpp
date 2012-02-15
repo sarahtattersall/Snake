@@ -2,7 +2,6 @@
 #include "boost/shared_ptr.hpp"
 #include "SnakeException.hpp"
 #include "CellOccupier.hpp"
-#include "Snake.hpp"
 #include <iostream>
 using namespace std;
 // Registers the fixture into the 'registry'

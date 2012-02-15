@@ -13,13 +13,10 @@ HEADERS += Board.hpp \
 		   CellObject.hpp \
            CellOccupier.hpp \
            Coord.hpp \
-           EmptyOccupier.hpp \
 		   FoodObject.hpp \
-		   FoodOccupier.hpp \
            Rules.hpp \
 		   RulesTest.hpp \
            Scene.hpp \
-           Snake.hpp \
            SnakeDirection.hpp \
            SnakeException.hpp \
            SnakeObject.hpp \
@@ -30,12 +27,12 @@ SOURCES += Board.cpp \
            BoardVisualiser.cpp \
            Cell.cpp \
 		   CellObject.cpp \
+           CellOccupier.cpp \
            Coord.cpp \
 		   FoodObject.cpp \
            Rules.cpp \
 		   RulesTest.cpp \
            Scene.cpp \
-           Snake.cpp \
            SnakeObject.cpp \
            test.cpp \
            TextualBoardVisualiser.cpp \
