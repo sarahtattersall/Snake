@@ -11,24 +11,18 @@ HEADERS += Board.hpp \
 		   CellObject.hpp \
            CellOccupier.hpp \
            Coord.hpp \
-		   FoodObject.hpp \
            Rules.hpp \
            Scene.hpp \
            SnakeDirection.hpp \
            SnakeException.hpp \
-           SnakeObject.hpp \
-           TextualBoardVisualiser.hpp \
-		   WallObject.hpp
+           TextualBoardVisualiser.hpp
 SOURCES += Board.cpp \
            BoardVisualiser.cpp \
            Cell.cpp \
 		   CellObject.cpp \
            CellOccupier.cpp \
            Coord.cpp \
-		   FoodObject.cpp \
            main.cpp \
            Rules.cpp \
            Scene.cpp \
-           SnakeObject.cpp \
            TextualBoardVisualiser.cpp \
-		   WallObject.cpp

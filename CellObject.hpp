@@ -16,4 +16,31 @@ public:
     static int get_height();
 };
 
+class FoodObject : public CellObject{
+public:
+    // Takes coords for scene.
+    FoodObject(int x, int y);
+    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+};
+
+class SnakeObject : public CellObject{
+public:
+    // Takes coords for scene.
+    SnakeObject(int x, int y);
+    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+};
+
+class SnakeDeadObject : public CellObject{
+public:
+    SnakeDeadObject(int x, int y);
+    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+};
+
+class WallObject : public CellObject{
+public:
+    // Takes coords for scene.
+    WallObject(int x, int y);
+    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+};
+
 #endif

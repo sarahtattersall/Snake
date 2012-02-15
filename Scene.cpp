@@ -1,7 +1,5 @@
 #include "Scene.hpp"
-#include "FoodObject.hpp"
-#include "SnakeObject.hpp"
-#include "WallObject.hpp"
+#include "CellObject.hpp"
 #include "CellOccupier.hpp"
 #include "SnakeDirection.hpp"
 Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
