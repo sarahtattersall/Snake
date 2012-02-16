@@ -37,7 +37,7 @@ const Snake& Rules::get_snake(int index){
 void Rules::place_food(){
     int x = rand() % m_board->get_width();
     int y = rand() % m_board->get_height();
-    if( m_board->lookup(Coord(x,y))->get_type() == CellOccupier::EMPTY ){
+    if (m_board->lookup(Coord(x,y))->get_type() == CellOccupier::EMPTY){
         m_board->insert(m_food, Coord(x,y));
     } else {
         place_food();
@@ -59,8 +59,8 @@ bool Rules::move_snake(int index){
 }
 
 bool Rules::snake_dead(){
-    for(ptr_vector<Snake>::iterator itr = m_snakes.begin(); itr != m_snakes.end(); ++itr){
-        if(!(*itr).is_alive()){
+    for (ptr_vector<Snake>::iterator itr = m_snakes.begin(); itr != m_snakes.end(); ++itr){
+        if (!(*itr).is_alive()){
             return true;
         }
     }
@@ -87,7 +87,7 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
     if (m_board->lookup(new_front)->get_type() == CellOccupier::SNAKE){
         snake.set_alive(false);
         return false;
-    } else if (m_board->lookup(new_front)->get_type() == CellOccupier::FOOD){
+    } else if (m_board->lookup(new _front)->get_type() == CellOccupier::FOOD){
         m_board->remove(m_food);
         //Should grow move the head? Current it does.
         snake.grow(m_board);
@@ -95,7 +95,7 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
         place_food();
     } else {
         m_board->move(&snake, new_front);
-        if(snake.get_size() > 1){
+        if (snake.get_size() > 1){
             SnakeTail* tail = snake.find_tail();
             m_board->move(tail, old_front);
             // Not entirely sure if this should be in snake?
@@ -109,11 +109,11 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
 void Rules::build_wall(){
     int width = m_board->get_width();
     int height = m_board->get_height();
-    for( int x = 0; x < width; ++x ){
+    for (int x = 0; x < width; ++x){
         m_board->insert(m_wall, Coord(x, 0));
         m_board->insert(m_wall, Coord(x, height-1));
     }
-    for( int y = 0; y < height; ++y ){
+    for (int y = 0; y < height; ++y){
         m_board->insert(m_wall, Coord(0, y));
         m_board->insert(m_wall, Coord(width-1, y));
     }
@@ -125,7 +125,7 @@ void Rules::set_snakes(int players){
 void Rules::set_snakes(int players, int snake_size){
     m_prev_snake_size = snake_size;
     Coord board_middle(m_board->get_width()/2, m_board->get_height()/2);
-    for( int player = 0; player < players; ++player){
+    for (int player = 0; player < players; ++player){
         Coord snake_start(board_middle.get_x() - player, board_middle.get_y());
         Snake* snake = new Snake(snake_size, Coord::DOWN);
         m_snakes.push_back(snake);
