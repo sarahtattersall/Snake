@@ -52,13 +52,13 @@ Coord Coord::operator=(const Coord& coord){
 Coord Coord::move(Direction direction){
     switch(direction){
         case UP:
-          return Coord(m_x, m_y-1);
+          return Coord(m_x, m_y) - Coord(0, 1);
         case DOWN:
-          return Coord(m_x, m_y+1);
+          return Coord(m_x, m_y) + Coord(0, 1);
         case LEFT:
-          return Coord(m_x-1, m_y);
+          return Coord(m_x, m_y) - Coord(1, 0);
         case RIGHT:
-          return Coord(m_x+1, m_y);
+          return Coord(m_x, m_y) + Coord(1, 0);;
     }
     return *this;
 }
