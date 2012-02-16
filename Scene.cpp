@@ -69,6 +69,9 @@ void Scene::keyPressEvent(QKeyEvent* event){
                 case Qt::Key_Right:
                     result = m_rules->move_snake(0, Coord::RIGHT);
                     break;
+                default:
+                    result = m_rules->move_snake(0);
+                    break;
                 }
             if(!result){
                 end_game();
