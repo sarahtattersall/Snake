@@ -7,15 +7,12 @@
 #include <stdlib.h>
 #include <time.h>
 
-Rules::Rules(shared_ptr<Board> board){
+Rules::Rules(shared_ptr<Board> board, bool through_walls){
     m_board = board;
-    //m_snake_start_size = snakes[0]->get_size();
-    // for(vector<Snake*>::iterator itr = snakes.begin(); itr != snakes.end(); ++itr){
-    //     m_snakes.push_back(*itr);
-    // }
     m_prev_snake_size = 0;
     m_wall = new WallOccupier();
     m_food = new FoodOccupier();
+    m_through_walls = through_walls;
     srand(time(NULL));
     place_food();
 }
@@ -75,16 +72,16 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
     Coord new_front = old_front.move(direction);
     bool set_food = false;
     snake.set_direction(direction); // Need to set this here so grow moves snake in right direction
-
     if (coord_out_of_bounds(new_front)){
-        snake.set_alive(false);
-        return false;
+        if (!m_through_walls){
+            snake.set_alive(false);
+            return false;
+        }
+        //Move twice through walls
+        new_front = new_front.move(direction);
+        new_front = new_front.move(direction);
     }
     
-    /*if (coord_out_of_bounds(new_front)){
-        new_front = new_front.move(direction);
-        new_front = new_front.move(direction);
-    }*/
     
     // Is it better to just do one lookup?
     if (m_board->lookup(new_front)->get_type() == CellOccupier::SNAKE){
@@ -147,6 +144,7 @@ void Rules::reset(){
 }
 
 RuleBuilder::RuleBuilder(){
+    m_through_walls = false;
     m_player_count = 0;
     m_snake_size = 0;
 }
@@ -166,6 +164,11 @@ RuleBuilder& RuleBuilder::set_player_count(int count){
     return *this;
 }
 
+RuleBuilder& RuleBuilder::set_through_walls(bool through_walls){
+    m_through_walls = through_walls;
+    return *this;
+}
+
 shared_ptr<Rules> RuleBuilder::create(){
     BoardBuilder board_builder;
     if (m_board.get() == NULL || m_player_count == 0){
@@ -181,7 +184,7 @@ shared_ptr<Rules> RuleBuilder::create(){
     }
     // Hand in initialiser object that can build wall and snakes.
     Coord::set_board_dimensions(m_board->get_height(), m_board->get_width());
-    shared_ptr<Rules> rules = shared_ptr<Rules> (new Rules(m_board));
+    shared_ptr<Rules> rules = shared_ptr<Rules> (new Rules(m_board, m_through_walls));
     rules->build_wall();
     rules->set_snakes(m_player_count, m_snake_size);
     return rules;

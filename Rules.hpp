@@ -14,7 +14,7 @@ class BoardVisualiser;
 
 class Rules{
 public:
-    Rules(shared_ptr<Board> board);
+    Rules(shared_ptr<Board> board, bool through_walls);
     ~Rules();
     shared_ptr<Board> get_board();
     // Returns bool for if the move succeeds. If false
@@ -42,7 +42,8 @@ private:
     bool compute_move(Snake& snake, Coord::Direction direction);
     void place_food();
     int m_prev_snake_size;
-    //int m_snake_start_size;
+    //Bool determining if the snake can pass through walls.
+    bool m_through_walls;
     
 };
 
@@ -54,6 +55,7 @@ public:
     // Don't have to set snake size will go to default if not.
     RuleBuilder& set_snake_size(int size);
     RuleBuilder& set_player_count(int count);
+    RuleBuilder& set_through_walls(bool through_walls);
     // Creates rules, adds a perimiter around the board,
     // adds snakes to the board.
     shared_ptr<Rules> create();
@@ -61,6 +63,7 @@ private:
     shared_ptr<Board> m_board;
     int m_snake_size;
     int m_player_count;
+    bool m_through_walls;
 };
 
 #endif
