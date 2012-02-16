@@ -12,6 +12,7 @@ HEADERS += Board.hpp \
            Cell.hpp \
            CellOccupier.hpp \
            Coord.hpp \
+           CoordTest.hpp \
            Rules.hpp \
 		   RulesTest.hpp \
            Scene.hpp \
@@ -25,6 +26,7 @@ SOURCES += Board.cpp \
 		   CellObject.cpp \
            CellOccupier.cpp \
            Coord.cpp \
+           CoordTest.cpp \
            Rules.cpp \
 		   RulesTest.cpp \
            Scene.cpp \

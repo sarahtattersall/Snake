@@ -13,12 +13,15 @@ public:
   Coord operator-(const Coord& coord) const;
   // Overrides = operator
   Coord operator=(const Coord& coord);
-
   Coord move(Direction direction);
-
+  static void set_board_dimensions(int height, int width);
+  
 private:
+    static int s_board_height;
+    static int s_board_width;
     int m_x;
     int m_y;
+    int mod (int number, int mod_value);
 };
 
 #endif

@@ -80,6 +80,12 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
         snake.set_alive(false);
         return false;
     }
+    
+    /*if (coord_out_of_bounds(new_front)){
+        new_front = new_front.move(direction);
+        new_front = new_front.move(direction);
+    }*/
+    
     // Is it better to just do one lookup?
     if (m_board->lookup(new_front)->get_type() == CellOccupier::SNAKE){
         snake.set_alive(false);
@@ -174,6 +180,7 @@ shared_ptr<Rules> RuleBuilder::create(){
         throw SnakeTooBigException();
     }
     // Hand in initialiser object that can build wall and snakes.
+    Coord::set_board_dimensions(m_board->get_height(), m_board->get_width());
     shared_ptr<Rules> rules = shared_ptr<Rules> (new Rules(m_board));
     rules->build_wall();
     rules->set_snakes(m_player_count, m_snake_size);
