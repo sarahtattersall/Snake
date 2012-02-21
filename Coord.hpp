@@ -4,6 +4,7 @@
 class Coord{
 public:
   enum Direction { UP, DOWN, RIGHT, LEFT };
+  Coord();
   Coord(int x, int y);
   int get_x() const;
   int get_y() const;

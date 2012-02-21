@@ -2,6 +2,11 @@
 
 int Coord::s_board_height = 0;
 int Coord::s_board_width = 0;
+Coord::Coord(){
+    m_x = 0;
+    m_y = 0;
+}
+
 Coord::Coord(int x, int y){
     //assert(s_board_height != 0);
     //assert(s_board_width != 0);
