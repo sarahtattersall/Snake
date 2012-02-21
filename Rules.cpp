@@ -14,7 +14,8 @@ Rules::Rules(shared_ptr<Board> board, bool through_walls){
     m_food = new FoodOccupier();
     m_through_walls = through_walls;
     srand(time(NULL));
-    place_food();
+    //Can't place food before setting up the snake!
+    //place_food();
 }
 
 Rules::~Rules(){
@@ -78,19 +79,18 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
             return false;
         }
         //Move twice through walls
+        //TODO: Could I make the wall calculate the new coord??
+        //THIS HAS WRITTEN OVER THE FOOD
         new_front = new_front.move(direction);
         new_front = new_front.move(direction);
     }
-    
-    
-    // Is it better to just do one lookup?
     if (m_board->lookup(new_front)->get_type() == CellOccupier::SNAKE){
         snake.set_alive(false);
         return false;
-    } else if (m_board->lookup(new _front)->get_type() == CellOccupier::FOOD){
+    }else if (m_board->lookup(new_front)->get_type() == CellOccupier::FOOD){
         m_board->remove(m_food);
         //Should grow move the head? Current it does.
-        snake.grow(m_board);
+        snake.grow(m_board, new_front);
         set_food = true;
         place_food();
     } else {
@@ -187,5 +187,6 @@ shared_ptr<Rules> RuleBuilder::create(){
     shared_ptr<Rules> rules = shared_ptr<Rules> (new Rules(m_board, m_through_walls));
     rules->build_wall();
     rules->set_snakes(m_player_count, m_snake_size);
+    rules->place_food();
     return rules;
 }

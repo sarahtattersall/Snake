@@ -14,6 +14,8 @@ class BoardVisualiser;
 
 class Rules{
 public:
+    //I didn't want to make place_food private so said the builder is a friend??
+    friend class RuleBuilder;
     Rules(shared_ptr<Board> board, bool through_walls);
     ~Rules();
     shared_ptr<Board> get_board();
@@ -40,10 +42,10 @@ private:
     // Determines if a Coord is out of bounds for the board
     bool coord_out_of_bounds(Coord coord);
     bool compute_move(Snake& snake, Coord::Direction direction);
-    void place_food();
     int m_prev_snake_size;
     //Bool determining if the snake can pass through walls.
     bool m_through_walls;
+    void place_food();
     
 };
 

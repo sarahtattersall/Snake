@@ -2,10 +2,10 @@
 #include "Board.hpp"
 Snake::Snake(int size, Coord::Direction d) : CellOccupier(){
     m_size = size;
-        m_alive = true;
+    m_alive = true;
     m_direction = d;
-        m_tail = NULL;
-        m_speed = FAST;
+    m_tail = NULL;
+    m_speed = FAST;
 }
 
 Snake::~Snake(){
@@ -29,9 +29,12 @@ void Snake::set_direction(Coord::Direction d){
 }
 void Snake::build_tail(shared_ptr<Board> board){
     if( m_size > 1 ){
-            for(int i = 0; i < m_size - 1; ++i){
-                grow(board);
-            }
+        //Is it better to declare it out here rather than in the for?
+        Coord front;
+        for (int i = 0; i < m_size - 1; ++i){
+            front = board->find(this);
+            grow(board, front.move(m_direction));
+        }
     }
 }
 
@@ -60,21 +63,21 @@ SnakeTail* Snake::find_prev(SnakeTail* tail){
     return next;
 }
 
-void Snake::grow(shared_ptr<Board> board){
-    Coord front = board->find(this);
-    if( m_tail != NULL ){
+void Snake::grow(shared_ptr<Board> board, Coord new_front){
+    Coord old_front = board->find(this);
+    if (m_tail != NULL){
         SnakeTail* new_tail = new SnakeTail();
         SnakeTail* end_of_tail = find_prev(m_tail);
         end_of_tail->m_next = new_tail;
         new_tail->m_next = m_tail;
         m_tail =  new_tail;
-        board->move(this, front.move(m_direction));
-        board->insert(new_tail, front);
+        board->move(this, new_front);
+        board->insert(new_tail, old_front);
     } else {
         m_tail = new SnakeTail();
         m_tail->m_next = m_tail;
-        board->move(this, front.move(m_direction));
-        board->insert(m_tail, front);
+        board->move(this, new_front);
+        board->insert(m_tail, old_front);
     }
 }
 

@@ -64,7 +64,7 @@ public:
     int get_size() const;
         int get_speed() const;
     void move_tail();
-        void grow(shared_ptr<Board> board);
+        void grow(shared_ptr<Board> board, Coord new_front);
         void set_alive(bool alive);
         bool is_alive();
 
