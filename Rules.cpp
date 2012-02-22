@@ -190,3 +190,7 @@ shared_ptr<Rules> RuleBuilder::create(){
     rules->place_food();
     return rules;
 }
+
+int Rules::get_player_count(){
+    return m_snakes.size();
+}

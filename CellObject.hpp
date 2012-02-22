@@ -26,8 +26,10 @@ public:
 class SnakeObject : public CellObject{
 public:
     // Takes coords for scene.
-    SnakeObject(int x, int y);
+    SnakeObject(int x, int y, int player);
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
+private:
+    int m_player_number;
 };
 
 class SnakeDeadObject : public CellObject{

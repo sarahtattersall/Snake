@@ -34,6 +34,7 @@ public:
     // then calls set_snakes(players, snake_size)
     void set_snakes(int players);
     void reset();
+    int get_player_count();
 private:
     ptr_vector<Snake> m_snakes;
     shared_ptr<Board> m_board;

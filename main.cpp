@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
         shared_ptr<Board> board =  board_builder.create();
         RuleBuilder rule_builder;
         rule_builder.set_board(board);
-        rule_builder.set_player_count(1);
+        rule_builder.set_player_count(2);
         rule_builder.set_through_walls(true);
         shared_ptr<Rules> rules = rule_builder.create();
         QApplication app(argc, argv);    

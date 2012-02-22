@@ -89,8 +89,13 @@ int Scene::map_to_view(int x, int size){
 
 void Scene::update_view(){
     QTransform transform;
-    bool dead = m_rules->snake_dead();
-    for( int row = 0; row < m_board->get_height(); ++row ){
+    //bool dead = m_rules->snake_dead();
+    int players = m_rules->get_player_count();
+    for( int i = 0; i < players; ++i){
+        const Snake snake = m_rules->get_snake(i);
+        
+    }
+    /*for( int row = 0; row < m_board->get_height(); ++row ){
         for( int col = 0; col < m_board->get_width(); ++col ){
             CellOccupier* occupier = m_board->lookup(Coord(col, row));
             int x = map_to_view(col, SnakeObject::get_width());
@@ -102,8 +107,10 @@ void Scene::update_view(){
                 delete item;
             }
             if(occupier->get_type() == CellOccupier::SNAKE){
+                // TODO: Don't like cast
+                Snake* snake = (Snake *)occupier;
                 if(!dead){
-                    addItem(new SnakeObject(x, y));
+                    addItem(new SnakeObject(x, y, snake->get_player_number()));
                 } else{
                     addItem(new SnakeDeadObject(x, y));
                 }
@@ -113,5 +120,5 @@ void Scene::update_view(){
                 addItem(new FoodObject(x, y));
             }
         }
-    }
+    }*/
 }

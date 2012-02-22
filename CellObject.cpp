@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "CellObject.hpp"
 int CellObject::s_size = 10;
 CellObject::CellObject(int x, int y) : QGraphicsRectItem(x,y,s_size,s_size){    
@@ -21,12 +22,20 @@ void FoodObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
 	QGraphicsRectItem::paint(painter, option, widget);
 }
 
-SnakeObject::SnakeObject(int x, int y) : CellObject(x,y){   
+SnakeObject::SnakeObject(int x, int y, int player) : CellObject(x,y){  
+    m_player_number = player; 
 }
 
 void SnakeObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget){
-    setBrush(Qt::green);
-    painter->setPen(Qt::green);
+    if (m_player_number == 0){
+        setBrush(Qt::green);
+        painter->setPen(Qt::green);
+    } else{
+        assert(m_player_number == 1);
+        setBrush(Qt::cyan);
+        painter->setPen(Qt::cyan);
+    }
+    
     QGraphicsRectItem::paint(painter, option, widget);
 }
 
