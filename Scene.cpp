@@ -93,6 +93,7 @@ void Scene::update_view(){
     int players = m_rules->get_player_count();
     for( int i = 0; i < players; ++i){
         const Snake snake = m_rules->get_snake(i);
+        Coord coord = m_board->find(&snake);
         
     }
     /*for( int row = 0; row < m_board->get_height(); ++row ){

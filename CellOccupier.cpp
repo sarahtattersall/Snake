@@ -4,14 +4,14 @@ Snake::Snake(int size, Coord::Direction d) : CellOccupier(){
     m_size = size;
     m_alive = true;
     m_direction = d;
-    m_tail = NULL;
+    m_next = NULL;
     m_speed = FAST;
 }
 
 Snake::~Snake(){
-    if( m_tail != NULL ){
-        SnakeTail* front = m_tail;
-        SnakeTail* next_tail = m_tail->get_next();
+    if( m_next != NULL ){
+        SnakeTail* front = m_next;
+        SnakeTail* next_tail = m_next->get_next();
         front->m_next = NULL; // Break the loop.
         while( next_tail != NULL ){
             SnakeTail* current = next_tail;
@@ -39,8 +39,8 @@ void Snake::build_tail(shared_ptr<Board> board){
 }
 
 SnakeTail* Snake::find_tail(){
-    if( m_tail != NULL ){
-        return find_prev(m_tail);
+    if( m_next != NULL ){
+        return find_prev(m_next);
     }
     return NULL;
 }
@@ -52,11 +52,11 @@ int Snake::get_size() const{
 
 void Snake::move_tail(){
     SnakeTail* tail = find_tail();
-    m_tail = tail;
+    m_next = tail;
 }
 
 SnakeTail* Snake::find_prev(SnakeTail* tail){
-    SnakeTail* next = m_tail;
+    SnakeTail* next = m_next;
     while(next->m_next != tail ){
         next = next->m_next;
     }
@@ -65,19 +65,19 @@ SnakeTail* Snake::find_prev(SnakeTail* tail){
 
 void Snake::grow(shared_ptr<Board> board, Coord new_front){
     Coord old_front = board->find(this);
-    if (m_tail != NULL){
+    if (m_next != NULL){
         SnakeTail* new_tail = new SnakeTail();
-        SnakeTail* end_of_tail = find_prev(m_tail);
+        SnakeTail* end_of_tail = find_prev(m_next);
         end_of_tail->m_next = new_tail;
-        new_tail->m_next = m_tail;
-        m_tail =  new_tail;
+        new_tail->m_next = m_next;
+        m_next =  new_tail;
         board->move(this, new_front);
         board->insert(new_tail, old_front);
     } else {
-        m_tail = new SnakeTail();
-        m_tail->m_next = m_tail;
+        m_next = new SnakeTail();
+        m_next->m_next = m_next;
         board->move(this, new_front);
-        board->insert(m_tail, old_front);
+        board->insert(m_next, old_front);
     }
 }
 
@@ -91,4 +91,11 @@ void Snake::set_alive(bool alive){
 
 bool Snake::is_alive(){
     return m_alive;
+}
+
+SnakeTailIterator Snake::begin(){
+    return SnakeTailIterator(m_next);
+}
+SnakeTailIterator Snake::end(){
+    return SnakeTailIterator(find_tail());
 }

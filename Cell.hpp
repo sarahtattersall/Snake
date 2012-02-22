@@ -6,11 +6,11 @@ class Coord;
 class Cell{
 public:
     bool is_occupied();
-    void set_occupier(CellOccupier* occupier);
-    CellOccupier* get_occupier();
+    void set_occupier(const CellOccupier* occupier);
+    const CellOccupier* get_occupier();
     Cell(CellOccupier* occupier);
 private:
-    CellOccupier* m_occupier;
+    const CellOccupier* m_occupier;
 };
 
 #endif

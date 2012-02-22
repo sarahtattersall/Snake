@@ -5,11 +5,11 @@ Cell::Cell(CellOccupier* occupier){
     m_occupier = occupier;
 }
 
-void Cell::set_occupier(CellOccupier* occupier){
+void Cell::set_occupier(const CellOccupier* occupier){
     m_occupier = occupier;
 }
 
-CellOccupier* Cell::get_occupier(){
+const CellOccupier* Cell::get_occupier(){
     return m_occupier;
 }
 

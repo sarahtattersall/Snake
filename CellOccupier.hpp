@@ -19,29 +19,29 @@ class Board;
 class CellOccupier{
 public:
     enum TYPE {EMPTY, SNAKE, FOOD, WALL};
-    virtual TYPE get_type() = 0;
+    virtual TYPE get_type() const = 0;
 };
 
 class EmptyOccupier : public CellOccupier{
 public:
-    virtual TYPE get_type() { return EMPTY; }
+    virtual TYPE get_type() const { return EMPTY; }
 };
 
 class FoodOccupier : public CellOccupier{
 public:
-    virtual TYPE get_type() { return FOOD; }
+    virtual TYPE get_type() const { return FOOD; }
 };
 
 class WallOccupier : public CellOccupier{
 public:
-    virtual TYPE get_type() { return WALL; }
+    virtual TYPE get_type() const { return WALL; }
 };
 
 class SnakeTail : public CellOccupier{
 public:
     friend class Snake;
     SnakeTail() : CellOccupier() {};
-    virtual TYPE get_type() { return SNAKE; }
+    virtual TYPE get_type() const { return SNAKE; }
     SnakeTail* get_next(){
         return m_next;
     }
@@ -49,12 +49,41 @@ private:
     SnakeTail* m_next;
 };
 
+//TODO: ARGGGHHH Cant make this work for both Snake head and snake tail? :(
+class SnakeTailIterator{
+public:
+    SnakeTailIterator(SnakeTail* current){
+        m_current = current;
+    }
+    
+    SnakeTailIterator& operator++(){
+        m_current = m_current->get_next();
+        return *this;
+    }
+    //TODO: Apparently not giving the parameter a name gets rid of compiler
+    //warning.
+    void operator++(int){
+        operator++();
+    }
+    
+    bool operator==(SnakeTailIterator iter){
+        return (m_current == iter.m_current);
+    }
+    
+    SnakeTail* operator*(){
+        return m_current;
+    }
+    
+private:
+    SnakeTail* m_current;
+};
+
 class Snake : public CellOccupier{
 public:
     enum Speed { FAST = 1, MEDIUM, SLOW };
     Snake(int size, Coord::Direction d);
     ~Snake();
-    virtual TYPE get_type() { return SNAKE; }
+    virtual TYPE get_type() const { return SNAKE; }
     
     Coord::Direction get_direction();
     void set_direction(Coord::Direction d);
@@ -62,18 +91,22 @@ public:
 
     SnakeTail* find_tail();
     int get_size() const;
-        int get_speed() const;
+    int get_speed() const;
     void move_tail();
-        void grow(shared_ptr<Board> board, Coord new_front);
-        void set_alive(bool alive);
-        bool is_alive();
+    void grow(shared_ptr<Board> board, Coord new_front);
+    void set_alive(bool alive);
+    bool is_alive();
+    
+    //Iterator methods:
+    SnakeTailIterator begin();
+    SnakeTailIterator end();
 
 private:
     int m_size;
-        bool m_alive;
-        Speed m_speed;
+    bool m_alive;
+    Speed m_speed;
     Coord::Direction m_direction;
-    SnakeTail* m_tail;
+    SnakeTail* m_next;
     SnakeTail* find_prev(SnakeTail* tail);
 };
 #endif

@@ -17,16 +17,16 @@ public:
     virtual int get_height();
     virtual int get_width();
     virtual void insert(CellOccupier* occupier, Coord coord);
-    virtual void move(CellOccupier* occupier, Coord coord);
+    virtual void move(const CellOccupier* occupier, Coord coord);
     virtual void remove(CellOccupier* occupier);
-    virtual Coord find(CellOccupier* occupier);
-    virtual CellOccupier* lookup(Coord coord);
+    virtual Coord find(const CellOccupier* occupier);
+    virtual const CellOccupier* lookup(const Coord coord);
     virtual void clear();
 private:
     int m_size;
     vector<vector<Cell> > m_cells;
     // Stores occupiers to coordinates
-    multimap<CellOccupier*, Coord> m_occupiers;
+    multimap<const CellOccupier*, Coord> m_occupiers;
     // Initializes the board with empty cells.
     void initialize_board();
     //Coord next_coord(SnakeDirection::Direction direction, Coord coord);
@@ -74,14 +74,14 @@ void SquareBoard::insert(CellOccupier* occupier, const Coord coord){
     m_occupiers.insert(pair<CellOccupier*,Coord>(occupier, coord));
 }
 
-void SquareBoard::move(CellOccupier* occupier, const Coord coord){
+void SquareBoard::move(const CellOccupier* occupier, const Coord coord){
     Coord old_coord = m_occupiers.find(occupier)->second;
     m_cells[old_coord.get_y()][old_coord.get_x()].set_occupier(m_empty);
     m_cells[coord.get_y()][coord.get_x()].set_occupier(occupier);
     if( m_occupiers.find(occupier) != m_occupiers.end() ){
         m_occupiers.erase(m_occupiers.find(occupier));
     }
-    m_occupiers.insert(pair<CellOccupier*,Coord>(occupier, coord));
+    m_occupiers.insert(pair<const CellOccupier*,Coord>(occupier, coord));
 }
 
 void SquareBoard::remove(CellOccupier* occupier){
@@ -90,11 +90,11 @@ void SquareBoard::remove(CellOccupier* occupier){
     m_occupiers.erase(m_occupiers.find(occupier));
 }
 
-Coord SquareBoard::find(CellOccupier* occupier){
+Coord SquareBoard::find(const CellOccupier* occupier){
     return m_occupiers.find(occupier)->second;
 }
 
-CellOccupier* SquareBoard::lookup(Coord coord){
+const CellOccupier* SquareBoard::lookup(const Coord coord){
     return m_cells[coord.get_y()][coord.get_x()].get_occupier();
 }
 
@@ -109,7 +109,7 @@ void SquareBoard::initialize_board(){
 }
 
 void SquareBoard::clear(){    
-    for(multimap<CellOccupier*, Coord>::iterator itr = m_occupiers.begin();
+    for(multimap<const CellOccupier*, Coord>::iterator itr = m_occupiers.begin();
         itr != m_occupiers.end(); ++itr ){
             m_occupiers.erase(itr);
     }

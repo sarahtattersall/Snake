@@ -15,10 +15,10 @@ public:
     virtual void insert(CellOccupier* occupier, Coord coord) = 0;
     // Moves the occupier to the new coord and sets the occupiers previous
     // cell to empty
-    virtual void move(CellOccupier* occupier, Coord coord) = 0;
+    virtual void move(const CellOccupier* occupier, Coord coord) = 0;
     virtual void remove(CellOccupier* occupier) = 0;
-    virtual Coord find(CellOccupier* occupier) = 0;
-    virtual CellOccupier* lookup(Coord coord) = 0;
+    virtual Coord find(const CellOccupier* occupier) = 0;
+    virtual const CellOccupier* lookup(Coord coord) = 0;
     // Clears the contents of te board.
     virtual void clear() = 0;
 };
