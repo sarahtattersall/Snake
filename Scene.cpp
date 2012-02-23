@@ -91,9 +91,10 @@ void Scene::update_view(){
     QTransform transform;
     bool dead = m_rules->snake_dead();
     int players = m_rules->get_player_count();
+    QGraphicsItem* item;
     for( int player = 0; player < players; ++player){
         const Snake snake = m_rules->get_snake(player);
-        for (SnakeIterator itr = snake.begin(); itr != snake.end(); ++itr){
+        for (SnakeTailIterator itr = snake.begin(); itr != snake.end(); ++itr){
             Coord coord = m_board->find(*itr);
             int x = map_to_view(coord.get_x(), SnakeObject::get_width());
             int y = map_to_view(coord.get_y(), SnakeObject::get_height());
