@@ -39,6 +39,7 @@ public:
 
 class IterableSnake{
     //CellOccupier * get_occupier();
+    friend class SnakeIterator;
     virtual IterableSnake * next() = 0;
     virtual CellOccupier * get_cell_occupier() = 0;
 };
@@ -46,7 +47,6 @@ class IterableSnake{
 class SnakeTail : public CellOccupier, public IterableSnake {
 public:
     friend class Snake;
-    friend class SnakeIterator;
     SnakeTail() : CellOccupier() {};
     virtual TYPE get_type() const { return SNAKE; }
     SnakeTail* get_next(){
@@ -67,12 +67,12 @@ private:
 //TODO: ARGGGHHH Cant make this work for both Snake head and snake tail? :(
 class SnakeIterator{
 public:
-    SnakeIterator(SnakeTail* current){
+    SnakeIterator(IterableSnake* current){
         m_current = current;
     }
     
     SnakeIterator& operator++(){
-        m_current = m_current->get_next();
+        m_current = m_current->next();
         return *this;
     }
     //TODO: Apparently not giving the parameter a name gets rid of compiler
@@ -89,12 +89,12 @@ public:
         return !(operator==(iter));
     }
     
-    SnakeTail* operator*(){
-        return m_current;
+    CellOccupier * operator*(){
+        return m_current->get_cell_occupier();
     }
     
 private:
-    SnakeTail* m_current;
+    IterableSnake* m_current;
 };
 
 class Snake : public CellOccupier, public IterableSnake {

@@ -93,18 +93,7 @@ void Scene::update_view(){
     int players = m_rules->get_player_count();
     for( int player = 0; player < players; ++player){
         const Snake snake = m_rules->get_snake(player);
-        Coord coord = m_board->find(&snake);
-        int x = map_to_view(coord.get_x(), SnakeObject::get_width());
-        int y = map_to_view(coord.get_y(), SnakeObject::get_height());
-        QGraphicsItem* item = itemAt(x, y, transform);
-        if(!item){
-            if(!dead){
-                addItem(new SnakeObject(x, y, player));
-            } else{
-                addItem(new SnakeDeadObject(x, y));
-            }
-        }
-        for (SnakeTailIterator itr = snake.begin(); itr != snake.end(); ++itr){
+        for (SnakeIterator itr = snake.begin(); itr != snake.end(); ++itr){
             Coord coord = m_board->find(*itr);
             int x = map_to_view(coord.get_x(), SnakeObject::get_width());
             int y = map_to_view(coord.get_y(), SnakeObject::get_height());
