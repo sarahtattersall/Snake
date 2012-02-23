@@ -3,7 +3,7 @@
 
 #include "Rules.hpp"
 #include "Board.hpp"
-#include "Log.hpp"
+#include "Coord.hpp"
 
 #include <boost/shared_ptr.hpp>
 #include <QGraphicsScene>
@@ -22,10 +22,11 @@ public:
 public slots:
     void move_snake();
 private:
-    QGraphicsView view;
+    QGraphicsView view;    
     QPainter painter;
     shared_ptr<Board> m_board;
     shared_ptr<Rules> m_rules;
+    QTransform m_transform;
     QTimer* m_timer;
     bool m_playing;
     // A bool to determine if a key has been pressed for the given turn.
@@ -36,6 +37,8 @@ private:
     // Maps board point x to the view, taking into consideration
     // size of objects
     int map_to_view(int x, int size);
+    QGraphicsItem* find_item(Coord coord);
+    Coord get_scene_coord(CellOccupier* occupier);
 };
 
 #endif

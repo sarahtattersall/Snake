@@ -2,7 +2,7 @@
 #include "CellObject.hpp"
 #include "CellOccupier.hpp"
 #include "SnakeDirection.hpp"
-Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules){
+Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules) : m_transform(){
     m_board = board;
     m_rules = rules;
     m_key_press = false;
@@ -87,31 +87,45 @@ int Scene::map_to_view(int x, int size){
   return x*size;
 }
 
+Coord Scene::get_scene_coord(CellOccupier* occupier){
+    Coord coord = m_board->find(occupier);
+    int x = map_to_view(coord.get_x(), SnakeObject::get_width());
+    int y = map_to_view(coord.get_y(), SnakeObject::get_height()); 
+    return Coord(x,y);
+}
+QGraphicsItem* Scene::find_item(Coord coord){
+    return itemAt(coord.get_x(), coord.get_y(), m_transform);
+}
 void Scene::update_view(){
-    QTransform transform;
     bool dead = m_rules->snake_dead();
     int players = m_rules->get_player_count();
     QGraphicsItem* item;
+    Coord coord;
     for( int player = 0; player < players; ++player){
         const Snake snake = m_rules->get_snake(player);
-        for (SnakeTailIterator itr = snake.begin(); itr != snake.end(); ++itr){
-            Coord coord = m_board->find(*itr);
-            int x = map_to_view(coord.get_x(), SnakeObject::get_width());
-            int y = map_to_view(coord.get_y(), SnakeObject::get_height());
-            item = itemAt(x, y, transform);
+        for (SnakeIterator itr = snake.begin(); itr != snake.end(); ++itr){
+            coord = get_scene_coord(*itr);
+            item = find_item(coord);
             if(!item){
                 if(!dead){
-                    addItem(new SnakeObject(x, y, player));
+                    addItem(new SnakeObject(coord, player));
                 } else{
-                    addItem(new SnakeDeadObject(x, y));
+                    addItem(new SnakeDeadObject(coord));
                 }
             }
         }
     }
     
-    FoodOccupiuer* food = m_rules->get_food();
-    WallOccupier* wall = m_rules->get_wall();
-    
+    coord = get_scene_coord(m_rules->get_food());
+    item = find_item(coord);
+    if(!item){
+        addItem(new FoodObject(coord));
+    }
+    coord = get_scene_coord(m_rules->get_wall());
+    item = find_item(coord);
+    if(!item){
+        addItem(new WallObject(coord));
+    }
     /*for( int row = 0; row < m_board->get_height(); ++row ){
         for( int col = 0; col < m_board->get_width(); ++col ){
             CellOccupier* occupier = m_board->lookup(Coord(col, row));
