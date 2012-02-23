@@ -1,7 +1,7 @@
 #include <assert.h>
 #include "CellObject.hpp"
 int CellObject::s_size = 10;
-CellObject::CellObject(int x, int y) : QGraphicsRectItem(x,y,s_size,s_size){    
+CellObject::CellObject(Coord coord) : QGraphicsRectItem(coord.get_x(),coord.get_y(),s_size,s_size){    
 }
 
 
@@ -13,7 +13,7 @@ int CellObject::get_height(){
     return s_size;
 }
 
-FoodObject::FoodObject(int x, int y) : CellObject(x,y){	
+FoodObject::FoodObject(Coord coord) : CellObject(coord){	
 }
 
 void FoodObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget){
@@ -22,7 +22,7 @@ void FoodObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
 	QGraphicsRectItem::paint(painter, option, widget);
 }
 
-SnakeObject::SnakeObject(int x, int y, int player) : CellObject(x,y){  
+SnakeObject::SnakeObject(Coord coord, int player) : CellObject(coord){  
     m_player_number = player; 
 }
 
@@ -39,7 +39,7 @@ void SnakeObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
     QGraphicsRectItem::paint(painter, option, widget);
 }
 
-SnakeDeadObject::SnakeDeadObject(int x, int y) : CellObject(x,y){   
+SnakeDeadObject::SnakeDeadObject(Coord coord) : CellObject(coord){   
 }
 
 void SnakeDeadObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget){
@@ -48,7 +48,7 @@ void SnakeDeadObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
     QGraphicsRectItem::paint(painter, option, widget);
 }
 
-WallObject::WallObject(int x, int y) : CellObject(x,y){ 
+WallObject::WallObject(Coord coord) : CellObject(coord){ 
 }
 
 void WallObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget){
