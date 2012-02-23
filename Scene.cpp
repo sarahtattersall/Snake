@@ -89,13 +89,39 @@ int Scene::map_to_view(int x, int size){
 
 void Scene::update_view(){
     QTransform transform;
-    //bool dead = m_rules->snake_dead();
+    bool dead = m_rules->snake_dead();
     int players = m_rules->get_player_count();
-    for( int i = 0; i < players; ++i){
-        const Snake snake = m_rules->get_snake(i);
+    for( int player = 0; player < players; ++player){
+        const Snake snake = m_rules->get_snake(player);
         Coord coord = m_board->find(&snake);
-        
+        int x = map_to_view(coord.get_x(), SnakeObject::get_width());
+        int y = map_to_view(coord.get_y(), SnakeObject::get_height());
+        QGraphicsItem* item = itemAt(x, y, transform);
+        if(!item){
+            if(!dead){
+                addItem(new SnakeObject(x, y, player));
+            } else{
+                addItem(new SnakeDeadObject(x, y));
+            }
+        }
+        for (SnakeTailIterator itr = snake.begin(); itr != snake.end(); ++itr){
+            Coord coord = m_board->find(*itr);
+            int x = map_to_view(coord.get_x(), SnakeObject::get_width());
+            int y = map_to_view(coord.get_y(), SnakeObject::get_height());
+            item = itemAt(x, y, transform);
+            if(!item){
+                if(!dead){
+                    addItem(new SnakeObject(x, y, player));
+                } else{
+                    addItem(new SnakeDeadObject(x, y));
+                }
+            }
+        }
     }
+    
+    FoodOccupiuer* food = m_rules->get_food();
+    WallOccupier* wall = m_rules->get_wall();
+    
     /*for( int row = 0; row < m_board->get_height(); ++row ){
         for( int col = 0; col < m_board->get_width(); ++col ){
             CellOccupier* occupier = m_board->lookup(Coord(col, row));

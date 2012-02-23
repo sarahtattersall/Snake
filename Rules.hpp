@@ -35,6 +35,8 @@ public:
     void set_snakes(int players);
     void reset();
     int get_player_count();
+    FoodOccupier* get_food();
+    WallOccupier* get_wall();
 private:
     ptr_vector<Snake> m_snakes;
     shared_ptr<Board> m_board;

@@ -38,7 +38,7 @@ void Snake::build_tail(shared_ptr<Board> board){
     }
 }
 
-SnakeTail* Snake::find_tail(){
+SnakeTail* Snake::find_tail() const{
     if( m_next != NULL ){
         return find_prev(m_next);
     }
@@ -55,7 +55,7 @@ void Snake::move_tail(){
     m_next = tail;
 }
 
-SnakeTail* Snake::find_prev(SnakeTail* tail){
+SnakeTail* Snake::find_prev(SnakeTail* tail) const{
     SnakeTail* next = m_next;
     while(next->m_next != tail ){
         next = next->m_next;
@@ -93,9 +93,17 @@ bool Snake::is_alive(){
     return m_alive;
 }
 
-SnakeTailIterator Snake::begin(){
-    return SnakeTailIterator(m_next);
+SnakeIterator Snake::begin() const{
+    return SnakeIterator(m_next);
 }
-SnakeTailIterator Snake::end(){
-    return SnakeTailIterator(find_tail());
+SnakeIterator Snake::end() const{
+    return SnakeIterator(find_tail());
+}
+
+IterableSnake * Snake::next(){
+    return m_next;
+}
+
+CellOccupier * Snake::get_cell_occupier(){
+    return this;
 }

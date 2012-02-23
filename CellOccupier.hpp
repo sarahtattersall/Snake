@@ -37,26 +37,41 @@ public:
     virtual TYPE get_type() const { return WALL; }
 };
 
-class SnakeTail : public CellOccupier{
+class IterableSnake{
+    //CellOccupier * get_occupier();
+    virtual IterableSnake * next() = 0;
+    virtual CellOccupier * get_cell_occupier() = 0;
+};
+
+class SnakeTail : public CellOccupier, public IterableSnake {
 public:
     friend class Snake;
+    friend class SnakeIterator;
     SnakeTail() : CellOccupier() {};
     virtual TYPE get_type() const { return SNAKE; }
     SnakeTail* get_next(){
         return m_next;
     }
+    
 private:
     SnakeTail* m_next;
+    virtual IterableSnake * next(){
+        return m_next;
+    }
+    virtual CellOccupier * get_cell_occupier(){
+        return this;
+    }
 };
 
+
 //TODO: ARGGGHHH Cant make this work for both Snake head and snake tail? :(
-class SnakeTailIterator{
+class SnakeIterator{
 public:
-    SnakeTailIterator(SnakeTail* current){
+    SnakeIterator(SnakeTail* current){
         m_current = current;
     }
     
-    SnakeTailIterator& operator++(){
+    SnakeIterator& operator++(){
         m_current = m_current->get_next();
         return *this;
     }
@@ -66,8 +81,12 @@ public:
         operator++();
     }
     
-    bool operator==(SnakeTailIterator iter){
+    bool operator==(SnakeIterator iter){
         return (m_current == iter.m_current);
+    }
+    
+    bool operator!=(SnakeIterator iter){
+        return !(operator==(iter));
     }
     
     SnakeTail* operator*(){
@@ -78,7 +97,7 @@ private:
     SnakeTail* m_current;
 };
 
-class Snake : public CellOccupier{
+class Snake : public CellOccupier, public IterableSnake {
 public:
     enum Speed { FAST = 1, MEDIUM, SLOW };
     Snake(int size, Coord::Direction d);
@@ -89,7 +108,7 @@ public:
     void set_direction(Coord::Direction d);
     void build_tail(shared_ptr<Board> board);
 
-    SnakeTail* find_tail();
+    SnakeTail* find_tail() const;
     int get_size() const;
     int get_speed() const;
     void move_tail();
@@ -98,8 +117,8 @@ public:
     bool is_alive();
     
     //Iterator methods:
-    SnakeTailIterator begin();
-    SnakeTailIterator end();
+    SnakeIterator begin() const;
+    SnakeIterator end() const;
 
 private:
     int m_size;
@@ -107,6 +126,8 @@ private:
     Speed m_speed;
     Coord::Direction m_direction;
     SnakeTail* m_next;
-    SnakeTail* find_prev(SnakeTail* tail);
+    SnakeTail* find_prev(SnakeTail* tail) const;
+    virtual IterableSnake * next();
+    virtual CellOccupier * get_cell_occupier();
 };
 #endif
