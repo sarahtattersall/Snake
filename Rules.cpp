@@ -143,10 +143,10 @@ void Rules::reset(){
     place_food();
 }
 
-FoodOccupier* Rules::get_food(){
+CellOccupier* Rules::get_food(){
     return m_food;
 }
-WallOccupier* Rules::get_wall(){
+CellOccupier* Rules::get_wall(){
     return m_wall;
 }
 
