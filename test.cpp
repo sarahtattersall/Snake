@@ -2,7 +2,6 @@
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h>
 using namespace CppUnit;
-// ::TestFactoryRegistry::getRegistry;
 
 int main()
 {

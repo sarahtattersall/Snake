@@ -7,20 +7,18 @@ PKGCONFIG += cppunit
 
 # Input
 HEADERS += Board.hpp \
-		   BoardTest.hpp \
            BoardVisualiser.hpp \
            Cell.hpp \
            CellOccupier.hpp \
            Coord.hpp \
            CoordTest.hpp \
            Rules.hpp \
-		   RulesTest.hpp \
            Scene.hpp \
            SnakeDirection.hpp \
            SnakeException.hpp \
+           Tests.hpp \
            TextualBoardVisualiser.hpp 
 SOURCES += Board.cpp \
-		   BoardTest.cpp \
            BoardVisualiser.cpp \
            Cell.cpp \
 		   CellObject.cpp \
@@ -28,7 +26,7 @@ SOURCES += Board.cpp \
            Coord.cpp \
            CoordTest.cpp \
            Rules.cpp \
-		   RulesTest.cpp \
            Scene.cpp \
            test.cpp \
+           Tests.cpp \
            TextualBoardVisualiser.cpp 

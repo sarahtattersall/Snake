@@ -38,7 +38,7 @@ private:
     // size of objects
     int map_to_view(int x, int size);
     QGraphicsItem* find_item(Coord coord);
-    Coord get_scene_coord(CellOccupier* occupier);
+    Coord get_scene_coord(const CellOccupier* occupier);
 };
 
 #endif

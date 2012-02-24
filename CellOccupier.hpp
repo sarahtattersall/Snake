@@ -38,10 +38,9 @@ public:
 };
 
 class IterableSnake{
-    //CellOccupier * get_occupier();
     friend class SnakeIterator;
-    virtual IterableSnake * next() = 0;
-    virtual CellOccupier * get_cell_occupier() = 0;
+    virtual const IterableSnake* next() const = 0;
+    virtual const CellOccupier* get_cell_occupier() const = 0;
 };
 
 class SnakeTail : public CellOccupier, public IterableSnake {
@@ -55,10 +54,10 @@ public:
     
 private:
     SnakeTail* m_next;
-    virtual IterableSnake * next(){
+    virtual const IterableSnake* next() const{
         return m_next;
     }
-    virtual CellOccupier * get_cell_occupier(){
+    virtual const CellOccupier* get_cell_occupier() const{
         return this;
     }
 };
@@ -67,14 +66,19 @@ private:
 //TODO: ARGGGHHH Cant make this work for both Snake head and snake tail? :(
 class SnakeIterator{
 public:
-    SnakeIterator(IterableSnake* current){
+    SnakeIterator(const IterableSnake* current, IterableSnake* tail){
         m_current = current;
+        m_tail = tail;
     }
     
     ~SnakeIterator(){};
     
     SnakeIterator& operator++(){
-        m_current = m_current->next();
+        if (m_current == m_tail){
+            m_current = NULL;
+        } else {
+            m_current = m_current->next();
+        }
         return *this;
     }
     void operator++(int){
@@ -89,12 +93,12 @@ public:
         return !(operator==(iter));
     }
     
-    CellOccupier * operator*(){
+    const CellOccupier * operator*(){
         return m_current->get_cell_occupier();
     }
     
 private:
-    IterableSnake* m_current;
+    const IterableSnake* m_current;
     IterableSnake* m_tail;
 };
 
@@ -128,7 +132,7 @@ private:
     Coord::Direction m_direction;
     SnakeTail* m_next;
     SnakeTail* find_prev(SnakeTail* tail) const;
-    virtual IterableSnake * next();
-    virtual CellOccupier * get_cell_occupier();
+    virtual const IterableSnake * next() const;
+    virtual const CellOccupier * get_cell_occupier() const;
 };
 #endif

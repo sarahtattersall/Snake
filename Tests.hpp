@@ -1,5 +1,5 @@
-#ifndef RULES_TEST_HPP
-#define RULES_TEST_HPP
+#ifndef TESTS_HPP
+#define TESTS_HPP
 #include "Rules.hpp"
 #include <cppunit/extensions/HelperMacros.h>
 #include "cppunit/TestCase.h"
@@ -67,4 +67,59 @@ private:
     int m_test_snake_size;
 };
 
+class BoardTest : public CppUnit::TestFixture
+{
+    CPPUNIT_TEST_SUITE( BoardTest );
+    CPPUNIT_TEST( sizeTest );
+    CPPUNIT_TEST( builderFailsTest );
+    CPPUNIT_TEST( createdEmpty );
+    CPPUNIT_TEST( insertInRightCell );
+    CPPUNIT_TEST( correctMove );
+    CPPUNIT_TEST( correctFind );
+    CPPUNIT_TEST( correctLookup );
+    CPPUNIT_TEST( clear );
+    CPPUNIT_TEST_SUITE_END();
+
+public:
+    void setUp();
+    void tearDown();
+protected:
+    void sizeTest();
+    void builderFailsTest();
+    void createdEmpty();
+    void insertInRightCell();
+    void correctMove();
+    void correctFind();
+    void correctLookup();
+    void clear();
+private:
+    BoardBuilder* m_builder1;
+    BoardBuilder* m_builder2;
+    BoardBuilder* m_builder3;
+    BoardBuilder* m_builder4;
+    BoardBuilder* m_builder5;
+    BoardBuilder* m_builder6;
+    BoardBuilder* m_builder7;
+    BoardBuilder* m_builder8;
+    CellOccupier* m_snake_occupier;
+    int m_test_size;
+};
+
+class SnakeTest : public CppUnit::TestFixture
+{
+    CPPUNIT_TEST_SUITE( SnakeTest );
+    CPPUNIT_TEST( iterator );
+    CPPUNIT_TEST_SUITE_END();
+
+public:
+    void setUp();
+    void tearDown();
+protected:
+    void iterator();
+private:
+    shared_ptr<Rules> m_rules;
+    shared_ptr<Board> m_board;
+    int m_board_size;
+    int m_player_count;
+};
 #endif 

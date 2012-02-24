@@ -94,16 +94,16 @@ bool Snake::is_alive(){
 }
 
 SnakeIterator Snake::begin() const{
-    return SnakeIterator(m_next);
+    return SnakeIterator(this, find_tail());
 }
 SnakeIterator Snake::end() const{
-    return SnakeIterator(find_tail());
+    return SnakeIterator(NULL, find_tail());
 }
 
-IterableSnake * Snake::next(){
+const IterableSnake * Snake::next() const{
     return m_next;
 }
 
-CellOccupier * Snake::get_cell_occupier(){
+const CellOccupier * Snake::get_cell_occupier() const{
     return this;
 }

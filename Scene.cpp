@@ -87,7 +87,7 @@ int Scene::map_to_view(int x, int size){
   return x*size;
 }
 
-Coord Scene::get_scene_coord(CellOccupier* occupier){
+Coord Scene::get_scene_coord(const CellOccupier* occupier){
     Coord coord = m_board->find(occupier);
     int x = map_to_view(coord.get_x(), SnakeObject::get_width());
     int y = map_to_view(coord.get_y(), SnakeObject::get_height()); 
@@ -110,13 +110,13 @@ void Scene::update_view(){
             if(!item){
                 if(!dead){
                     addItem(new SnakeObject(coord, player));
+                    ++i;
                 } else{
                     addItem(new SnakeDeadObject(coord));
                 }
             }
-            // ++i;
         }
-        //assert(i==2);
+        assert(i==3);
     }
     
     coord = get_scene_coord(m_rules->get_food());
