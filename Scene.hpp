@@ -44,7 +44,8 @@ private:
     QGraphicsItem* find_item(Coord coord);
     Coord get_scene_coord(const CellOccupier* occupier);
     set<QGraphicsItem*> m_last_objects;
-    void add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects);
+    void add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects = NULL);
+    void display_board();
 
 };
 

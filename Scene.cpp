@@ -17,7 +17,7 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
     view.setWindowTitle("Sarah's Amazing Snake Game");
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(move_snake()));
-  
+    display_board();
     update_view();
     view.show();
 }
@@ -101,7 +101,9 @@ QGraphicsItem* Scene::find_item(Coord coord){
 
 void Scene::add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects){
     addItem(obj);
-    new_objects->insert(obj);
+    if (new_objects){
+        new_objects->insert(obj);
+    }
 }
 
 void Scene::update_view(){
@@ -136,19 +138,6 @@ void Scene::update_view(){
         add_object(new FoodObject(coord), &new_objects);
     } else{
         new_objects.insert(item);
-    }
-    
-    vector<Coord> coords = m_board->find_all(m_rules->get_wall());
-    for (vector<Coord>::iterator itr = coords.begin(); itr != coords.end(); ++itr){
-        int x = map_to_view((*itr).get_x(), SnakeObject::get_width());
-        int y = map_to_view((*itr).get_y(), SnakeObject::get_height());
-        coord = Coord(x,y); 
-        item = find_item(coord);
-        if(!item){
-            add_object(new WallObject(coord), &new_objects);
-        } else{
-            new_objects.insert(item);
-        }
     }
 
     set<QGraphicsItem*> result;
@@ -188,4 +177,19 @@ void Scene::update_view(){
             }
         }
     }*/
+}
+
+void Scene::display_board(){
+    QGraphicsItem* item;
+    Coord coord;
+    vector<Coord> coords = m_board->find_all(m_rules->get_wall());
+    for (vector<Coord>::iterator itr = coords.begin(); itr != coords.end(); ++itr){
+        int x = map_to_view((*itr).get_x(), SnakeObject::get_width());
+        int y = map_to_view((*itr).get_y(), SnakeObject::get_height());
+        coord = Coord(x,y); 
+        item = find_item(coord);
+        if(!item){
+            add_object(new WallObject(coord));
+        }
+    }
 }
