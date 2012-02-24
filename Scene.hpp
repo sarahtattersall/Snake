@@ -33,8 +33,6 @@ private:
     QTransform m_transform;
     QTimer* m_timer;
     bool m_playing;
-    // A bool to determine if a key has been pressed for the given turn.
-    bool m_key_press;
 
     void end_game();
     void update_view();
@@ -44,6 +42,7 @@ private:
     QGraphicsItem* find_item(Coord coord);
     Coord get_scene_coord(const CellOccupier* occupier);
     set<QGraphicsItem*> m_last_objects;
+    vector<Coord::Direction> m_directions;
     void add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects = NULL);
     void display_board();
 

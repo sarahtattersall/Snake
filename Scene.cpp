@@ -4,11 +4,14 @@
 
 #include <algorithm>
 Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
-        : m_transform(), m_last_objects(){
+        : m_transform(), m_last_objects(), m_directions(){
     m_board = board;
     m_rules = rules;
-    m_key_press = false;
     m_playing = false;
+    m_directions.resize(m_rules->get_player_count());
+    for (int player = 0; player < m_rules->get_player_count(); ++player){
+        m_directions[player] = (m_rules->get_snake(player))->get_direction();
+    }
 
     view.resize(m_board->get_width()*SnakeObject::get_width(), m_board->get_height()*SnakeObject::get_height());
     view.setAlignment(Qt::AlignTop | Qt::AlignLeft);
@@ -28,20 +31,18 @@ Scene::~Scene(){
 
 void Scene::move_snake(){
     bool result = true;
-    if(!m_key_press){
-        result = m_rules->move_snake(0);
+    for (int player = 0; player < m_rules->get_player_count(); ++player){
+        result &= m_rules->move_snake(player, m_directions[player]);
     }
-    update_view();
-    m_key_press = false;
     if(!result){
         end_game();
     }
+    update_view();
 }
 
 void Scene::end_game(){
     m_timer->stop();
     m_playing = false;
-    update_view();
 }
 
 void Scene::keyPressEvent(QKeyEvent* event){
@@ -56,31 +57,36 @@ void Scene::keyPressEvent(QKeyEvent* event){
         m_timer->start(100*snake->get_speed());
         m_playing = true;
     } else{
-        bool result;
-        if(!m_key_press && m_playing){
+        if(m_playing){
             switch(event->key()){
                 case Qt::Key_Up:
-                    result = m_rules->move_snake(0, Coord::UP);
+                    m_directions[0] = Coord::UP;
                     break;
                 case Qt::Key_Down:
-                    result = m_rules->move_snake(0, Coord::DOWN);
+                    m_directions[0] = Coord::DOWN;
                     break;
                 case Qt::Key_Left:
-                    result = m_rules->move_snake(0, Coord::LEFT);
+                    m_directions[0] = Coord::LEFT;
                     break;
                 case Qt::Key_Right:
-                    result = m_rules->move_snake(0, Coord::RIGHT);
+                    m_directions[0] = Coord::RIGHT;
+                    break;
+                case Qt::Key_W:
+                    m_directions[1] = Coord::UP;
+                    break;
+                case Qt::Key_S:
+                    m_directions[1] = Coord::DOWN;
+                    break;
+                case Qt::Key_A:
+                    m_directions[1] = Coord::LEFT;
+                    break;
+                case Qt::Key_D:
+                    m_directions[1] = Coord::RIGHT;
                     break;
                 default:
-                    result = m_rules->move_snake(0);
                     break;
                 }
-            if(!result){
-                end_game();
-            } else{
-                m_key_press = true;
-                QGraphicsScene::keyPressEvent(event);
-            }
+            QGraphicsScene::keyPressEvent(event);
         }
     }
 }
@@ -117,18 +123,18 @@ void Scene::update_view(){
         for (SnakeIterator itr = snake->begin(); itr != snake->end(); ++itr){
             coord = get_scene_coord(*itr);
             item = find_item(coord);
-            if(!dead){
-                if (!item){
+            if (!item){
+                if (dead){
+                    add_object(new SnakeDeadObject(coord), &new_objects);
+                } else {
                     add_object(new SnakeObject(coord, player), &new_objects);
+                }
+            } else {
+                if (dead){
+                    add_object(new SnakeDeadObject(coord), &new_objects);
                 } else{
                     new_objects.insert(item);
                 }
-            } else{
-                if (item){
-                    //removeItem(item);
-                    // delete(item);
-                }
-                add_object(new SnakeDeadObject(coord), &new_objects);
             }
         }
     }
@@ -149,34 +155,6 @@ void Scene::update_view(){
         delete *itr;
     }
     m_last_objects = new_objects;
-    /*Coord coord;
-    for( int row = 0; row < m_board->get_height(); ++row ){
-        for( int col = 0; col < m_board->get_width(); ++col ){
-            const CellOccupier* occupier = m_board->lookup(Coord(col, row));
-            int x = map_to_view(col, SnakeObject::get_width());
-            int y = map_to_view(row, SnakeObject::get_height());
-            coord = Coord(x,y);
-            // Would rather remove if not snake?
-            QGraphicsItem* item = itemAt(x, y, m_transform);
-            if(item){
-                removeItem(item);
-                delete item;
-            }
-            if(occupier->get_type() == CellOccupier::SNAKE){
-                // TODO: Don't like cast
-                Snake* snake = (Snake *)occupier;
-                if(!dead){
-                    addItem(new SnakeObject(coord, 0));
-                } else{
-                    addItem(new SnakeDeadObject(coord));
-                }
-            } else if(occupier->get_type() == CellOccupier::WALL){
-                addItem(new WallObject(coord));
-            } else if(occupier->get_type() == CellOccupier::FOOD){
-                addItem(new FoodObject(coord));
-            }
-        }
-    }*/
 }
 
 void Scene::display_board(){

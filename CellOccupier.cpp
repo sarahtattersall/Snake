@@ -21,7 +21,7 @@ Snake::~Snake(){
     }
 }
 
-Coord::Direction Snake::get_direction(){
+Coord::Direction Snake::get_direction() const{
     return m_direction;    
 }
 void Snake::set_direction(Coord::Direction d){

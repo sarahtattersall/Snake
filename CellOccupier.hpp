@@ -109,7 +109,7 @@ public:
     ~Snake();
     virtual TYPE get_type() const { return SNAKE; }
     
-    Coord::Direction get_direction();
+    Coord::Direction get_direction() const;
     void set_direction(Coord::Direction d);
     void build_tail(shared_ptr<Board> board);
 
