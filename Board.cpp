@@ -20,6 +20,7 @@ public:
     virtual void move(const CellOccupier* occupier, Coord coord);
     virtual void remove(CellOccupier* occupier);
     virtual Coord find(const CellOccupier* occupier);
+    virtual vector<Coord> find_all(const CellOccupier* occupier);
     virtual const CellOccupier* lookup(const Coord coord);
     virtual void clear();
 private:
@@ -68,9 +69,9 @@ int SquareBoard::get_width(){
 
 void SquareBoard::insert(CellOccupier* occupier, const Coord coord){
     m_cells[coord.get_y()][coord.get_x()].set_occupier(occupier);
-    if( m_occupiers.find(occupier) != m_occupiers.end() ){
-        m_occupiers.erase(m_occupiers.find(occupier));
-    }
+    // if( m_occupiers.find(occupier) != m_occupiers.end() ){
+    //         m_occupiers.erase(m_occupiers.find(occupier));
+    //     }
     m_occupiers.insert(pair<CellOccupier*,Coord>(occupier, coord));
 }
 
@@ -92,6 +93,17 @@ void SquareBoard::remove(CellOccupier* occupier){
 
 Coord SquareBoard::find(const CellOccupier* occupier){
     return m_occupiers.find(occupier)->second;
+}
+
+// TODO would it have been better to return a pointer and delete when finished?
+vector<Coord> SquareBoard::find_all(const CellOccupier* occupier){
+    vector<Coord> coords;
+    pair<multimap<const CellOccupier*, Coord>::iterator,multimap<const CellOccupier*, Coord>::iterator> ret;
+    ret = m_occupiers.equal_range(occupier);
+    for (multimap<const CellOccupier*, Coord>::iterator itr = ret.first; itr != ret.second; ++itr){
+        coords.push_back((*itr).second);
+    }
+    return coords;
 }
 
 const CellOccupier* SquareBoard::lookup(const Coord coord){

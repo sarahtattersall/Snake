@@ -6,6 +6,7 @@
 #include <list>
 #include <boost/shared_ptr.hpp>
 using boost::shared_ptr;
+using std::vector;
 
 //IAN: Made this class a pure abstract interface
 class Board {
@@ -18,6 +19,7 @@ public:
     virtual void move(const CellOccupier* occupier, Coord coord) = 0;
     virtual void remove(CellOccupier* occupier) = 0;
     virtual Coord find(const CellOccupier* occupier) = 0;
+    virtual vector<Coord> find_all(const CellOccupier* occupier) = 0;
     virtual const CellOccupier* lookup(Coord coord) = 0;
     // Clears the contents of te board.
     virtual void clear() = 0;

@@ -4,6 +4,9 @@
 #include "Rules.hpp"
 #include "Board.hpp"
 #include "Coord.hpp"
+#include "CellObject.hpp"
+
+#include <set>
 
 #include <boost/shared_ptr.hpp>
 #include <QGraphicsScene>
@@ -12,6 +15,7 @@
 #include <QKeyEvent>
 #include <QDebug>
 
+using std::set;
 
 class Scene : public QGraphicsScene{
     Q_OBJECT
@@ -39,6 +43,9 @@ private:
     int map_to_view(int x, int size);
     QGraphicsItem* find_item(Coord coord);
     Coord get_scene_coord(const CellOccupier* occupier);
+    set<QGraphicsItem*> m_last_objects;
+    void add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects);
+
 };
 
 #endif

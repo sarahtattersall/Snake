@@ -1,8 +1,10 @@
 #include "Scene.hpp"
-#include "CellObject.hpp"
 #include "CellOccupier.hpp"
 #include "SnakeDirection.hpp"
-Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules) : m_transform(){
+
+#include <algorithm>
+Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
+        : m_transform(), m_last_objects(){
     m_board = board;
     m_rules = rules;
     m_key_press = false;
@@ -96,39 +98,68 @@ Coord Scene::get_scene_coord(const CellOccupier* occupier){
 QGraphicsItem* Scene::find_item(Coord coord){
     return itemAt(coord.get_x(), coord.get_y(), m_transform);
 }
+
+void Scene::add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects){
+    addItem(obj);
+    new_objects->insert(obj);
+}
+
 void Scene::update_view(){
+    set<QGraphicsItem*> new_objects;
     bool dead = m_rules->snake_dead();
     int players = m_rules->get_player_count();
     QGraphicsItem* item;
     Coord coord;
     for( int player = 0; player < players; ++player){
         const Snake* snake = m_rules->get_snake(player);
-        int i = 0;
         for (SnakeIterator itr = snake->begin(); itr != snake->end(); ++itr){
             coord = get_scene_coord(*itr);
             item = find_item(coord);
-            if(!item){
-                if(!dead){
-                    addItem(new SnakeObject(coord, player));
-                    ++i;
+            if(!dead){
+                if (!item){
+                    add_object(new SnakeObject(coord, player), &new_objects);
                 } else{
-                    addItem(new SnakeDeadObject(coord));
+                    new_objects.insert(item);
                 }
+            } else{
+                if (item){
+                    //removeItem(item);
+                    // delete(item);
+                }
+                add_object(new SnakeDeadObject(coord), &new_objects);
             }
         }
-        assert(i==3);
     }
-    
     coord = get_scene_coord(m_rules->get_food());
     item = find_item(coord);
     if(!item){
-        addItem(new FoodObject(coord));
+        add_object(new FoodObject(coord), &new_objects);
+    } else{
+        new_objects.insert(item);
     }
-    coord = get_scene_coord(m_rules->get_wall());
-    item = find_item(coord);
-    if(!item){
-        addItem(new WallObject(coord));
+    
+    vector<Coord> coords = m_board->find_all(m_rules->get_wall());
+    for (vector<Coord>::iterator itr = coords.begin(); itr != coords.end(); ++itr){
+        int x = map_to_view((*itr).get_x(), SnakeObject::get_width());
+        int y = map_to_view((*itr).get_y(), SnakeObject::get_height());
+        coord = Coord(x,y); 
+        item = find_item(coord);
+        if(!item){
+            add_object(new WallObject(coord), &new_objects);
+        } else{
+            new_objects.insert(item);
+        }
     }
+
+    set<QGraphicsItem*> result;
+    set_difference(m_last_objects.begin(), m_last_objects.end(),
+        new_objects.begin(), new_objects.end(), std::inserter(result, result.end()));
+    
+    for (set<QGraphicsItem*>::iterator itr = result.begin(); itr != result.end(); ++itr){
+        removeItem(*itr);
+        delete *itr;
+    }
+    m_last_objects = new_objects;
     /*Coord coord;
     for( int row = 0; row < m_board->get_height(); ++row ){
         for( int col = 0; col < m_board->get_width(); ++col ){
