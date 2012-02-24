@@ -30,8 +30,8 @@ int Rules::snake_count(){
     return m_snakes.size();
 }
 
-const Snake& Rules::get_snake(int index){
-    const Snake& snake = m_snakes[index];
+const Snake* Rules::get_snake(int index){
+    const Snake* snake = &m_snakes[index];
     return snake;
 }
 

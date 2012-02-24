@@ -50,8 +50,8 @@ void Scene::keyPressEvent(QKeyEvent* event){
         }
     }
     if( event->key() == Qt::Key_S && !m_playing ){
-        const Snake& snake = m_rules->get_snake(0);
-        m_timer->start(100*snake.get_speed());
+        const Snake* snake = m_rules->get_snake(0);
+        m_timer->start(100*snake->get_speed());
         m_playing = true;
     } else{
         bool result;
@@ -102,8 +102,9 @@ void Scene::update_view(){
     QGraphicsItem* item;
     Coord coord;
     for( int player = 0; player < players; ++player){
-        const Snake snake = m_rules->get_snake(player);
-        for (SnakeIterator itr = snake.begin(); itr != snake.end(); ++itr){
+        const Snake* snake = m_rules->get_snake(player);
+        int i = 0;
+        for (SnakeIterator itr = snake->begin(); itr != snake->end(); ++itr){
             coord = get_scene_coord(*itr);
             item = find_item(coord);
             if(!item){
@@ -113,7 +114,9 @@ void Scene::update_view(){
                     addItem(new SnakeDeadObject(coord));
                 }
             }
+            // ++i;
         }
+        //assert(i==2);
     }
     
     coord = get_scene_coord(m_rules->get_food());
@@ -126,13 +129,15 @@ void Scene::update_view(){
     if(!item){
         addItem(new WallObject(coord));
     }
-    /*for( int row = 0; row < m_board->get_height(); ++row ){
+    /*Coord coord;
+    for( int row = 0; row < m_board->get_height(); ++row ){
         for( int col = 0; col < m_board->get_width(); ++col ){
-            CellOccupier* occupier = m_board->lookup(Coord(col, row));
+            const CellOccupier* occupier = m_board->lookup(Coord(col, row));
             int x = map_to_view(col, SnakeObject::get_width());
             int y = map_to_view(row, SnakeObject::get_height());
+            coord = Coord(x,y);
             // Would rather remove if not snake?
-            QGraphicsItem* item = itemAt(x, y, transform);
+            QGraphicsItem* item = itemAt(x, y, m_transform);
             if(item){
                 removeItem(item);
                 delete item;
@@ -141,14 +146,14 @@ void Scene::update_view(){
                 // TODO: Don't like cast
                 Snake* snake = (Snake *)occupier;
                 if(!dead){
-                    addItem(new SnakeObject(x, y, snake->get_player_number()));
+                    addItem(new SnakeObject(coord, 0));
                 } else{
-                    addItem(new SnakeDeadObject(x, y));
+                    addItem(new SnakeDeadObject(coord));
                 }
             } else if(occupier->get_type() == CellOccupier::WALL){
-                addItem(new WallObject(x, y));
+                addItem(new WallObject(coord));
             } else if(occupier->get_type() == CellOccupier::FOOD){
-                addItem(new FoodObject(x, y));
+                addItem(new FoodObject(coord));
             }
         }
     }*/

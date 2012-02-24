@@ -26,7 +26,7 @@ public:
     // snakes direction
     bool move_snake(int index);
     int snake_count();
-    const Snake& get_snake(int index);
+    const Snake* get_snake(int index);
     bool snake_dead();
     void build_wall();
     void set_snakes(int players, int snake_size);

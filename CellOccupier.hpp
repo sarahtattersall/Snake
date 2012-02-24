@@ -71,12 +71,12 @@ public:
         m_current = current;
     }
     
+    ~SnakeIterator(){};
+    
     SnakeIterator& operator++(){
         m_current = m_current->next();
         return *this;
     }
-    //TODO: Apparently not giving the parameter a name gets rid of compiler
-    //warning.
     void operator++(int){
         operator++();
     }
@@ -95,6 +95,7 @@ public:
     
 private:
     IterableSnake* m_current;
+    IterableSnake* m_tail;
 };
 
 class Snake : public CellOccupier, public IterableSnake {
