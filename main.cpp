@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     if (argc > 1){
         players = atoi(argv[1]);  
         if (argc > 2){
-            through_walls = (atoi(argv[2]) || strcmp(argv[2], "t") || strcmp(argv[2], "true"));
+            through_walls = (atoi(argv[2]) == 1 || strcmp(argv[2], "t") > 0 || strcmp(argv[2], "true") > 0);
         }
     }
     try{
