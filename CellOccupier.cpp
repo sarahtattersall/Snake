@@ -89,7 +89,7 @@ void Snake::set_alive(bool alive){
     m_alive = alive;
 }
 
-bool Snake::is_alive(){
+bool Snake::is_alive() const{
     return m_alive;
 }
 

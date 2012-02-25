@@ -123,12 +123,13 @@ void Scene::add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects){
 
 void Scene::update_view(){
     set<QGraphicsItem*> new_objects;
-    bool dead = m_rules->snake_dead();
+    bool dead; //= m_rules->snake_dead();
     int players = m_rules->get_player_count();
     QGraphicsItem* item;
     Coord coord;
     for( int player = 0; player < players; ++player){
         const Snake* snake = m_rules->get_snake(player);
+        dead = !snake->is_alive();
         for (SnakeIterator itr = snake->begin(); itr != snake->end(); ++itr){
             coord = get_scene_coord(*itr);
             item = find_item(coord);

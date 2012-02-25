@@ -119,7 +119,7 @@ public:
     void move_tail();
     void grow(shared_ptr<Board> board, Coord new_front);
     void set_alive(bool alive);
-    bool is_alive();
+    bool is_alive() const;
     
     //Iterator methods:
     SnakeIterator begin() const;
