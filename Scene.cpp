@@ -13,10 +13,8 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
     m_rules = rules;
     m_playing = false;
     m_directions.resize(m_rules->get_player_count());
-    for (int player = 0; player < m_rules->get_player_count(); ++player){
-        m_directions[player] = (m_rules->get_snake(player))->get_direction();
-    }
-
+    reset_directions();
+    
     view.resize(m_board->get_width()*SnakeObject::get_width(), m_board->get_height()*SnakeObject::get_height());
     view.setAlignment(Qt::AlignTop | Qt::AlignLeft);
     view.setScene(this);
@@ -31,6 +29,12 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
 
 Scene::~Scene(){
     delete m_timer;
+}
+
+void Scene::reset_directions(){
+    for (int player = 0; player < m_rules->get_player_count(); ++player){
+        m_directions[player] = (m_rules->get_snake(player))->get_direction();
+    }
 }
 
 void Scene::move_snake(){
@@ -53,6 +57,7 @@ void Scene::keyPressEvent(QKeyEvent* event){
     if( event->key() == Qt::Key_R && !m_playing ){
         if(m_rules->snake_dead()){
             m_rules->reset();
+            reset_directions();
             update_view();
         }
     }

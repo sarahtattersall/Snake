@@ -46,6 +46,7 @@ private:
     void add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects = NULL);
     void display_board();
     static const int MAX_PLAYERS = 2;
+    void reset_directions();
 
 };
 
