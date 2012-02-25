@@ -1,10 +1,14 @@
 #include "Scene.hpp"
 #include "CellOccupier.hpp"
 #include "SnakeDirection.hpp"
+#include "SnakeException.hpp"
 
 #include <algorithm>
 Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
         : m_transform(), m_last_objects(), m_directions(){
+    if (rules->get_player_count() > MAX_PLAYERS){
+        throw TooManyPlayersError();
+    }
     m_board = board;
     m_rules = rules;
     m_playing = false;

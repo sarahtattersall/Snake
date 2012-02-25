@@ -45,6 +45,7 @@ private:
     vector<Coord::Direction> m_directions;
     void add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects = NULL);
     void display_board();
+    static const int MAX_PLAYERS = 2;
 
 };
 

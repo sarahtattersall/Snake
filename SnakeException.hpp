@@ -1,3 +1,5 @@
+#ifndef SNAKE_EXCEPTION_HPP
+#define SNAKE_EXCEPTION_HPP
 // standard exceptions
 #include <iostream>
 #include <exception>
@@ -36,3 +38,11 @@ class TextualRepresentationError : public SnakeException{
         return "Cannot represent unknown type on board.";
     } 
 };
+
+class TooManyPlayersError : public SnakeException{
+    virtual const char* what() const throw(){
+        return "Error! Current board cannot handle this many players.";
+    } 
+};
+
+#endif
