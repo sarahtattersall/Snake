@@ -1,5 +1,38 @@
 #include "CellOccupier.hpp"
 #include "Board.hpp"
+#include "Rules.hpp"
+
+void CellOccupier::move_snake(Coord front, shared_ptr<Board> board, Snake* snake) const{
+    Coord old_front = board->find(snake);
+    board->move(snake, front);
+    if (snake->get_size() > 1){
+        SnakeTail* tail = snake->find_tail();
+        board->move(tail, old_front);
+        snake->move_tail();
+    }
+}
+
+bool FoodOccupier::handle_move(Coord coord, Coord::Direction, shared_ptr<Board> board, Snake* snake, Rules* rules) const{
+    board->remove(this);
+    snake->grow(board, coord);
+    rules->place_food();
+    return true;
+}
+bool WallOccupier::handle_move(Coord coord, Coord::Direction direction, shared_ptr<Board> board, Snake* snake, Rules* rules) const{
+    Coord new_coord = coord.move(direction);
+    const CellOccupier* occupier = board->lookup(new_coord);
+    return occupier->handle_move(new_coord, direction, board, snake, rules);
+}
+
+bool Snake::handle_move(Coord, Coord::Direction, shared_ptr<Board>, Snake* snake, Rules*) const{
+    snake->set_alive(false);
+    return false;
+}
+
+bool SnakeTail::handle_move(Coord, Coord::Direction, shared_ptr<Board>, Snake* snake, Rules*) const{
+    snake->set_alive(false);
+    return false;
+}
 Snake::Snake(int size, Coord::Direction d) : CellOccupier(){
     m_size = size;
     m_alive = true;

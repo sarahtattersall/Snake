@@ -17,7 +17,7 @@ public:
     // Moves the occupier to the new coord and sets the occupiers previous
     // cell to empty
     virtual void move(const CellOccupier* occupier, Coord coord) = 0;
-    virtual void remove(CellOccupier* occupier) = 0;
+    virtual void remove(const CellOccupier* occupier) = 0;
     virtual Coord find(const CellOccupier* occupier) = 0;
     virtual vector<Coord> find_all(const CellOccupier* occupier) = 0;
     virtual const CellOccupier* lookup(Coord coord) = 0;

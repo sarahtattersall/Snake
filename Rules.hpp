@@ -37,6 +37,7 @@ public:
     int get_player_count();
     CellOccupier* get_food();
     CellOccupier* get_wall();
+    void place_food();
 private:
     ptr_vector<Snake> m_snakes;
     shared_ptr<Board> m_board;
@@ -48,7 +49,6 @@ private:
     int m_prev_snake_size;
     //Bool determining if the snake can pass through walls.
     bool m_through_walls;
-    void place_food();
     
 };
 

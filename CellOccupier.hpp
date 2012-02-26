@@ -6,6 +6,8 @@
 #include <boost/shared_ptr.hpp>
 using boost::shared_ptr;
 class Board;
+class Snake;
+class Rules;
 
 //IAN: There are so many ways to implement this, but none of them are really
 // all that good.
@@ -20,21 +22,30 @@ class CellOccupier{
 public:
     enum TYPE {EMPTY, SNAKE, FOOD, WALL};
     virtual TYPE get_type() const = 0;
+    virtual bool handle_move(Coord coord, Coord::Direction direction, shared_ptr<Board> board, Snake* snake, Rules* rules) const = 0;
+protected:
+    void move_snake(Coord front, shared_ptr<Board> board, Snake* snake) const;
 };
 
 class EmptyOccupier : public CellOccupier{
 public:
     virtual TYPE get_type() const { return EMPTY; }
+    virtual bool handle_move(Coord coord, Coord::Direction, shared_ptr<Board> board, Snake* snake, Rules*) const{
+        move_snake(coord, board, snake);
+        return true;
+    }
 };
 
 class FoodOccupier : public CellOccupier{
 public:
     virtual TYPE get_type() const { return FOOD; }
+    virtual bool handle_move(Coord coord, Coord::Direction direction, shared_ptr<Board> board, Snake* snake, Rules* rules) const;
 };
 
 class WallOccupier : public CellOccupier{
 public:
     virtual TYPE get_type() const { return WALL; }
+    virtual bool handle_move(Coord coord, Coord::Direction direction, shared_ptr<Board> board, Snake* snake, Rules* rules) const;
 };
 
 class IterableSnake{
@@ -51,6 +62,7 @@ public:
     SnakeTail* get_next(){
         return m_next;
     }
+    virtual bool handle_move(Coord, Coord::Direction, shared_ptr<Board>, Snake* snake, Rules*) const;
     
 private:
     SnakeTail* m_next;
@@ -63,7 +75,6 @@ private:
 };
 
 
-//TODO: ARGGGHHH Cant make this work for both Snake head and snake tail? :(
 class SnakeIterator{
 public:
     SnakeIterator(const IterableSnake* current, IterableSnake* tail){
@@ -108,7 +119,7 @@ public:
     Snake(int size, Coord::Direction d);
     ~Snake();
     virtual TYPE get_type() const { return SNAKE; }
-    
+    virtual bool handle_move(Coord, Coord::Direction, shared_ptr<Board>, Snake* snake, Rules*) const;
     Coord::Direction get_direction() const;
     void set_direction(Coord::Direction d);
     void build_tail(shared_ptr<Board> board);
@@ -124,7 +135,7 @@ public:
     //Iterator methods:
     SnakeIterator begin() const;
     SnakeIterator end() const;
-
+    
 private:
     int m_size;
     bool m_alive;

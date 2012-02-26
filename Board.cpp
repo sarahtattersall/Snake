@@ -18,7 +18,7 @@ public:
     virtual int get_width();
     virtual void insert(CellOccupier* occupier, Coord coord);
     virtual void move(const CellOccupier* occupier, Coord coord);
-    virtual void remove(CellOccupier* occupier);
+    virtual void remove(const CellOccupier* occupier);
     virtual Coord find(const CellOccupier* occupier);
     virtual vector<Coord> find_all(const CellOccupier* occupier);
     virtual const CellOccupier* lookup(const Coord coord);
@@ -85,7 +85,7 @@ void SquareBoard::move(const CellOccupier* occupier, const Coord coord){
     m_occupiers.insert(pair<const CellOccupier*,Coord>(occupier, coord));
 }
 
-void SquareBoard::remove(CellOccupier* occupier){
+void SquareBoard::remove(const CellOccupier* occupier){
     Coord coord = m_occupiers.find(occupier)->second;
     m_cells[coord.get_y()][coord.get_x()].set_occupier(m_empty);
     m_occupiers.erase(m_occupiers.find(occupier));

@@ -4,8 +4,6 @@
 #include <iostream>
 #include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 Rules::Rules(shared_ptr<Board> board, bool through_walls){
     m_board = board;
@@ -71,9 +69,10 @@ bool Rules::snake_dead(){
 bool Rules::compute_move(Snake& snake, Coord::Direction direction){
     Coord old_front = m_board->find(&snake);
     Coord new_front = old_front.move(direction);
-    bool set_food = false;
+    //bool set_food = false;
     snake.set_direction(direction); // Need to set this here so grow moves snake in right direction
-    if (coord_out_of_bounds(new_front)){
+    return m_board->lookup(new_front)->handle_move(new_front, direction, m_board, &snake, this);
+    /*if (coord_out_of_bounds(new_front)){
         if (!m_through_walls){
             snake.set_alive(false);
             return false;
@@ -91,7 +90,7 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
         m_board->remove(m_food);
         //Should grow move the head? Current it does.
         snake.grow(m_board, new_front);
-        set_food = true;
+        //set_food = true;
         place_food();
     } else {
         m_board->move(&snake, new_front);
@@ -101,7 +100,7 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
             // Not entirely sure if this should be in snake?
             snake.move_tail();         
         }
-    }
+    }*/
 
     return true;
 }
