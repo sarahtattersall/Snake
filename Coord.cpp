@@ -1,5 +1,5 @@
 #include "Coord.hpp"
-
+#include "assert.h"
 int Coord::s_board_height = 0;
 int Coord::s_board_width = 0;
 Coord::Coord(){
@@ -8,8 +8,8 @@ Coord::Coord(){
 }
 
 Coord::Coord(int x, int y){
-    //assert(s_board_height != 0);
-    //assert(s_board_width != 0);
+    assert(s_board_height != 0);
+    assert(s_board_width != 0);
     m_x = x;
     m_y = y;
 }
@@ -70,25 +70,10 @@ Coord Coord::move(Direction direction){
 
 int Coord::mod(int number, int mod_value){
     number %= mod_value;
-    return number < 0 ? number + mod_value : number; 
+    return number < 0 ? number + mod_value : number;
 }
 
 void Coord::set_board_dimensions(int height, int width){
     s_board_height = height;
     s_board_width = width;
 }
-
-
-// Coord::Direction Coord::invert_direction(Direction direction){
-//     switch(direction){
-//         case UP:
-//             return DOWN;
-//         case DOWN:
-//           return UP;
-//         case LEFT:
-//           return RIGHT;
-//         case RIGHT:
-//           return LEFT;
-//     }
-//     return direction;
-// }

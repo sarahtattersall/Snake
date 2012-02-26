@@ -12,8 +12,6 @@ Rules::Rules(shared_ptr<Board> board, bool through_walls){
     m_food = new FoodOccupier();
     m_through_walls = through_walls;
     srand(time(NULL));
-    //Can't place food before setting up the snake!
-    //place_food();
 }
 
 Rules::~Rules(){
@@ -69,40 +67,8 @@ bool Rules::snake_dead(){
 bool Rules::compute_move(Snake& snake, Coord::Direction direction){
     Coord old_front = m_board->find(&snake);
     Coord new_front = old_front.move(direction);
-    //bool set_food = false;
     snake.set_direction(direction); // Need to set this here so grow moves snake in right direction
     return m_board->lookup(new_front)->handle_move(new_front, direction, m_board, &snake, this);
-    /*if (coord_out_of_bounds(new_front)){
-        if (!m_through_walls){
-            snake.set_alive(false);
-            return false;
-        }
-        //Move twice through walls
-        //TODO: Could I make the wall calculate the new coord??
-        //THIS HAS WRITTEN OVER THE FOOD
-        new_front = new_front.move(direction);
-        new_front = new_front.move(direction);
-    }
-    if (m_board->lookup(new_front)->get_type() == CellOccupier::SNAKE){
-        snake.set_alive(false);
-        return false;
-    }else if (m_board->lookup(new_front)->get_type() == CellOccupier::FOOD){
-        m_board->remove(m_food);
-        //Should grow move the head? Current it does.
-        snake.grow(m_board, new_front);
-        //set_food = true;
-        place_food();
-    } else {
-        m_board->move(&snake, new_front);
-        if (snake.get_size() > 1){
-            SnakeTail* tail = snake.find_tail();
-            m_board->move(tail, old_front);
-            // Not entirely sure if this should be in snake?
-            snake.move_tail();         
-        }
-    }*/
-
-    return true;
 }
 
 void Rules::build_wall(){
@@ -145,6 +111,7 @@ void Rules::reset(){
 CellOccupier* Rules::get_food(){
     return m_food;
 }
+
 CellOccupier* Rules::get_wall(){
     return m_wall;
 }
