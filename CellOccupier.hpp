@@ -45,6 +45,12 @@ public:
 class WallOccupier : public CellOccupier{
 public:
     virtual TYPE get_type() const { return WALL; }
+    virtual bool handle_move(Coord, Coord::Direction, shared_ptr<Board>, Snake* snake, Rules*) const;
+};
+
+class TeleportOccupier : public CellOccupier{
+public:
+    virtual TYPE get_type() const { return WALL; }
     virtual bool handle_move(Coord coord, Coord::Direction direction, shared_ptr<Board> board, Snake* snake, Rules* rules) const;
 };
 

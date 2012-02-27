@@ -9,6 +9,7 @@ Rules::Rules(shared_ptr<Board> board, bool through_walls){
     m_board = board;
     m_prev_snake_size = 0;
     m_wall = new WallOccupier();
+    m_teleport = new TeleportOccupier();
     m_food = new FoodOccupier();
     m_through_walls = through_walls;
     srand(time(NULL));
@@ -16,6 +17,8 @@ Rules::Rules(shared_ptr<Board> board, bool through_walls){
 
 Rules::~Rules(){
     delete m_wall;
+    delete m_food;
+    delete m_teleport;
 }
 
 shared_ptr<Board> Rules::get_board(){
@@ -72,15 +75,21 @@ bool Rules::compute_move(Snake& snake, Coord::Direction direction){
 }
 
 void Rules::build_wall(){
+    CellOccupier* wall;
+    if (m_through_walls){
+        wall = m_teleport;
+    } else{
+        wall = m_wall;
+    }
     int width = m_board->get_width();
     int height = m_board->get_height();
     for (int x = 0; x < width; ++x){
-        m_board->insert(m_wall, Coord(x, 0));
-        m_board->insert(m_wall, Coord(x, height-1));
+        m_board->insert(wall, Coord(x, 0));
+        m_board->insert(wall, Coord(x, height-1));
     }
     for (int y = 0; y < height; ++y){
-        m_board->insert(m_wall, Coord(0, y));
-        m_board->insert(m_wall, Coord(width-1, y));
+        m_board->insert(wall, Coord(0, y));
+        m_board->insert(wall, Coord(width-1, y));
     }
 }
 
@@ -112,8 +121,13 @@ CellOccupier* Rules::get_food(){
     return m_food;
 }
 
-CellOccupier* Rules::get_wall(){
-    return m_wall;
+vector<CellOccupier*> Rules::get_walls(){
+    vector<CellOccupier*> walls;
+    walls.push_back(m_wall);
+    if (m_through_walls){
+        walls.push_back(m_teleport);
+    }
+    return walls;
 }
 
 
@@ -157,7 +171,6 @@ shared_ptr<Rules> RuleBuilder::create(){
         throw SnakeTooBigException();
     }
     // Hand in initialiser object that can build wall and snakes.
-    Coord::set_board_dimensions(m_board->get_height(), m_board->get_width());
     shared_ptr<Rules> rules = shared_ptr<Rules> (new Rules(m_board, m_through_walls));
     rules->build_wall();
     rules->set_snakes(m_player_count, m_snake_size);

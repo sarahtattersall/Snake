@@ -36,12 +36,13 @@ public:
     void reset();
     int get_player_count();
     CellOccupier* get_food();
-    CellOccupier* get_wall();
+    vector<CellOccupier*> get_walls();
     void place_food();
 private:
     ptr_vector<Snake> m_snakes;
     shared_ptr<Board> m_board;
     WallOccupier* m_wall;
+    TeleportOccupier* m_teleport;
     FoodOccupier* m_food;
     // Determines if a Coord is out of bounds for the board
     bool coord_out_of_bounds(Coord coord);

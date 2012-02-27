@@ -170,14 +170,17 @@ void Scene::update_view(){
 void Scene::display_board(){
     QGraphicsItem* item;
     Coord coord;
-    vector<Coord> coords = m_board->find_all(m_rules->get_wall());
-    for (vector<Coord>::iterator itr = coords.begin(); itr != coords.end(); ++itr){
-        int x = map_to_view((*itr).get_x(), SnakeObject::get_width());
-        int y = map_to_view((*itr).get_y(), SnakeObject::get_height());
-        coord = Coord(x,y); 
-        item = find_item(coord);
-        if(!item){
-            add_object(new WallObject(coord));
+    vector<CellOccupier*> walls = m_rules->get_walls();
+    for(vector<CellOccupier*>::iterator wall = walls.begin(); wall != walls.end(); ++wall ){
+        vector<Coord> coords = m_board->find_all(*wall);
+        for (vector<Coord>::iterator itr = coords.begin(); itr != coords.end(); ++itr){
+            int x = map_to_view((*itr).get_x(), SnakeObject::get_width());
+            int y = map_to_view((*itr).get_y(), SnakeObject::get_height());
+            coord = Coord(x,y); 
+            item = find_item(coord);
+            if(!item){
+                add_object(new WallObject(coord));
+            }
         }
     }
 }

@@ -46,6 +46,7 @@ shared_ptr<Board> BoardBuilder::create(){
     if(m_size == 0){
         throw BoardBuilderException();
     }
+    Coord::set_board_dimensions(m_size, m_size);
     return shared_ptr<Board> (new SquareBoard(m_size));
 }
 
