@@ -54,19 +54,19 @@ void Scene::end_game(){
 }
 
 void Scene::keyPressEvent(QKeyEvent* event){
-    if( event->key() == Qt::Key_R && !m_playing ){
+    if (event->key() == Qt::Key_R && !m_playing){
         if(m_rules->snake_dead()){
             m_rules->reset();
             reset_directions();
             update_view();
         }
     }
-    if( event->key() == Qt::Key_S && !m_playing ){
+    if (event->key() == Qt::Key_Space && !m_playing){
         const Snake* snake = m_rules->get_snake(0);
         m_timer->start(100*snake->get_speed());
         m_playing = true;
     } else{
-        if(m_playing){
+        if (m_playing){
             switch(event->key()){
                 case Qt::Key_Up:
                     m_directions[0] = Coord::UP;
