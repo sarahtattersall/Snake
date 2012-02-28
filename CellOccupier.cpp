@@ -67,7 +67,6 @@ void Snake::set_direction(Coord::Direction d){
 }
 void Snake::build_tail(shared_ptr<Board> board){
     if( m_size > 1 ){
-        //Is it better to declare it out here rather than in the for?
         Coord front;
         for (int i = 0; i < m_size - 1; ++i){
             front = board->find(this);

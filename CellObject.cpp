@@ -4,7 +4,6 @@ int CellObject::s_size = 10;
 CellObject::CellObject(Coord coord) : QGraphicsRectItem(coord.get_x(),coord.get_y(),s_size,s_size){    
 }
 
-
 int CellObject::get_width(){
     return s_size;
 }
