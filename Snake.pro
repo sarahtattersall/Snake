@@ -6,9 +6,8 @@ CONFIG += qt debug
 
 # Input
 HEADERS += Board.hpp \
-           BoardVisualiser.hpp \
            Cell.hpp \
-		   CellObject.hpp \
+           CellObject.hpp \
            CellOccupier.hpp \
            Coord.hpp \
            Rules.hpp \
@@ -17,9 +16,8 @@ HEADERS += Board.hpp \
            SnakeException.hpp \
            TextualBoardVisualiser.hpp
 SOURCES += Board.cpp \
-           BoardVisualiser.cpp \
            Cell.cpp \
-		   CellObject.cpp \
+           CellObject.cpp \
            CellOccupier.cpp \
            Coord.cpp \
            main.cpp \

@@ -7,7 +7,6 @@ PKGCONFIG += cppunit
 
 # Input
 HEADERS += Board.hpp \
-           BoardVisualiser.hpp \
            Cell.hpp \
            CellOccupier.hpp \
            Coord.hpp \
@@ -19,7 +18,6 @@ HEADERS += Board.hpp \
            Tests.hpp \
            TextualBoardVisualiser.hpp 
 SOURCES += Board.cpp \
-           BoardVisualiser.cpp \
            Cell.cpp \
 		   CellObject.cpp \
            CellOccupier.cpp \

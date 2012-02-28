@@ -1,7 +1,6 @@
 #include "Board.hpp"
 #include "Cell.hpp"
 #include "SnakeException.hpp"
-//#include "CellOccupier.hpp"
 #include <map>
 #include <vector>
 using std::multimap;
@@ -9,7 +8,7 @@ using std::vector;
 using std::pair;
 
 class CellOccupier;
-//IAN: This is the only current implementation of Board
+//This is the only current implementation of Board
 class SquareBoard : public Board {
 public:
     SquareBoard(const int size);
@@ -26,12 +25,11 @@ public:
 private:
     int m_size;
     vector<vector<Cell> > m_cells;
+    EmptyOccupier* m_empty;
     // Stores occupiers to coordinates
     multimap<const CellOccupier*, Coord> m_occupiers;
     // Initializes the board with empty cells.
     void initialize_board();
-    //Coord next_coord(SnakeDirection::Direction direction, Coord coord);
-    EmptyOccupier* m_empty;
 };
 
 BoardBuilder::BoardBuilder(){

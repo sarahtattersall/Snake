@@ -17,11 +17,14 @@ public:
     // Moves the occupier to the new coord and sets the occupiers previous
     // cell to empty
     virtual void move(const CellOccupier* occupier, Coord coord) = 0;
+    // Removes the cell occupier from the board
     virtual void remove(const CellOccupier* occupier) = 0;
+    // Finds the coordinate of the cell occupier
     virtual Coord find(const CellOccupier* occupier) = 0;
+    // Finds all coordinates a cell occupier is 
     virtual vector<Coord> find_all(const CellOccupier* occupier) = 0;
     virtual const CellOccupier* lookup(Coord coord) = 0;
-    // Clears the contents of te board.
+    // Clears the contents of the board.
     virtual void clear() = 0;
 };
 
@@ -29,7 +32,7 @@ class BoardBuilder {
 public:
     BoardBuilder();
     BoardBuilder& set_size(const int size);
-    // if haven't set size create should refuse.
+    // If haven't set size create will error.
     shared_ptr<Board> create();
 private:
     int m_size;

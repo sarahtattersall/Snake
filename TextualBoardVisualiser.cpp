@@ -4,7 +4,8 @@
 #include <iostream>
 using namespace std;
 
-TextualBoardVisualiser::TextualBoardVisualiser(shared_ptr<Board> board) : BoardVisualiser(board){
+TextualBoardVisualiser::TextualBoardVisualiser(shared_ptr<Board> board){
+    m_board = board;
 }
 
 // Not sure yet of a better way to do this...is a bit ugly
@@ -28,7 +29,6 @@ string TextualBoardVisualiser::textual_display(CellOccupier::TYPE type){
 }
 
 void TextualBoardVisualiser::display(){
-    // Not assuming it's a square
     for( int i = 0; i < m_board->get_height(); ++i){
         for( int j = 0; j < m_board->get_width(); ++j){
             cout << textual_display(m_board->lookup(Coord(j, i))->get_type()) << ", ";
@@ -37,10 +37,14 @@ void TextualBoardVisualiser::display(){
     }
 }
 
-shared_ptr<BoardVisualiser> TextualBoardVisualiserBuilder::create(){
+shared_ptr<TextualBoardVisualiser> TextualBoardVisualiserBuilder::create(){
     if (m_board.get() == NULL){
         throw TextualBoardVisualiserBuilderException();
     }
-    return shared_ptr<BoardVisualiser> (new TextualBoardVisualiser(m_board));
-    // Error?
+    return shared_ptr<TextualBoardVisualiser> (new TextualBoardVisualiser(m_board));
+}
+
+TextualBoardVisualiserBuilder& TextualBoardVisualiserBuilder::set_board(shared_ptr<Board> board){
+    m_board = board;
+    return *this;
 }
