@@ -10,7 +10,6 @@ HEADERS += Board.hpp \
            CellOccupier.hpp \
            Coord.hpp \
            EmptyOccupier.hpp \
-		   Log.hpp \
            Rules.hpp \
            Scene.hpp \
            Snake.hpp \
