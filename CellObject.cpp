@@ -11,7 +11,7 @@ int CellObject::get_width(){
 int CellObject::get_height(){
     return s_size;
 }
-
+/*
 FoodObject::FoodObject(Coord coord) : CellObject(coord){	
 }
 
@@ -54,4 +54,4 @@ void WallObject::paint(QPainter* painter, const QStyleOptionGraphicsItem* option
     setBrush(Qt::blue);
     painter->setPen(Qt::blue);
     QGraphicsRectItem::paint(painter, option, widget);
-}
+}*/

@@ -12,11 +12,10 @@ private:
 public:
     // Takes coords for scene.
     CellObject(Coord coord);
-    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) = 0;
     static int get_width();
     static int get_height();
 };
-
+/*
 class FoodObject : public CellObject{
 public:
     // Takes coords for scene.
@@ -44,6 +43,6 @@ public:
     // Takes coords for scene.
     WallObject(Coord coord);
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
-};
+};*/
 
 #endif

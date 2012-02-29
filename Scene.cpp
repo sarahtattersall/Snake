@@ -15,7 +15,7 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
     m_directions.resize(m_rules->get_player_count());
     reset_directions();
     
-    view.resize(m_board->get_width()*SnakeObject::get_width(), m_board->get_height()*SnakeObject::get_height());
+    view.resize(m_board->get_width()*CellObject::get_width(), m_board->get_height()*CellObject::get_height());
     view.setAlignment(Qt::AlignTop | Qt::AlignLeft);
     view.setScene(this);
     view.setBackgroundBrush(Qt::black);
@@ -106,8 +106,8 @@ int Scene::map_to_view(int x, int size){
 
 Coord Scene::get_scene_coord(const CellOccupier* occupier){
     Coord coord = m_board->find(occupier);
-    int x = map_to_view(coord.get_x(), SnakeObject::get_width());
-    int y = map_to_view(coord.get_y(), SnakeObject::get_height()); 
+    int x = map_to_view(coord.get_x(), CellObject::get_width());
+    int y = map_to_view(coord.get_y(), CellObject::get_height()); 
     return Coord(x,y);
 }
 QGraphicsItem* Scene::find_item(Coord coord){
@@ -123,6 +123,7 @@ void Scene::add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects){
 
 void Scene::update_view(){
     set<QGraphicsItem*> new_objects;
+    CellObject* obj;
     bool dead; //= m_rules->snake_dead();
     int players = m_rules->get_player_count();
     QGraphicsItem* item;
@@ -135,14 +136,27 @@ void Scene::update_view(){
             item = find_item(coord);
             if (!item){
                 if (dead){
-                    add_object(new SnakeDeadObject(coord), &new_objects);
+                    obj = new CellObject(coord);
+                    obj->setBrush(QBrush(Qt::red));
+                    //obj->setPen(QPen(Qt::red));
+                    add_object(obj);
                 } else {
-                    add_object(new SnakeObject(coord, player), &new_objects);
+                    obj = new CellObject(coord);
+                    obj->setBrush(QBrush(Qt::green));
+                    //obj->setPen(QPen(Qt::green));
+                    add_object(obj, &new_objects);
                 }
             } else {
-                if (dead){
-                    add_object(new SnakeDeadObject(coord), &new_objects);
-                } else{
+                obj = dynamic_cast<CellObject *>(item);
+                if(obj){
+                    if (dead){
+                        obj->setBrush(QBrush(Qt::red));
+                        //obj->setPen(QPen(Qt::red));
+                        //add_object(obj, &new_objects);
+                    } else{
+                        obj->setBrush(QBrush(Qt::green));
+                        //obj->setPen(QPen(Qt::green));
+                    }
                     new_objects.insert(item);
                 }
             }
@@ -151,7 +165,10 @@ void Scene::update_view(){
     coord = get_scene_coord(m_rules->get_food());
     item = find_item(coord);
     if(!item){
-        add_object(new FoodObject(coord), &new_objects);
+        obj = new CellObject(coord);
+        obj->setBrush(QBrush(Qt::yellow));
+        //obj->setPen(QPen(Qt::yellow));
+        add_object(obj, &new_objects);
     } else{
         new_objects.insert(item);
     }
@@ -174,12 +191,15 @@ void Scene::display_walls(){
     for(vector<CellOccupier*>::iterator wall = walls.begin(); wall != walls.end(); ++wall ){
         vector<Coord> coords = m_board->find_all(*wall);
         for (vector<Coord>::iterator itr = coords.begin(); itr != coords.end(); ++itr){
-            int x = map_to_view((*itr).get_x(), SnakeObject::get_width());
-            int y = map_to_view((*itr).get_y(), SnakeObject::get_height());
+            int x = map_to_view((*itr).get_x(), CellObject::get_width());
+            int y = map_to_view((*itr).get_y(), CellObject::get_height());
             coord = Coord(x,y); 
             item = find_item(coord);
             if(!item){
-                add_object(new WallObject(coord));
+                CellObject* obj = new CellObject(coord);
+                obj->setBrush(QBrush(Qt::blue));
+                //obj->setPen(QPen(Qt::blue));
+                add_object(obj);
             }
         }
     }
