@@ -164,8 +164,7 @@ void Scene::update_view(){
     item = find_item(coord);
     if(!item){
         obj = new CellObject(coord);
-        obj->setBrush(QBrush(Qt::yellow));
-        //obj->setPen(QPen(Qt::yellow));
+        obj->setBrush(FOOD_BRUSH);
         add_object(obj, &new_objects);
     } else{
         new_objects.insert(item);
