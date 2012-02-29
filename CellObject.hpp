@@ -8,12 +8,16 @@
 
 class CellObject : public QGraphicsRectItem{
 private:
-    static int s_size;
+    static const int s_size = 10;
 public:
     // Takes coords for scene.
-    CellObject(Coord coord);
-    static int get_width();
-    static int get_height();
+    CellObject(Coord coord) : QGraphicsRectItem(coord.get_x(),coord.get_y(),s_size,s_size) {};
+    static int get_width(){
+        return s_size;
+    }
+    static int get_height(){
+        return s_size;
+    }
 };
 /*
 class FoodObject : public CellObject{

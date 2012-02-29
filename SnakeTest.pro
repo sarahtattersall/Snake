@@ -19,7 +19,6 @@ HEADERS += Board.hpp \
            TextualBoardVisualiser.hpp 
 SOURCES += Board.cpp \
            Cell.cpp \
-		   CellObject.cpp \
            CellOccupier.cpp \
            Coord.cpp \
            CoordTest.cpp \
