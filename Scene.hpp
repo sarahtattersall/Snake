@@ -47,6 +47,7 @@ private:
     void add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects = NULL);
     void display_walls();
     void reset_directions();
+    CellObject* create_new_cell_object(Coord coord, QBrush brush);
     static const int MAX_PLAYERS = 2;
     static const QBrush FOOD_BRUSH;
     static const QBrush WALL_BRUSH;

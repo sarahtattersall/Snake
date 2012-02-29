@@ -126,6 +126,12 @@ void Scene::add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects){
     }
 }
 
+CellObject* Scene::create_new_cell_object(Coord coord, QBrush brush){
+    CellObject* obj = new CellObject(coord);
+    obj->setBrush(brush);
+    return obj;
+}
+
 void Scene::update_view(){
     set<QGraphicsItem*> new_objects;
     CellObject* obj;
@@ -141,13 +147,9 @@ void Scene::update_view(){
             item = find_item(coord);
             if (!item){
                 if (dead){
-                    obj = new CellObject(coord);
-                    obj->setBrush(DEAD_BRUSH);
-                    add_object(obj);
+                    add_object(create_new_cell_object(coord, DEAD_BRUSH));
                 } else {
-                    obj = new CellObject(coord);
-                    obj->setBrush(PLAYER_BRUSHES[player]);
-                    add_object(obj, &new_objects);
+                    add_object(create_new_cell_object(coord, PLAYER_BRUSHES[player]), &new_objects);
                 }
             } else {
                 obj = dynamic_cast<CellObject *>(item);
@@ -165,9 +167,7 @@ void Scene::update_view(){
     coord = get_scene_coord(m_rules->get_food());
     item = find_item(coord);
     if(!item){
-        obj = new CellObject(coord);
-        obj->setBrush(FOOD_BRUSH);
-        add_object(obj, &new_objects);
+        add_object(create_new_cell_object(coord, FOOD_BRUSH), &new_objects);
     } else{
         new_objects.insert(item);
     }
@@ -195,9 +195,7 @@ void Scene::display_walls(){
             coord = Coord(x,y); 
             item = find_item(coord);
             if(!item){
-                CellObject* obj = new CellObject(coord);
-                obj->setBrush(WALL_BRUSH);
-                add_object(obj);
+                add_object(create_new_cell_object(coord, WALL_BRUSH));
             }
         }
     }
