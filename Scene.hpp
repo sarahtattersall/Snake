@@ -44,7 +44,7 @@ private:
     set<QGraphicsItem*> m_last_objects;
     vector<Coord::Direction> m_directions;
     void add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects = NULL);
-    void display_board();
+    void display_walls();
     static const int MAX_PLAYERS = 2;
     void reset_directions();
 

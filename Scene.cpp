@@ -22,7 +22,7 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
     view.setWindowTitle("Sarah's Amazing Snake Game");
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(move_snake()));
-    display_board();
+    display_walls();
     update_view();
     view.show();
 }
@@ -167,7 +167,7 @@ void Scene::update_view(){
     m_last_objects = new_objects;
 }
 
-void Scene::display_board(){
+void Scene::display_walls(){
     QGraphicsItem* item;
     Coord coord;
     vector<CellOccupier*> walls = m_rules->get_walls();
