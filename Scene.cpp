@@ -4,6 +4,9 @@
 #include "SnakeException.hpp"
 
 #include <algorithm>
+const QBrush Scene::FOOD_BRUSH = QBrush(Qt::yellow);
+const QBrush Scene::WALL_BRUSH = QBrush(Qt::blue);
+const QBrush Scene::DEAD_BRUSH = QBrush(Qt::red);
 Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
         : m_transform(), m_last_objects(), m_directions(){
     if (rules->get_player_count() > MAX_PLAYERS){
@@ -137,25 +140,20 @@ void Scene::update_view(){
             if (!item){
                 if (dead){
                     obj = new CellObject(coord);
-                    obj->setBrush(QBrush(Qt::red));
-                    //obj->setPen(QPen(Qt::red));
+                    obj->setBrush(DEAD_BRUSH);
                     add_object(obj);
                 } else {
                     obj = new CellObject(coord);
                     obj->setBrush(QBrush(Qt::green));
-                    //obj->setPen(QPen(Qt::green));
                     add_object(obj, &new_objects);
                 }
             } else {
                 obj = dynamic_cast<CellObject *>(item);
                 if(obj){
                     if (dead){
-                        obj->setBrush(QBrush(Qt::red));
-                        //obj->setPen(QPen(Qt::red));
-                        //add_object(obj, &new_objects);
+                        obj->setBrush(DEAD_BRUSH);
                     } else{
                         obj->setBrush(QBrush(Qt::green));
-                        //obj->setPen(QPen(Qt::green));
                     }
                     new_objects.insert(item);
                 }
@@ -197,8 +195,7 @@ void Scene::display_walls(){
             item = find_item(coord);
             if(!item){
                 CellObject* obj = new CellObject(coord);
-                obj->setBrush(QBrush(Qt::blue));
-                //obj->setPen(QPen(Qt::blue));
+                obj->setBrush(WALL_BRUSH);
                 add_object(obj);
             }
         }

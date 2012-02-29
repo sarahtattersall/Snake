@@ -14,6 +14,7 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <QDebug>
+#include <QBrush>
 
 using std::set;
 
@@ -45,8 +46,11 @@ private:
     vector<Coord::Direction> m_directions;
     void add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects = NULL);
     void display_walls();
-    static const int MAX_PLAYERS = 2;
     void reset_directions();
+    static const int MAX_PLAYERS = 2;
+    static const QBrush FOOD_BRUSH;
+    static const QBrush WALL_BRUSH;
+    static const QBrush DEAD_BRUSH;
 
 };
 
