@@ -51,7 +51,7 @@ private:
     static const QBrush FOOD_BRUSH;
     static const QBrush WALL_BRUSH;
     static const QBrush DEAD_BRUSH;
-
+    static const QBrush PLAYER_BRUSHES[2];
 };
 
 #endif

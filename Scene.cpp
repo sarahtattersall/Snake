@@ -7,6 +7,7 @@
 const QBrush Scene::FOOD_BRUSH = QBrush(Qt::yellow);
 const QBrush Scene::WALL_BRUSH = QBrush(Qt::blue);
 const QBrush Scene::DEAD_BRUSH = QBrush(Qt::red);
+const QBrush Scene::PLAYER_BRUSHES[2] = {QBrush(Qt::green), QBrush(Qt::cyan)};
 Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
         : m_transform(), m_last_objects(), m_directions(){
     if (rules->get_player_count() > MAX_PLAYERS){
@@ -113,6 +114,7 @@ Coord Scene::get_scene_coord(const CellOccupier* occupier){
     int y = map_to_view(coord.get_y(), CellObject::get_height()); 
     return Coord(x,y);
 }
+
 QGraphicsItem* Scene::find_item(Coord coord){
     return itemAt(coord.get_x(), coord.get_y(), m_transform);
 }
@@ -144,7 +146,7 @@ void Scene::update_view(){
                     add_object(obj);
                 } else {
                     obj = new CellObject(coord);
-                    obj->setBrush(QBrush(Qt::green));
+                    obj->setBrush(PLAYER_BRUSHES[player]);
                     add_object(obj, &new_objects);
                 }
             } else {
@@ -153,7 +155,7 @@ void Scene::update_view(){
                     if (dead){
                         obj->setBrush(DEAD_BRUSH);
                     } else{
-                        obj->setBrush(QBrush(Qt::green));
+                        obj->setBrush(PLAYER_BRUSHES[player]);
                     }
                     new_objects.insert(item);
                 }
