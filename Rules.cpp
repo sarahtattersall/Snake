@@ -50,6 +50,9 @@ bool Rules::coord_out_of_bounds(Coord coord){
 
 bool Rules::move_snake(int index, Coord::Direction direction){
     Snake& snake = m_snakes[index];
+    if (Coord::inverse(direction) == snake.get_direction()){
+        return compute_move(snake, snake.get_direction());
+    }
     return compute_move(snake, direction);
 }
 

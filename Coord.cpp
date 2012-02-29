@@ -57,13 +57,13 @@ Coord Coord::operator=(const Coord& coord){
 Coord Coord::move(Direction direction){
     switch(direction){
         case UP:
-          return Coord(m_x, m_y) - Coord(0, 1);
+            return Coord(m_x, m_y) - Coord(0, 1);
         case DOWN:
-          return Coord(m_x, m_y) + Coord(0, 1);
+            return Coord(m_x, m_y) + Coord(0, 1);
         case LEFT:
-          return Coord(m_x, m_y) - Coord(1, 0);
+            return Coord(m_x, m_y) - Coord(1, 0);
         case RIGHT:
-          return Coord(m_x, m_y) + Coord(1, 0);
+            return Coord(m_x, m_y) + Coord(1, 0);
     }
     return *this;
 }
@@ -76,4 +76,19 @@ int Coord::mod(int number, int mod_value){
 void Coord::set_board_dimensions(int height, int width){
     s_board_height = height;
     s_board_width = width;
+}
+
+
+Coord::Direction Coord::inverse(Direction direction){
+    switch(direction){
+        case UP:
+            return DOWN;
+        case DOWN:
+            return UP;
+        case LEFT:
+            return RIGHT;
+        case RIGHT:
+            return LEFT;
+    }
+    return direction;
 }

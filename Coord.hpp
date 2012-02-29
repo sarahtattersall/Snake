@@ -16,7 +16,7 @@ public:
   Coord operator=(const Coord& coord);
   Coord move(Direction direction);
   static void set_board_dimensions(int height, int width);
-  
+  static Direction inverse(Direction direction);
 private:
     static int s_board_height;
     static int s_board_width;
