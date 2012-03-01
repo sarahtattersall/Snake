@@ -75,12 +75,6 @@ private:
 
 class SnakeIterator{
 public:
-    // Replace tail with snake head 
-    // Change iterator to have a last and current variables, then in begin
-    // set last = null, current = head
-    // end last = tail, current = head->next
-    // when we do ++ set last = current, current = current->next
-    // Don't do null hack anymore!
     SnakeIterator(const IterableSnake* current, IterableSnake* last){
         m_current = current;
         m_last = last;
