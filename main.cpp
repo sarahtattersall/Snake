@@ -11,6 +11,7 @@ using boost::shared_ptr;
 
 int main(int argc, char *argv[])
 {
+    //TODO: Look up command line passing arguments library to parse them.
     int players = 1;
     bool through_walls = false;
     if (argc > 1){

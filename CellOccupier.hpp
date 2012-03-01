@@ -75,19 +75,22 @@ private:
 
 class SnakeIterator{
 public:
-    SnakeIterator(const IterableSnake* current, IterableSnake* tail){
+    // Replace tail with snake head 
+    // Change iterator to have a last and current variables, then in begin
+    // set last = null, current = head
+    // end last = tail, current = head->next
+    // when we do ++ set last = current, current = current->next
+    // Don't do null hack anymore!
+    SnakeIterator(const IterableSnake* current, IterableSnake* last){
         m_current = current;
-        m_tail = tail;
+        m_last = last;
     }
     
     ~SnakeIterator(){};
     
     SnakeIterator& operator++(){
-        if (m_current == m_tail){
-            m_current = NULL;
-        } else {
-            m_current = m_current->next();
-        }
+        m_last = m_current;
+        m_current = m_current->next();
         return *this;
     }
     void operator++(int){
@@ -95,7 +98,7 @@ public:
     }
     
     bool operator==(SnakeIterator iter){
-        return (m_current == iter.m_current);
+        return (m_current == iter.m_current && m_last == iter.m_last);
     }
     
     bool operator!=(SnakeIterator iter){
@@ -108,7 +111,7 @@ public:
     
 private:
     const IterableSnake* m_current;
-    IterableSnake* m_tail;
+    const IterableSnake* m_last;
 };
 
 class Snake : public CellOccupier, public IterableSnake {

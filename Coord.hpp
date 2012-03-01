@@ -1,6 +1,9 @@
 #ifndef COORD_HPP
 #define COORD_HPP
 
+// CoordinateSpace class that handles mod not coord and all the move stuff.
+// space.add(point, vector)
+// Seperation!!!
 class Coord{
 public:
   enum Direction { UP, DOWN, RIGHT, LEFT };

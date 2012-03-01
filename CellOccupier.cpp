@@ -131,10 +131,10 @@ bool Snake::is_alive() const{
 }
 
 SnakeIterator Snake::begin() const{
-    return SnakeIterator(this, find_tail());
+    return SnakeIterator(this, NULL);
 }
 SnakeIterator Snake::end() const{
-    return SnakeIterator(NULL, find_tail());
+    return SnakeIterator(this->next(), find_tail());
 }
 
 const IterableSnake * Snake::next() const{

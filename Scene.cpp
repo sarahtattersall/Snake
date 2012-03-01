@@ -54,6 +54,24 @@ void Scene::end_game(){
 }
 
 void Scene::keyPressEvent(QKeyEvent* event){
+    //TODO: Change this to "dispatch handler", basically a map of key presses
+    // to methods. 
+    // if(m_playing){
+    //     playing_handler(key);
+    // } else
+    //     not_playing_handler(key);
+    // Playing handles handle key
+    // handlekey(key){
+    // handle = my_map.find(key);
+    // if (!handler){
+    //     handle(key);
+    // }
+    // }
+    // if (parentDispatch != NULL)
+    //     parentDispatch->handleyKey(key);
+    // Gives mappable keyboards. 
+    
+    
     if (event->key() == Qt::Key_R && !m_playing){
         if(m_rules->snake_dead()){
             m_rules->reset();
@@ -130,6 +148,7 @@ CellObject* Scene::create_new_cell_object(Coord coord, QBrush brush){
 }
 
 void Scene::update_view(){
+    //TODO: Declare variables as late as you can unless there's a good reason to do so.
     set<QGraphicsItem*> new_objects;
     CellObject* obj;
     bool dead;
@@ -149,8 +168,7 @@ void Scene::update_view(){
                     add_object(create_new_cell_object(coord, PLAYER_BRUSHES[player]), &new_objects);
                 }
             } else {
-                obj = dynamic_cast<CellObject *>(item);
-                if(obj){
+                if(obj = dynamic_cast<CellObject *>(item)){
                     if (dead){
                         obj->setBrush(DEAD_BRUSH);
                     } else{

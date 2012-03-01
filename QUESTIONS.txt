@@ -1,2 +1,0 @@
-Used forwards declaration in CellOccupier.hpp then imported actual Board in hpp. is this ok? Otherwise can't import Board.hpp into CellOccupier.hpp
-
