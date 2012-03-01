@@ -9,6 +9,7 @@
 #include <set>
 
 #include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QTimer>
@@ -17,22 +18,30 @@
 #include <QBrush>
 
 using std::set;
+using boost::scoped_ptr;
 
 class Scene : public QGraphicsScene{
     Q_OBJECT
 public:
     Scene(shared_ptr<Board> board, shared_ptr<Rules> rules);
     void keyPressEvent(QKeyEvent *event);
-    ~Scene();
 public slots:
     void move_snake();
 private:
+    static const int MAX_PLAYERS = 2;
+    static const QBrush FOOD_BRUSH;
+    static const QBrush WALL_BRUSH;
+    static const QBrush DEAD_BRUSH;
+    static const QBrush PLAYER_BRUSHES[2];
+    
     QGraphicsView view;    
     QPainter painter;
     shared_ptr<Board> m_board;
     shared_ptr<Rules> m_rules;
     QTransform m_transform;
-    QTimer* m_timer;
+    set<QGraphicsItem*> m_last_objects;
+    vector<Coord::Direction> m_directions;
+    scoped_ptr<QTimer> m_timer;
     bool m_playing;
 
     void end_game();
@@ -42,17 +51,11 @@ private:
     int map_to_view(int x, int size);
     QGraphicsItem* find_item(Coord coord);
     Coord get_scene_coord(const CellOccupier* occupier);
-    set<QGraphicsItem*> m_last_objects;
-    vector<Coord::Direction> m_directions;
     void add_object(QGraphicsItem* obj, set<QGraphicsItem*>* new_objects = NULL);
     void display_walls();
+    void update_food();
     void reset_directions();
     CellObject* create_new_cell_object(Coord coord, QBrush brush);
-    static const int MAX_PLAYERS = 2;
-    static const QBrush FOOD_BRUSH;
-    static const QBrush WALL_BRUSH;
-    static const QBrush DEAD_BRUSH;
-    static const QBrush PLAYER_BRUSHES[2];
 };
 
 #endif

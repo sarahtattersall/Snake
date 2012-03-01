@@ -31,7 +31,7 @@ public:
 class BoardBuilder {
 public:
     BoardBuilder();
-    BoardBuilder& set_size(const int size);
+    BoardBuilder& set_size(int size);
     // If haven't set size create will error.
     shared_ptr<Board> create();
 private:

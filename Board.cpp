@@ -36,7 +36,7 @@ BoardBuilder::BoardBuilder(){
     m_size = 0;
 }
 
-BoardBuilder& BoardBuilder::set_size(const int size){
+BoardBuilder& BoardBuilder::set_size(int size){
     m_size = size;
     return *this;
 }

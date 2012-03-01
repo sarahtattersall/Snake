@@ -2,14 +2,14 @@
 #include "CellOccupier.hpp"
 #include "SnakeDirection.hpp"
 #include "SnakeException.hpp"
-
 #include <algorithm>
 const QBrush Scene::FOOD_BRUSH = QBrush(Qt::yellow);
 const QBrush Scene::WALL_BRUSH = QBrush(Qt::blue);
 const QBrush Scene::DEAD_BRUSH = QBrush(Qt::red);
 const QBrush Scene::PLAYER_BRUSHES[2] = {QBrush(Qt::green), QBrush(Qt::cyan)};
 Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
-        : m_transform(), m_last_objects(), m_directions(){
+        : m_transform(), m_last_objects(), m_directions(),
+          m_timer(new QTimer(this)){
     if (rules->get_player_count() > MAX_PLAYERS){
         throw TooManyPlayersError();
     }
@@ -24,16 +24,12 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
     view.setScene(this);
     view.setBackgroundBrush(Qt::black);
     view.setWindowTitle("Sarah's Amazing Snake Game");
-    m_timer = new QTimer(this);
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(move_snake()));
+    connect(m_timer.get(), SIGNAL(timeout()), this, SLOT(move_snake()));
     display_walls();
     update_view();
     view.show();
 }
 
-Scene::~Scene(){
-    delete m_timer;
-}
 
 void Scene::reset_directions(){
     for (int player = 0; player < m_rules->get_player_count(); ++player){
@@ -108,6 +104,7 @@ int Scene::map_to_view(int x, int size){
   return x*size;
 }
 
+
 Coord Scene::get_scene_coord(const CellOccupier* occupier){
     Coord coord = m_board->find(occupier);
     int x = map_to_view(coord.get_x(), CellObject::get_width());
@@ -135,11 +132,11 @@ CellObject* Scene::create_new_cell_object(Coord coord, QBrush brush){
 void Scene::update_view(){
     set<QGraphicsItem*> new_objects;
     CellObject* obj;
-    bool dead; //= m_rules->snake_dead();
+    bool dead;
     int players = m_rules->get_player_count();
     QGraphicsItem* item;
     Coord coord;
-    for( int player = 0; player < players; ++player){
+    for (int player = 0; player < players; ++player){
         const Snake* snake = m_rules->get_snake(player);
         dead = !snake->is_alive();
         for (SnakeIterator itr = snake->begin(); itr != snake->end(); ++itr){
@@ -164,6 +161,7 @@ void Scene::update_view(){
             }
         }
     }
+    
     coord = get_scene_coord(m_rules->get_food());
     item = find_item(coord);
     if(!item){
