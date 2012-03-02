@@ -10,7 +10,7 @@ using boost::shared_ptr;
 CPPUNIT_TEST_SUITE_REGISTRATION( RulesTest );
 CPPUNIT_TEST_SUITE_REGISTRATION( BoardTest );
 CPPUNIT_TEST_SUITE_REGISTRATION( SnakeTest );
-
+CPPUNIT_TEST_SUITE_REGISTRATION( CoordTest );
 
 void RulesTest::setUp(){
     m_builder1 = new RuleBuilder();
@@ -84,7 +84,7 @@ void RulesTest::correctMove(){
     m_builder4->set_player_count(m_test_player_count);
     m_builder4->set_snake_size(m_test_snake_size);
     shared_ptr<Rules> rules = m_builder4->create();
-    bool result = rules->move_snake(1, Coord::DOWN);
+    bool result = rules->move_snake(1, Vector::DOWN);
     CPPUNIT_ASSERT_EQUAL(result, true);
     //SARAH: How can assure board has moved snake without access to board??
 }
@@ -98,10 +98,10 @@ void RulesTest::snakeBottomWallCrash(){
     // -2 as perimeter is around outside of board and still want a space 
     // to move down
     for(int i = 0; i < ((m_test_board_size/2) - m_test_snake_size - 1 ); ++i){
-        result = rules->move_snake(0, Coord::DOWN);
+        result = rules->move_snake(0, Vector::DOWN);
         CPPUNIT_ASSERT_EQUAL(result, true);
     }
-    result = rules->move_snake(0, Coord::DOWN);
+    result = rules->move_snake(0, Vector::DOWN);
     CPPUNIT_ASSERT_EQUAL(result, false);
 }
 
@@ -112,10 +112,10 @@ void RulesTest::snakeRightWallCrash(){
     shared_ptr<Rules> rules = m_builder6->create();
     bool result;
     for(int i = 0; i < ((m_test_board_size/2) - 2); ++i){
-        result = rules->move_snake(0, Coord::RIGHT);
+        result = rules->move_snake(0, Vector::RIGHT);
         CPPUNIT_ASSERT_EQUAL(result, true);
     }
-    result = rules->move_snake(0, Coord::RIGHT);
+    result = rules->move_snake(0, Vector::RIGHT);
     CPPUNIT_ASSERT_EQUAL(result, false);
 }
 
@@ -127,10 +127,10 @@ void RulesTest::snakeLeftWallCrash(){
     shared_ptr<Rules> rules = m_builder7->create();
     bool result;
     for(int i = 0; i < ((m_test_board_size/2) - 1); ++i){
-        result = rules->move_snake(0, Coord::LEFT);
+        result = rules->move_snake(0, Vector::LEFT);
         CPPUNIT_ASSERT_EQUAL(result, true);
     }
-    result = rules->move_snake(0, Coord::LEFT);
+    result = rules->move_snake(0, Vector::LEFT);
     CPPUNIT_ASSERT_EQUAL(result, false);
 }
 
@@ -140,12 +140,12 @@ void RulesTest::snakeTopWallCrash(){
     m_builder8->set_snake_size(m_test_snake_size);
     shared_ptr<Rules> rules = m_builder8->create();
     bool result;
-    result = rules->move_snake(0, Coord::RIGHT);
+    result = rules->move_snake(0, Vector::RIGHT);
     for(int i = 0; i < ((m_test_board_size/2) + m_test_snake_size -2); ++i){
-        result = rules->move_snake(0, Coord::UP);
+        result = rules->move_snake(0, Vector::UP);
         CPPUNIT_ASSERT_EQUAL(result, true);
     }
-    result = rules->move_snake(0, Coord::UP);
+    result = rules->move_snake(0, Vector::UP);
     CPPUNIT_ASSERT_EQUAL(result, false);
 }
 
@@ -155,7 +155,7 @@ void RulesTest::snakeOnSnakeCrash(){
     m_builder9->set_snake_size(m_test_snake_size);
     shared_ptr<Rules> rules = m_builder9->create();
     bool result;
-    result = rules->move_snake(0, Coord::LEFT);
+    result = rules->move_snake(0, Vector::LEFT);
     CPPUNIT_ASSERT_EQUAL(result, false);
 }
 
@@ -177,12 +177,12 @@ void RulesTest::rulesReset(){
     
     
     bool result;
-    result = rules_10->move_snake(0, Coord::RIGHT);
+    result = rules_10->move_snake(0, Vector::RIGHT);
     for(int i = 0; i < ((m_test_board_size/2) + m_test_snake_size -2); ++i){
-        result = rules_10->move_snake(0, Coord::UP);
+        result = rules_10->move_snake(0, Vector::UP);
         CPPUNIT_ASSERT_EQUAL(result, true);
     }
-    result = rules_10->move_snake(0, Coord::UP);
+    result = rules_10->move_snake(0, Vector::UP);
     CPPUNIT_ASSERT_EQUAL(result, false);
     rules_10->reset();
     CPPUNIT_ASSERT_EQUAL(CellOccupier::SNAKE,m_test_board10->lookup(Coord(board_middle.get_x(),board_middle.get_y() + 1))->get_type());
@@ -312,4 +312,67 @@ void SnakeTest::iterator(){
     const CellOccupier* res = *itr;
     const CellOccupier* head = snake_head;
     CPPUNIT_ASSERT_EQUAL(head, res);
+}
+
+void CoordTest::setUp(){
+}
+
+void CoordTest::tearDown(){
+}
+
+void CoordTest::createTest(){
+    Coord coord(1,1);
+    CPPUNIT_ASSERT_EQUAL(1, coord.get_x());
+    CPPUNIT_ASSERT_EQUAL(1, coord.get_y());
+}
+
+void CoordTest::wrapAroundXTest(){
+    Coord coord(0,0);
+    Vector vec(-1,0);
+    Coord new_coord = m_space.move(coord, vec);
+    CPPUNIT_ASSERT_EQUAL(9, new_coord.get_x());
+    CPPUNIT_ASSERT_EQUAL(0, new_coord.get_y());
+}
+
+void CoordTest::wrapAroundYTest(){
+    Coord coord(9,9);
+    Vector vec(0,1);
+    Coord new_coord = m_space.move(coord, vec);
+    CPPUNIT_ASSERT_EQUAL(9, new_coord.get_x());
+    CPPUNIT_ASSERT_EQUAL(0, new_coord.get_y());
+}
+
+void CoordTest::moveTestVector(){
+    Coord coord(0,1);
+    Vector vec(0,1);
+    Coord new_coord = m_space.move(coord, vec);
+    CPPUNIT_ASSERT_EQUAL(0, new_coord.get_x());
+    CPPUNIT_ASSERT_EQUAL(2, new_coord.get_y());
+    new_coord = m_space.move(vec, coord);
+    CPPUNIT_ASSERT_EQUAL(0, new_coord.get_x());
+    CPPUNIT_ASSERT_EQUAL(2, new_coord.get_y());
+}
+
+void CoordTest::moveTestDirection(){
+    Coord coord(9,9);
+    Coord new_coord = m_space.move(coord, Vector::UP);
+    CPPUNIT_ASSERT_EQUAL(9, new_coord.get_x());
+    CPPUNIT_ASSERT_EQUAL(8, new_coord.get_y());
+    new_coord = m_space.move(Vector::UP, coord);
+    CPPUNIT_ASSERT_EQUAL(9, new_coord.get_x());
+    CPPUNIT_ASSERT_EQUAL(8, new_coord.get_y());
+}
+
+void CoordTest::wrapAroundYMoveTest(){
+    Coord coord(9,9);
+    Coord new_coord = m_space.move(coord, Vector::DOWN);
+    CPPUNIT_ASSERT_EQUAL(9, new_coord.get_x());
+    CPPUNIT_ASSERT_EQUAL(0, new_coord.get_y());
+}
+
+void CoordTest::wrapAroundXMoveTest(){
+    Coord coord(0,0);
+    Coord new_coord = m_space.move(coord, Vector::LEFT);
+    CPPUNIT_ASSERT_EQUAL(9, new_coord.get_x());
+    CPPUNIT_ASSERT_EQUAL(0, new_coord.get_y());
 }

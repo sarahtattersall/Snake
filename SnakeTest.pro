@@ -10,7 +10,6 @@ HEADERS += Board.hpp \
            Cell.hpp \
            CellOccupier.hpp \
            Coord.hpp \
-           CoordTest.hpp \
            Rules.hpp \
            Scene.hpp \
            SnakeDirection.hpp \
@@ -21,7 +20,6 @@ SOURCES += Board.cpp \
            Cell.cpp \
            CellOccupier.cpp \
            Coord.cpp \
-           CoordTest.cpp \
            Rules.cpp \
            Scene.cpp \
            test.cpp \

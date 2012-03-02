@@ -1,6 +1,7 @@
 #ifndef TESTS_HPP
 #define TESTS_HPP
 #include "Rules.hpp"
+#include "Coord.hpp"
 #include <cppunit/extensions/HelperMacros.h>
 #include "cppunit/TestCase.h"
 #include "cppunit/TestSuite.h"
@@ -121,5 +122,35 @@ private:
     shared_ptr<Board> m_board;
     int m_board_size;
     int m_player_count;
+};
+
+class CoordTest : public CppUnit::TestFixture
+{
+    CPPUNIT_TEST_SUITE( CoordTest );
+    CPPUNIT_TEST( createTest );
+    CPPUNIT_TEST( wrapAroundXTest );
+    CPPUNIT_TEST( wrapAroundYTest );
+    CPPUNIT_TEST( moveTestVector );
+    CPPUNIT_TEST( moveTestDirection );
+    CPPUNIT_TEST( wrapAroundYMoveTest );
+    CPPUNIT_TEST( wrapAroundXMoveTest );
+    CPPUNIT_TEST_SUITE_END();
+
+public:
+    CoordTest() : m_width(10), m_height(10), m_space(m_width, m_height){};
+    void setUp();
+    void tearDown();
+protected:
+    void createTest();
+    void moveTestVector();
+    void moveTestDirection();
+    void wrapAroundXTest();
+    void wrapAroundYTest();
+    void wrapAroundYMoveTest();
+    void wrapAroundXMoveTest();
+private:
+    const int m_width;
+    const int m_height;
+    const CoordinateSpace m_space;
 };
 #endif 
