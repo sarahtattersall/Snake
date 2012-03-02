@@ -20,7 +20,7 @@ public:
     shared_ptr<Board> get_board();
     // Returns bool for if the move succeeds. If false
     // end of game (i.e. hit wall or snake)
-    bool move_snake(int index, Coord::Direction direction);
+    bool move_snake(int index, Vector::Direction direction);
     // Overloaded method. If no direction is given moves in the current 
     // snakes direction
     bool move_snake(int index);
@@ -43,9 +43,10 @@ private:
     WallOccupier* m_wall;
     TeleportOccupier* m_teleport;
     FoodOccupier* m_food;
+    CoordinateSpace m_coord_space;
     // Determines if a Coord is out of bounds for the board
     bool coord_out_of_bounds(Coord coord);
-    bool compute_move(Snake& snake, Coord::Direction direction);
+    bool compute_move(Snake& snake, Vector::Direction direction);
     int m_prev_snake_size;
     //Bool determining if the snake can pass through walls.
     bool m_through_walls;

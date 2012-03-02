@@ -87,28 +87,28 @@ void Scene::keyPressEvent(QKeyEvent* event){
         if (m_playing){
             switch(event->key()){
                 case Qt::Key_Up:
-                    m_directions[0] = Coord::UP;
+                    m_directions[0] = Vector::UP;
                     break;
                 case Qt::Key_Down:
-                    m_directions[0] = Coord::DOWN;
+                    m_directions[0] = Vector::DOWN;
                     break;
                 case Qt::Key_Left:
-                    m_directions[0] = Coord::LEFT;
+                    m_directions[0] = Vector::LEFT;
                     break;
                 case Qt::Key_Right:
-                    m_directions[0] = Coord::RIGHT;
+                    m_directions[0] = Vector::RIGHT;
                     break;
                 case Qt::Key_W:
-                    m_directions[1] = Coord::UP;
+                    m_directions[1] = Vector::UP;
                     break;
                 case Qt::Key_S:
-                    m_directions[1] = Coord::DOWN;
+                    m_directions[1] = Vector::DOWN;
                     break;
                 case Qt::Key_A:
-                    m_directions[1] = Coord::LEFT;
+                    m_directions[1] = Vector::LEFT;
                     break;
                 case Qt::Key_D:
-                    m_directions[1] = Coord::RIGHT;
+                    m_directions[1] = Vector::RIGHT;
                     break;
                 default:
                     break;
@@ -168,7 +168,7 @@ void Scene::update_view(){
                     add_object(create_new_cell_object(coord, PLAYER_BRUSHES[player]), &new_objects);
                 }
             } else {
-                if(obj = dynamic_cast<CellObject *>(item)){
+                if((obj = dynamic_cast<CellObject *>(item))){
                     if (dead){
                         obj->setBrush(DEAD_BRUSH);
                     } else{

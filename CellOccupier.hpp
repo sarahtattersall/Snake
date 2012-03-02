@@ -14,7 +14,7 @@ class CellOccupier{
 public:
     enum TYPE {EMPTY, SNAKE, FOOD, WALL};
     virtual TYPE get_type() const = 0;
-    virtual bool handle_move(Coord coord, Coord::Direction direction, shared_ptr<Board> board, Snake* snake, Rules* rules) const = 0;
+    virtual bool handle_move(Coord coord, Vector::Direction direction, CoordinateSpace space, shared_ptr<Board> board, Snake* snake, Rules* rules) const = 0;
 protected:
     void move_snake(Coord front, shared_ptr<Board> board, Snake* snake) const;
 };
@@ -22,7 +22,7 @@ protected:
 class EmptyOccupier : public CellOccupier{
 public:
     virtual TYPE get_type() const { return EMPTY; }
-    virtual bool handle_move(Coord coord, Coord::Direction, shared_ptr<Board> board, Snake* snake, Rules*) const{
+    virtual bool handle_move(Coord coord, Vector::Direction, CoordinateSpace, shared_ptr<Board> board, Snake* snake, Rules*) const{
         move_snake(coord, board, snake);
         return true;
     }
@@ -31,19 +31,19 @@ public:
 class FoodOccupier : public CellOccupier{
 public:
     virtual TYPE get_type() const { return FOOD; }
-    virtual bool handle_move(Coord coord, Coord::Direction direction, shared_ptr<Board> board, Snake* snake, Rules* rules) const;
+    virtual bool handle_move(Coord coord, Vector::Direction direction, CoordinateSpace, shared_ptr<Board> board, Snake* snake, Rules* rules) const;
 };
 
 class WallOccupier : public CellOccupier{
 public:
     virtual TYPE get_type() const { return WALL; }
-    virtual bool handle_move(Coord, Coord::Direction, shared_ptr<Board>, Snake* snake, Rules*) const;
+    virtual bool handle_move(Coord, Vector::Direction, CoordinateSpace, shared_ptr<Board>, Snake* snake, Rules*) const;
 };
 
 class TeleportOccupier : public CellOccupier{
 public:
     virtual TYPE get_type() const { return WALL; }
-    virtual bool handle_move(Coord coord, Coord::Direction direction, shared_ptr<Board> board, Snake* snake, Rules* rules) const;
+    virtual bool handle_move(Coord coord, Vector::Direction direction, CoordinateSpace space, shared_ptr<Board> board, Snake* snake, Rules* rules) const;
 };
 
 class IterableSnake{
@@ -60,7 +60,7 @@ public:
     SnakeTail* get_next(){
         return m_next;
     }
-    virtual bool handle_move(Coord, Coord::Direction, shared_ptr<Board>, Snake* snake, Rules*) const;
+    virtual bool handle_move(Coord, Vector::Direction, CoordinateSpace space, shared_ptr<Board>, Snake* snake, Rules*) const;
     
 private:
     SnakeTail* m_next;
@@ -111,13 +111,13 @@ private:
 class Snake : public CellOccupier, public IterableSnake {
 public:
     enum Speed { FAST = 1, MEDIUM, SLOW };
-    Snake(int size, Coord::Direction d);
+    Snake(int size, Vector::Direction d);
     ~Snake();
     virtual TYPE get_type() const { return SNAKE; }
-    virtual bool handle_move(Coord, Coord::Direction, shared_ptr<Board>, Snake* snake, Rules*) const;
-    Coord::Direction get_direction() const;
-    void set_direction(Coord::Direction d);
-    void build_tail(shared_ptr<Board> board);
+    virtual bool handle_move(Coord, Vector::Direction, CoordinateSpace space, shared_ptr<Board>, Snake* snake, Rules*) const;
+    Vector::Direction get_direction() const;
+    void set_direction(Vector::Direction d);
+    void build_tail(shared_ptr<Board> board, CoordinateSpace space);
 
     SnakeTail* find_tail() const;
     int get_size() const;
@@ -135,7 +135,7 @@ private:
     int m_size;
     bool m_alive;
     Speed m_speed;
-    Coord::Direction m_direction;
+    Vector::Direction m_direction;
     SnakeTail* m_next;
     SnakeTail* find_prev(SnakeTail* tail) const;
     virtual const IterableSnake * next() const;

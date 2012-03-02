@@ -12,33 +12,33 @@ void CellOccupier::move_snake(Coord front, shared_ptr<Board> board, Snake* snake
     }
 }
 
-bool FoodOccupier::handle_move(Coord coord, Coord::Direction, shared_ptr<Board> board, Snake* snake, Rules* rules) const{
+bool FoodOccupier::handle_move(Coord coord, Vector::Direction, CoordinateSpace, shared_ptr<Board> board, Snake* snake, Rules* rules) const{
     board->remove(this);
     snake->grow(board, coord);
     rules->place_food();
     return true;
 }
-bool WallOccupier::handle_move(Coord, Coord::Direction, shared_ptr<Board>, Snake* snake, Rules*) const{
+bool WallOccupier::handle_move(Coord, Vector::Direction, CoordinateSpace, shared_ptr<Board>, Snake* snake, Rules*) const{
     snake->set_alive(false);
     return false;
 }
 
-bool TeleportOccupier::handle_move(Coord coord, Coord::Direction direction, shared_ptr<Board> board, Snake* snake, Rules* rules) const{
-    Coord new_coord = coord.move(direction);
+bool TeleportOccupier::handle_move(Coord coord, Vector::Direction direction, CoordinateSpace space, shared_ptr<Board> board, Snake* snake, Rules* rules) const{
+    Coord new_coord = space.move(coord, direction);
     const CellOccupier* occupier = board->lookup(new_coord);
-    return occupier->handle_move(new_coord, direction, board, snake, rules);
+    return occupier->handle_move(new_coord, direction, space, board, snake, rules);
 }
 
-bool Snake::handle_move(Coord, Coord::Direction, shared_ptr<Board>, Snake* snake, Rules*) const{
+bool Snake::handle_move(Coord, Vector::Direction, CoordinateSpace, shared_ptr<Board>, Snake* snake, Rules*) const{
     snake->set_alive(false);
     return false;
 }
 
-bool SnakeTail::handle_move(Coord, Coord::Direction, shared_ptr<Board>, Snake* snake, Rules*) const{
+bool SnakeTail::handle_move(Coord, Vector::Direction, CoordinateSpace, shared_ptr<Board>, Snake* snake, Rules*) const{
     snake->set_alive(false);
     return false;
 }
-Snake::Snake(int size, Coord::Direction d) : CellOccupier(){
+Snake::Snake(int size, Vector::Direction d) : CellOccupier(){
     m_size = size;
     m_alive = true;
     m_direction = d;
@@ -59,18 +59,18 @@ Snake::~Snake(){
     }
 }
 
-Coord::Direction Snake::get_direction() const{
+Vector::Direction Snake::get_direction() const{
     return m_direction;    
 }
-void Snake::set_direction(Coord::Direction d){
+void Snake::set_direction(Vector::Direction d){
     m_direction = d;
 }
-void Snake::build_tail(shared_ptr<Board> board){
+void Snake::build_tail(shared_ptr<Board> board, CoordinateSpace space){
     if( m_size > 1 ){
         Coord front;
         for (int i = 0; i < m_size - 1; ++i){
             front = board->find(this);
-            grow(board, front.move(m_direction));
+            grow(board, space.move(front, m_direction));
         }
     }
 }

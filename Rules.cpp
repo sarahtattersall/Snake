@@ -5,9 +5,10 @@
 #include <string.h>
 #include <stdio.h>
 
-Rules::Rules(shared_ptr<Board> board, bool through_walls){
-    m_board = board;
+Rules::Rules(shared_ptr<Board> board, bool through_walls)
+            : m_board(board), m_coord_space(board->get_width(), board->get_height()){
     m_prev_snake_size = 0;
+    // TODO: Make these scoped_ptrs
     m_wall = new WallOccupier();
     m_teleport = new TeleportOccupier();
     m_food = new FoodOccupier();
@@ -48,9 +49,9 @@ bool Rules::coord_out_of_bounds(Coord coord){
     return (m_board->lookup(coord)->get_type() == CellOccupier::WALL);
 }
 
-bool Rules::move_snake(int index, Coord::Direction direction){
+bool Rules::move_snake(int index, Vector::Direction direction){
     Snake& snake = m_snakes[index];
-    if (Coord::inverse(direction) == snake.get_direction()){
+    if (Vector::inverse(direction) == snake.get_direction()){
         return compute_move(snake, snake.get_direction());
     }
     return compute_move(snake, direction);
@@ -70,11 +71,11 @@ bool Rules::snake_dead(){
     return false;
 }
 
-bool Rules::compute_move(Snake& snake, Coord::Direction direction){
+bool Rules::compute_move(Snake& snake, Vector::Direction direction){
     Coord old_front = m_board->find(&snake);
-    Coord new_front = old_front.move(direction);
+    Coord new_front = m_coord_space.move(old_front, direction);
     snake.set_direction(direction); // Need to set this here so grow moves snake in right direction
-    return m_board->lookup(new_front)->handle_move(new_front, direction, m_board, &snake, this);
+    return m_board->lookup(new_front)->handle_move(new_front, direction, m_coord_space, m_board, &snake, this);
 }
 
 void Rules::build_wall(){
@@ -104,10 +105,10 @@ void Rules::set_snakes(int players, int snake_size){
     Coord board_middle(m_board->get_width()/2, m_board->get_height()/2);
     for (int player = 0; player < players; ++player){
         Coord snake_start(board_middle.get_x() - player, board_middle.get_y());
-        Snake* snake = new Snake(snake_size, Coord::DOWN);
+        Snake* snake = new Snake(snake_size, Vector::DOWN);
         m_snakes.push_back(snake);
         m_board->insert(snake, snake_start);
-        snake->build_tail(m_board);
+        snake->build_tail(m_board, m_coord_space);
     }
 }
 

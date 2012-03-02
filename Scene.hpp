@@ -40,7 +40,7 @@ private:
     shared_ptr<Rules> m_rules;
     QTransform m_transform;
     set<QGraphicsItem*> m_last_objects;
-    vector<Coord::Direction> m_directions;
+    vector<Vector::Direction> m_directions;
     scoped_ptr<QTimer> m_timer;
     bool m_playing;
 
