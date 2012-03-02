@@ -51,19 +51,19 @@ private:
 class CoordinateSpace{
 public:
   CoordinateSpace(int width, int height) : m_width(width), m_height(height) {};
-  Coord move(Vector vec, Coord coord){
+  Coord move(Vector vec, Coord coord) const{
       return move(coord, vec);
   };
-  Coord move(Vector::Direction direction, Coord coord){
+  Coord move(Vector::Direction direction, Coord coord) const{
       return move(coord, direction);
   }
-  Coord move(Coord coord, Vector vec);
-  Coord move(Coord coord, Vector::Direction direction);
+  Coord move(Coord coord, Vector vec) const;
+  Coord move(Coord coord, Vector::Direction direction) const;
   
 private:
     const int m_width;
     const int m_height;
-    int mod (int number, const int mod_value);
+    int mod (int number, const int mod_value) const;
 };
 
 #endif

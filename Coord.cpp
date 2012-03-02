@@ -89,18 +89,18 @@ Vector::Direction Vector::inverse(Direction direction){
     return direction;
 }
 
-int CoordinateSpace::mod(int number, const int mod_value){
+int CoordinateSpace::mod(int number, const int mod_value) const{
     number %= mod_value;
     return number < 0 ? number + mod_value : number;
 }
 
-Coord CoordinateSpace::move(Coord coord, Vector vec){
+Coord CoordinateSpace::move(Coord coord, Vector vec) const{
     int x = mod(coord.get_x() + vec.get_i(), m_width);
     int y = mod(coord.get_y() + vec.get_j(), m_height);
     return Coord(x,y);
 }
 
-Coord CoordinateSpace::move(Coord coord, Vector::Direction direction){
+Coord CoordinateSpace::move(Coord coord, Vector::Direction direction) const{
     switch (direction){
         case(Vector::UP):
             return move(coord, Vector(0,-1));
