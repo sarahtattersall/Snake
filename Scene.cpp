@@ -27,9 +27,31 @@ Scene::Scene(shared_ptr<Board> board, shared_ptr<Rules> rules)
     connect(m_timer.get(), SIGNAL(timeout()), this, SLOT(move_snake()));
     display_walls();
     update_view();
+    
+    setup_keys();
+    
+    
     view.show();
 }
 
+void Scene::setup_keys(){
+    m_not_playing_handler.add(Qt::Key_R, &Scene::reset);
+    m_not_playing_handler.add(Qt::Key_Space, &Scene::start_game);
+}
+
+void Scene::reset(){
+    if(m_rules->snake_dead()){
+        m_rules->reset();
+        reset_directions();
+        update_view();
+    }
+}
+
+void Scene::start_game(){
+    const Snake* snake = m_rules->get_snake(0);
+    m_timer->start(100*snake->get_speed());
+    m_playing = true;
+}
 
 void Scene::reset_directions(){
     for (int player = 0; player < m_rules->get_player_count(); ++player){
@@ -72,17 +94,19 @@ void Scene::keyPressEvent(QKeyEvent* event){
     // Gives mappable keyboards. 
     
     
-    if (event->key() == Qt::Key_R && !m_playing){
-        if(m_rules->snake_dead()){
-            m_rules->reset();
-            reset_directions();
-            update_view();
-        }
-    }
-    if (event->key() == Qt::Key_Space && !m_playing){
-        const Snake* snake = m_rules->get_snake(0);
-        m_timer->start(100*snake->get_speed());
-        m_playing = true;
+    // if (event->key() == Qt::Key_R && !m_playing){
+    //     if(m_rules->snake_dead()){
+    //         m_rules->reset();
+    //         reset_directions();
+    //         update_view();
+    //     }
+    // }
+    // if (event->key() == Qt::Key_Space && !m_playing){
+    //     const Snake* snake = m_rules->get_snake(0);
+    //     m_timer->start(100*snake->get_speed());
+    //     m_playing = true;
+    if (!m_playing){
+        m_not_playing_handler.handle(event->key, this);
     } else{
         if (m_playing){
             switch(event->key()){

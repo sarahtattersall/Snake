@@ -10,6 +10,7 @@ HEADERS += Board.hpp \
            CellObject.hpp \
            CellOccupier.hpp \
            Coord.hpp \
+           DispatchHandler.hpp \
            Rules.hpp \
            Scene.hpp \
            SnakeDirection.hpp \

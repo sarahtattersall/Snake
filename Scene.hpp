@@ -5,6 +5,7 @@
 #include "Board.hpp"
 #include "Coord.hpp"
 #include "CellObject.hpp"
+#include "DispatchHandler.hpp"
 
 #include <set>
 
@@ -42,6 +43,7 @@ private:
     set<QGraphicsItem*> m_last_objects;
     vector<Vector::Direction> m_directions;
     scoped_ptr<QTimer> m_timer;
+    DispatchHandler m_not_playing_handler;
     bool m_playing;
 
     void end_game();
@@ -56,6 +58,9 @@ private:
     void update_food();
     void reset_directions();
     CellObject* create_new_cell_object(Coord coord, QBrush brush);
+    void reset();
+    void start_game();
+    void setup_keys();
 };
 
 #endif
