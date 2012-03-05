@@ -4,11 +4,11 @@
 #include <map>
 #include <vector>
 
-// #include <boost/scoped_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 using std::multimap;
 using std::vector;
 using std::pair;
-// using boost::scoped_ptr;
+using boost::scoped_ptr;
 
 class CellOccupier;
 //This is the only current implementation of Board
@@ -49,7 +49,7 @@ shared_ptr<Board> BoardBuilder::create(){
     return shared_ptr<Board> (new SquareBoard(m_size));
 }
 
-SquareBoard::SquareBoard(const int size) : m_empty(shared_ptr<EmptyOccupier> (new EmptyOccupier())){
+SquareBoard::SquareBoard(const int size) : m_empty(new EmptyOccupier()){
     m_size = size;
     initialize_board();
 }
