@@ -6,6 +6,9 @@
 #include "cppunit/TestCase.h"
 #include "cppunit/TestSuite.h"
 #include "cppunit/TestCaller.h"
+#include <boost/scoped_ptr.hpp>
+
+using boost::scoped_ptr;
 
 
 class RulesTest : public CppUnit::TestFixture
@@ -24,8 +27,8 @@ class RulesTest : public CppUnit::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
 public:
+    RulesTest();
     void setUp();
-    void tearDown();
 protected:
     void noBoardTest();
     void noPlayerCountTest();
@@ -42,17 +45,17 @@ protected:
     void rulesReset();
 private:
     shared_ptr<Board> make_board();
-    RuleBuilder* m_builder1;
-    RuleBuilder* m_builder2;
-    RuleBuilder* m_builder3;
-    RuleBuilder* m_builder4;
-    RuleBuilder* m_builder5;
-    RuleBuilder* m_builder6;
-    RuleBuilder* m_builder7;
-    RuleBuilder* m_builder8;
-    RuleBuilder* m_builder9;
-    RuleBuilder* m_builder10;
-    RuleBuilder* m_builder11;
+    scoped_ptr<RuleBuilder> m_builder1;
+    scoped_ptr<RuleBuilder> m_builder2;
+    scoped_ptr<RuleBuilder> m_builder3;
+    scoped_ptr<RuleBuilder> m_builder4;
+    scoped_ptr<RuleBuilder> m_builder5;
+    scoped_ptr<RuleBuilder> m_builder6;
+    scoped_ptr<RuleBuilder> m_builder7;
+    scoped_ptr<RuleBuilder> m_builder8;
+    scoped_ptr<RuleBuilder> m_builder9;
+    scoped_ptr<RuleBuilder> m_builder10;
+    scoped_ptr<RuleBuilder> m_builder11;
     shared_ptr<Board> m_test_board2;
     shared_ptr<Board> m_test_board3;
     shared_ptr<Board> m_test_board4;
@@ -82,8 +85,8 @@ class BoardTest : public CppUnit::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
 public:
+    BoardTest();
     void setUp();
-    void tearDown();
 protected:
     void sizeTest();
     void builderFailsTest();
@@ -94,15 +97,15 @@ protected:
     void correctLookup();
     void clear();
 private:
-    BoardBuilder* m_builder1;
-    BoardBuilder* m_builder2;
-    BoardBuilder* m_builder3;
-    BoardBuilder* m_builder4;
-    BoardBuilder* m_builder5;
-    BoardBuilder* m_builder6;
-    BoardBuilder* m_builder7;
-    BoardBuilder* m_builder8;
-    CellOccupier* m_snake_occupier;
+    scoped_ptr<BoardBuilder> m_builder1;
+    scoped_ptr<BoardBuilder> m_builder2;
+    scoped_ptr<BoardBuilder> m_builder3;
+    scoped_ptr<BoardBuilder> m_builder4;
+    scoped_ptr<BoardBuilder> m_builder5;
+    scoped_ptr<BoardBuilder> m_builder6;
+    scoped_ptr<BoardBuilder> m_builder7;
+    scoped_ptr<BoardBuilder> m_builder8;
+    scoped_ptr<CellOccupier> m_snake_occupier;
     int m_test_size;
 };
 
@@ -114,7 +117,6 @@ class SnakeTest : public CppUnit::TestFixture
 
 public:
     void setUp();
-    void tearDown();
 protected:
     void iterator();
 private:
@@ -139,7 +141,6 @@ class CoordTest : public CppUnit::TestFixture
 public:
     CoordTest() : m_width(10), m_height(10), m_space(m_width, m_height){};
     void setUp();
-    void tearDown();
 protected:
     void createTest();
     void moveTestVector();

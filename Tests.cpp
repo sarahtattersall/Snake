@@ -12,18 +12,13 @@ CPPUNIT_TEST_SUITE_REGISTRATION( BoardTest );
 CPPUNIT_TEST_SUITE_REGISTRATION( SnakeTest );
 CPPUNIT_TEST_SUITE_REGISTRATION( CoordTest );
 
+RulesTest::RulesTest() : m_builder1(new RuleBuilder()), m_builder2(new RuleBuilder()), 
+  m_builder3(new RuleBuilder()), m_builder4(new RuleBuilder()), m_builder5(new RuleBuilder()), 
+  m_builder6(new RuleBuilder()), m_builder7(new RuleBuilder()), m_builder8(new RuleBuilder()),
+  m_builder9(new RuleBuilder()), m_builder10(new RuleBuilder()), m_builder11(new RuleBuilder()) 
+  {}
+
 void RulesTest::setUp(){
-    m_builder1 = new RuleBuilder();
-    m_builder2 = new RuleBuilder();
-    m_builder3 = new RuleBuilder();
-    m_builder4 = new RuleBuilder();
-    m_builder5 = new RuleBuilder();
-    m_builder6 = new RuleBuilder();
-    m_builder7 = new RuleBuilder();
-    m_builder8 = new RuleBuilder();
-    m_builder9 = new RuleBuilder();
-    m_builder10 = new RuleBuilder();
-    m_builder11 = new RuleBuilder();
     m_test_board_size = 20;
     m_test_player_count = 2;
     m_test_snake_size = 2;
@@ -44,21 +39,6 @@ shared_ptr<Board> RulesTest::make_board(){
     board_builder.set_size(m_test_board_size);
     return board_builder.create();
 }
-
-void RulesTest::tearDown(){
-    delete m_builder1;
-    delete m_builder2;
-    delete m_builder3;
-    delete m_builder4;
-    delete m_builder5;
-    delete m_builder6;
-    delete m_builder7;
-    delete m_builder8;
-    delete m_builder9;
-    delete m_builder10;
-    delete m_builder11;
-}
-
 
 void RulesTest::noBoardTest(){
     m_builder1->set_player_count(m_test_player_count);
@@ -199,29 +179,13 @@ void RulesTest::rulesReset(){
     }
 }
 
-void BoardTest::setUp(){
-    m_builder1 = new BoardBuilder();
-    m_builder2 = new BoardBuilder();
-    m_builder3 = new BoardBuilder();
-    m_builder4 = new BoardBuilder();
-    m_builder5 = new BoardBuilder();
-    m_builder6 = new BoardBuilder();
-    m_builder7 = new BoardBuilder();
-    m_builder8 = new BoardBuilder();
-    m_snake_occupier = new SnakeTail();
-    m_test_size = 10;
-}
+BoardTest::BoardTest() : m_builder1(new BoardBuilder()), m_builder2(new BoardBuilder()), 
+  m_builder3(new BoardBuilder()), m_builder4(new BoardBuilder()), m_builder5(new BoardBuilder()), 
+  m_builder6(new BoardBuilder()), m_builder7(new BoardBuilder()), m_builder8(new BoardBuilder()),
+  m_snake_occupier(new SnakeTail()) {};
 
-void BoardTest::tearDown(){
-    delete m_builder1;
-    delete m_builder2;
-    delete m_builder3;
-    delete m_builder4;
-    delete m_builder5;
-    delete m_builder6;
-    delete m_builder7;
-    delete m_builder8;
-    delete m_snake_occupier;
+void BoardTest::setUp(){
+    m_test_size = 10;
 }
 
 void BoardTest::sizeTest(){
@@ -249,16 +213,16 @@ void BoardTest::insertInRightCell(){
     m_builder4->set_size(m_test_size);
     shared_ptr<Board> board4 = m_builder4->create();
     Coord coord(3,3);
-    board4->insert(m_snake_occupier, coord);
+    board4->insert(m_snake_occupier.get(), coord);
     CPPUNIT_ASSERT_EQUAL(board4->lookup(coord)->get_type(), CellOccupier::SNAKE);
 }
 
 void BoardTest::correctMove(){
     m_builder5->set_size(m_test_size);
     shared_ptr<Board> board5 = m_builder5->create();
-    board5->insert(m_snake_occupier, Coord(0,0));
-    board5->move(m_snake_occupier, Coord(1,0));
-    Coord coord = board5->find(m_snake_occupier);
+    board5->insert(m_snake_occupier.get(), Coord(0,0));
+    board5->move(m_snake_occupier.get(), Coord(1,0));
+    Coord coord = board5->find(m_snake_occupier.get());
     CPPUNIT_ASSERT_EQUAL( coord.get_x(), 1 );
     CPPUNIT_ASSERT_EQUAL( coord.get_y(), 0 );
 }
@@ -266,18 +230,18 @@ void BoardTest::correctMove(){
 void BoardTest::correctFind(){
     m_builder6->set_size(m_test_size);
     shared_ptr<Board> board6 = m_builder6->create();
-    board6->insert(m_snake_occupier, Coord(0,0));
-    Coord coord = board6->find(m_snake_occupier);
-    CPPUNIT_ASSERT_EQUAL( coord.get_x(), 0 );
-    CPPUNIT_ASSERT_EQUAL( coord.get_y(), 0 );
+    board6->insert(m_snake_occupier.get(), Coord(0,0));
+    Coord coord = board6->find(m_snake_occupier.get());
+    CPPUNIT_ASSERT_EQUAL(coord.get_x(), 0);
+    CPPUNIT_ASSERT_EQUAL(coord.get_y(), 0);
 }
 
 void BoardTest::correctLookup(){
     m_builder7->set_size(m_test_size);
     shared_ptr<Board> board7 = m_builder7->create();
-    board7->insert(m_snake_occupier, Coord(0,0));
-    const CellOccupier* occupier = m_snake_occupier;
-    CPPUNIT_ASSERT_EQUAL( board7->lookup(Coord(0,0)), occupier );
+    board7->insert(m_snake_occupier.get(), Coord(0,0));
+    const CellOccupier* occupier = m_snake_occupier.get();
+    CPPUNIT_ASSERT_EQUAL(board7->lookup(Coord(0,0)), occupier);
 }
 
 void BoardTest::clear(){
@@ -303,8 +267,6 @@ void SnakeTest::setUp(){
     m_rules = rule_builder.create();
 }
 
-void SnakeTest::tearDown(){
-}
 
 void SnakeTest::iterator(){
     const Snake* snake_head = m_rules->get_snake(0);
@@ -315,9 +277,6 @@ void SnakeTest::iterator(){
 }
 
 void CoordTest::setUp(){
-}
-
-void CoordTest::tearDown(){
 }
 
 void CoordTest::createTest(){
