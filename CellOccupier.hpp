@@ -78,8 +78,6 @@ public:
         m_last = last;
     }
     
-    ~SnakeIterator(){};
-    
     SnakeIterator& operator++(){
         m_last = m_current;
         m_current = m_current->next();
