@@ -147,19 +147,14 @@ CellObject* Scene::create_new_cell_object(Coord coord, QBrush brush){
 }
 
 void Scene::update_view(){
-    //TODO: Declare variables as late as you can unless there's a good reason to do so.
     set<QGraphicsItem*> new_objects;
-    CellObject* obj;
-    bool dead;
     int players = m_rules->get_player_count();
-    QGraphicsItem* item;
-    Coord coord;
     for (int player = 0; player < players; ++player){
         const Snake* snake = m_rules->get_snake(player);
-        dead = !snake->is_alive();
+        bool dead = !snake->is_alive();
         for (SnakeIterator itr = snake->begin(); itr != snake->end(); ++itr){
-            coord = get_scene_coord(*itr);
-            item = find_item(coord);
+            Coord coord = get_scene_coord(*itr);
+            QGraphicsItem* item = find_item(coord);
             if (!item){
                 if (dead){
                     add_object(create_new_cell_object(coord, DEAD_BRUSH));
@@ -167,6 +162,7 @@ void Scene::update_view(){
                     add_object(create_new_cell_object(coord, PLAYER_BRUSHES[player]), &new_objects);
                 }
             } else {
+                CellObject* obj;
                 if((obj = dynamic_cast<CellObject *>(item))){
                     if (dead){
                         obj->setBrush(DEAD_BRUSH);
@@ -179,8 +175,8 @@ void Scene::update_view(){
         }
     }
     
-    coord = get_scene_coord(m_rules->get_food());
-    item = find_item(coord);
+    Coord coord = get_scene_coord(m_rules->get_food());
+    QGraphicsItem* item = find_item(coord);
     if(!item){
         add_object(create_new_cell_object(coord, FOOD_BRUSH), &new_objects);
     } else{
@@ -199,16 +195,14 @@ void Scene::update_view(){
 }
 
 void Scene::display_walls(){
-    QGraphicsItem* item;
-    Coord coord;
     vector<CellOccupier*> walls = m_rules->get_walls();
     for(vector<CellOccupier*>::iterator wall = walls.begin(); wall != walls.end(); ++wall ){
         vector<Coord> coords = m_board->find_all(*wall);
         for (vector<Coord>::iterator itr = coords.begin(); itr != coords.end(); ++itr){
             int x = map_to_view((*itr).get_x(), CellObject::get_width());
             int y = map_to_view((*itr).get_y(), CellObject::get_height());
-            coord = Coord(x,y); 
-            item = find_item(coord);
+            Coord coord = Coord(x,y); 
+            QGraphicsItem* item = find_item(coord);
             if(!item){
                 add_object(create_new_cell_object(coord, WALL_BRUSH));
             }

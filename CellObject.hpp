@@ -19,34 +19,5 @@ public:
         return s_size;
     }
 };
-/*
-class FoodObject : public CellObject{
-public:
-    // Takes coords for scene.
-    FoodObject(Coord coord);
-    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
-};
-
-class SnakeObject : public CellObject{
-public:
-    // Takes coords for scene.
-    SnakeObject(Coord coord, int player);
-    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
-private:
-    int m_player_number;
-};
-
-class SnakeDeadObject : public CellObject{
-public:
-    SnakeDeadObject(Coord coord);
-    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
-};
-
-class WallObject : public CellObject{
-public:
-    // Takes coords for scene.
-    WallObject(Coord coord);
-    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget);
-};*/
 
 #endif

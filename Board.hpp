@@ -8,7 +8,7 @@
 using boost::shared_ptr;
 using std::vector;
 
-//IAN: Made this class a pure abstract interface
+// Pure abstract interface
 class Board {
 public:
     virtual int get_height() = 0;
