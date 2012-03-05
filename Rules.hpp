@@ -1,7 +1,6 @@
 #ifndef RULES_HPP
 #define RULES_HPP
 #include "Board.hpp"
-#include "SnakeDirection.hpp"
 #include "CellOccupier.hpp"
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>

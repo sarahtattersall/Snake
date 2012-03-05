@@ -1,6 +1,5 @@
 #include "Scene.hpp"
 #include "CellOccupier.hpp"
-#include "SnakeDirection.hpp"
 #include "SnakeException.hpp"
 #include <algorithm>
 const QBrush Scene::FOOD_BRUSH = QBrush(Qt::yellow);

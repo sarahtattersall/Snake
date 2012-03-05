@@ -1,8 +1,6 @@
 #ifndef CELL_OCCUPIER_HPP
 #define CELL_OCCUPIER_HPP
 #include "Coord.hpp"
-#include "SnakeDirection.hpp"
-//#include "Board.hpp"
 #include <boost/shared_ptr.hpp>
 using boost::shared_ptr;
 class Board;

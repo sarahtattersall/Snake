@@ -12,7 +12,6 @@ HEADERS += Board.hpp \
            Coord.hpp \
            Rules.hpp \
            Scene.hpp \
-           SnakeDirection.hpp \
            SnakeException.hpp \
            Tests.hpp \
            TextualBoardVisualiser.hpp 
