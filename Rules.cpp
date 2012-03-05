@@ -6,20 +6,11 @@
 #include <stdio.h>
 
 Rules::Rules(shared_ptr<Board> board, bool through_walls)
-            : m_board(board), m_coord_space(board->get_width(), board->get_height()){
+            : m_board(board), m_coord_space(board->get_width(), board->get_height()),
+              m_wall(new WallOccupier()), m_teleport(new TeleportOccupier()), m_food(new FoodOccupier()){
     m_prev_snake_size = 0;
-    // TODO: Make these scoped_ptrs
-    m_wall = new WallOccupier();
-    m_teleport = new TeleportOccupier();
-    m_food = new FoodOccupier();
     m_through_walls = through_walls;
     srand(time(NULL));
-}
-
-Rules::~Rules(){
-    delete m_wall;
-    delete m_food;
-    delete m_teleport;
 }
 
 shared_ptr<Board> Rules::get_board(){
@@ -39,7 +30,7 @@ void Rules::place_food(){
     int x = rand() % m_board->get_width();
     int y = rand() % m_board->get_height();
     if (m_board->lookup(Coord(x,y))->get_type() == CellOccupier::EMPTY){
-        m_board->insert(m_food, Coord(x,y));
+        m_board->insert(m_food.get(), Coord(x,y));
     } else {
         place_food();
     }
@@ -81,9 +72,9 @@ bool Rules::compute_move(Snake& snake, Vector::Direction direction){
 void Rules::build_wall(){
     CellOccupier* wall;
     if (m_through_walls){
-        wall = m_teleport;
+        wall = m_teleport.get();
     } else{
-        wall = m_wall;
+        wall = m_wall.get();
     }
     int width = m_board->get_width();
     int height = m_board->get_height();
@@ -122,14 +113,14 @@ void Rules::reset(){
 }
 
 CellOccupier* Rules::get_food(){
-    return m_food;
+    return m_food.get();
 }
 
 vector<CellOccupier*> Rules::get_walls(){
     vector<CellOccupier*> walls;
-    walls.push_back(m_wall);
+    walls.push_back(m_wall.get());
     if (m_through_walls){
-        walls.push_back(m_teleport);
+        walls.push_back(m_teleport.get());
     }
     return walls;
 }

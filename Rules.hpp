@@ -4,9 +4,11 @@
 #include "SnakeDirection.hpp"
 #include "CellOccupier.hpp"
 #include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 using std::vector;
 using boost::shared_ptr;
+using boost::scoped_ptr;
 using boost::ptr_vector;
 
 class BoardVisualiser;
@@ -16,7 +18,6 @@ public:
     //I didn't want to make place_food private so said the builder is a friend??
     friend class RuleBuilder;
     Rules(shared_ptr<Board> board, bool through_walls);
-    ~Rules();
     shared_ptr<Board> get_board();
     // Returns bool for if the move succeeds. If false
     // end of game (i.e. hit wall or snake)
@@ -40,10 +41,10 @@ public:
 private:
     ptr_vector<Snake> m_snakes;
     shared_ptr<Board> m_board;
-    WallOccupier* m_wall;
-    TeleportOccupier* m_teleport;
-    FoodOccupier* m_food;
     CoordinateSpace m_coord_space;
+    scoped_ptr<WallOccupier> m_wall;
+    scoped_ptr<TeleportOccupier> m_teleport;
+    scoped_ptr<FoodOccupier> m_food;
     // Determines if a Coord is out of bounds for the board
     bool coord_out_of_bounds(Coord coord);
     bool compute_move(Snake& snake, Vector::Direction direction);
